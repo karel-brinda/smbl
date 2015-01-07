@@ -6,16 +6,21 @@ import os.path, shutil
 
 EXAMPLE_FASTA   = "example_fasta.fa"
 
-USE_HOME=1
+#USE_HOME=1
 
 # use user's home directory (to share the already compiled programs)?
-bin_dir = "bin"
 
 try:
-	if USE_HOME:
-		bin_dir = os.path.join(os.path.expanduser("~"),".snakemake-lib","bin")
+	USE_HOME
 except NameError:
-	pass
+	USE_HOME=False
+
+if USE_HOME:
+	bin_dir = os.path.join(os.path.expanduser("~"),".snakemake-lib","bin")
+else:
+	bin_dir = "bin"
+
+print("directory for programs: ",bin_dir)
 
 ART_454         = os.path.join(bin_dir,"art_454")
 ART_ILLUMINA    = os.path.join(bin_dir,"art_illumina")
