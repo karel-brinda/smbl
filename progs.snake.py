@@ -1,37 +1,8 @@
+include: "constants.py"
+
+
 import os.path, shutil
 	
-#
-# PROGRAMS
-#
-
-EXAMPLE_FASTA   = "example_fasta.fa"
-
-#USE_HOME=1
-
-# use user's home directory (to share the already compiled programs)?
-
-try:
-	USE_HOME
-except NameError:
-	USE_HOME=False
-
-if USE_HOME:
-	bin_dir = os.path.join(os.path.expanduser("~"),".snakemake-lib","bin")
-else:
-	bin_dir = "bin"
-
-print("directory for programs: ",bin_dir)
-
-ART_454         = os.path.join(bin_dir,"art_454")
-ART_ILLUMINA    = os.path.join(bin_dir,"art_illumina")
-ART_SOLID       = os.path.join(bin_dir,"art_solid")
-BCFTOOLS        = os.path.join(bin_dir,"bcftools")
-BGZIP           = os.path.join(bin_dir,"bgzip")
-BWA             = os.path.join(bin_dir,"bwa")
-DWGSIM          = os.path.join(bin_dir,"dwgsim")
-SAMTOOLS        = os.path.join(bin_dir,"samtools")
-TABIX           = os.path.join(bin_dir,"tabix")
-
 
 # SamTools cannot be compiled on OpenSuse because it normally requires 
 # the curses library instead of ncurses
@@ -44,36 +15,17 @@ def correct_samtools_make(makefile_fn):
 		with open(makefile_fn, 'w') as makefile:
 			makefile.write(content)
 
-rule __test_all__:
+rule __test_all_progs__:
 	input:
-		(
-			DWGSIM,
-			EXAMPLE_FASTA,
-			ART_454,
-			ART_ILLUMINA,
-			ART_SOLID,
-			BCFTOOLS,
-			BGZIP,
-			BWA,
-			SAMTOOLS,
-			TABIX
-		)
-
-rule example_fasta:
-	output:
-		EXAMPLE_FASTA
-	shell:
-		"""
-		curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna
-		"""
+		ALL_PROGS
 
 rule prog_art:
 	message:
 		"Compiling ART"
 	output:
-		ART_ILLUMINA,
-		ART_SOLID,
-		ART_454
+		PROG_ART_ILLUMINA,
+		PROG_ART_SOLID,
+		PROG_ART_454
 	params:
 		url="http://www.niehs.nih.gov/research/resources/assets/docs/artsrcvanillaicecream031114linuxtgz.tgz",
 		dir="art_src_VanillaIceCream_Linux"
@@ -97,7 +49,7 @@ rule prog_bcftools:
 	message:
 		"Compiling BcfTools"
 	output:
-		BCFTOOLS
+		PROG_BCFTOOLS
 	shell:
 		"""
 			rm -fR src_ext/bcftools
@@ -115,7 +67,7 @@ rule prog_dwgsim:
 	message:
 		"Compiling DwgSim"
 	output:
-		DWGSIM
+		PROG_DWGSIM
 	run:
 		shell(
 			"""
@@ -142,7 +94,7 @@ rule prog_bwa:
 	message:
 		"Compiling BWA "
 	output:
-		BWA
+		PROG_BWA
 	shell:
 		"""
 			mkdir -p src_ext
@@ -159,8 +111,8 @@ rule prog_htslib:
 	message:
 		"Compiling HtsLib"
 	output:
-		TABIX,
-		BGZIP
+		PROG_TABIX,
+		PROG_BGZIP
 	shell:
 		"""
 			rm -fR src_ext/htslib
@@ -179,7 +131,7 @@ rule prog_samtools:
 	message:
 		"Compiling SamTools"
 	output:
-		SAMTOOLS
+		PROG_SAMTOOLS
 	run:
 		shell(
 			"""
