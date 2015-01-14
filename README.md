@@ -51,9 +51,9 @@ include: "snakemake-lib/include_all.snake.py"
 
 rule all:
         input:
-                DWGSIM,
-                BWA,
-                EXAMPLE_FASTA
+                PROG_DWGSIM,
+                PROG_BWA,
+                FA_EXAMPLE
         params:
                 PREF="simulated_reads",
                 INDEX="bwa_index"
@@ -73,6 +73,6 @@ snakemake
 What happens:
 
  1. An example Fasta is downloaded
- 2. DwgSim and BWA are downloaded, compiled and installed
+ 2. DwgSim and BWA are downloaded, compiled and installed into ```~/.snakemake-lib/bin```
  3. DwgSim simulates reads from the example Fasta file
  4. These reads are mapped back to the reference by BWA (*alignment.sam* is created)
