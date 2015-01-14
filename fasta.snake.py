@@ -32,3 +32,4 @@ rule index_fasta:
 		"{filename}.fasta"
 	shell:
 		"{input[0]} faidx {input[1]}"		
+

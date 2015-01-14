@@ -1,8 +1,7 @@
 include: "constants.py"
 
-
 import os.path, shutil
-	
+
 
 # SamTools cannot be compiled on OpenSuse because it normally requires 
 # the curses library instead of ncurses
@@ -67,7 +66,7 @@ rule prog_dwgsim:
 	message:
 		"Compiling DwgSim"
 	output:
-		PROG_DWGSIM
+		PROG_DWGSIM, PROG_DWGSIM_EVAL
 	run:
 		shell(
 			"""
@@ -86,9 +85,29 @@ rule prog_dwgsim:
 				make
 				cd ../..
 				cp src_ext/dwgsim/dwgsim {output[0]}
+				cp src_ext/dwgsim/dwgsim_eval {output[1]}
 			"""
 		)
 
+rule prog_wgsim:
+	message:
+		"Compiling WgSim"
+	output:
+		PROG_WGSIM, PROG_WGSIM_EVAL
+	run:
+		shell(
+			"""
+				mkdir -p src_ext
+				cd src_ext
+				rm -fR wgsim
+				git clone --depth=1 http://github.com/lh3/wgsim
+				cd wgsim
+				gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
+				cd ../..
+				cp src_ext/wgsim/wgsim {output[0]}
+				cp src_ext/wgsim/wgsim_eval.pl {output[1]}
+			"""
+		)
 # BWA
 rule prog_bwa:
 	message:
