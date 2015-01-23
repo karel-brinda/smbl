@@ -11,3 +11,4 @@ include: "fasta.snake.py"
 rule __test_include_all__:
 	input:
 		[ALL_FAS, ALL_PROGS]
+
