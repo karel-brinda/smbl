@@ -1,8 +1,13 @@
-# Snakemake-lib
+# SMBL - SnakeMake Bioinformatics Library
 
-## Documentation
+## Installation
+```bash
+pip install --upgrade smbl
+```
 
-**Snakemake-lib** is a library of some useful rules and Python functions which can be used in bioinformatics Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. Files should be included using
+## Usage
+
+**SMBL** is a library of some useful rules and Python functions which can be used in bioinformatics Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. Files should be included using
 ```include: "snakemake-lib/include_all.snake.py"```.
 
  * **constants.py** - constants for program names, selected fasta files, etc.
@@ -38,16 +43,10 @@
     ```
 ## Example
 
-First do clone this repository:
-```bash
-git clone --depth 1 http://github.com/karel-brinda/snakemake-lib/
-```
-
 Then create this simple *Snakefile*:
 ```python
-USE_HOME=1
-
-include: "snakemake-lib/include_all.snake.py"
+import SMBL
+include: SMBL.include
 
 rule all:
         input:
