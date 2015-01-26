@@ -3,10 +3,10 @@ min_version("3.2")
 
 include: "constants.py"
 
-include: "fasta.snake.py"
+include: "fasta.snake"
 
 ## already included by fasta.snake.py
-#include: "progs.snake.py"
+#include: "progs.snake"
 
 rule __test_include_all__:
 	input:

@@ -1,3 +1,4 @@
+import os
 
 #USE_HOME=1
 
@@ -42,7 +43,7 @@ ALL_FAS = (
 		FA_EXAMPLE
 	)
 
-ALL_FAIS = expand("{fa}.fai", fa=ALL_FAS)
+ALL_FAIS = ["{}.fai".format(fa) for fa in ALL_FAS]
 
 ALL_PROGS = (
 		PROG_DWGSIM,

@@ -1,0 +1,24 @@
+import pkg_resources
+a=pkg_resources.resource_filename("SMBL","include_all.snake")
+print(a)
+
+USE_HOME=1
+
+include: "../SMBL/include_all.snake"
+
+rule all:
+        input:
+                PROG_DWGSIM,
+                PROG_BWA,
+                FA_EXAMPLE
+        params:
+                PREF="simulated_reads",
+                INDEX="bwa_index"
+        output:
+                "alignment.sam"
+        run:
+                shell("{input[0]} -C 1 {input[2]} {params.PREF}")
+                shell("{input[1]} index {input[2]}")
+                shell("{input[1]} mem {input[2]} {params.PREF}.bfast.fastq > alignment.sam")
+
+

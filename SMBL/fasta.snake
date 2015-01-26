@@ -1,6 +1,6 @@
 include: "constants.py"
 
-include: "progs.snake.py"
+include: "progs.snake"
 
 
 rule __test_all_fasta__:
