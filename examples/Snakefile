@@ -1,10 +1,9 @@
-import pkg_resources
-a=pkg_resources.resource_filename("SMBL","include_all.snake")
-print(a)
+import SMBL
+include: SMBL.include
 
 USE_HOME=1
 
-include: "../SMBL/include_all.snake"
+#include: a
 
 rule all:
         input:
