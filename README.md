@@ -11,11 +11,9 @@ pip install --upgrade smbl
 ```python
 import smbl
 include: smbl.include
-```.
+```
 
- * Programs:
-    
-    **Programs** (listed in alphabetical order together with variables with pathes):
+ * **Programs** (listed in alphabetical order together with variables with pathes):
     * *art_454* - ```smbl.prog.ART_454```
     * *art_illumina* - ```smbl.prog.ART_ILLUMINA```
     * *art_solid* - ```smbl.prog.ART_SOLID```
@@ -27,7 +25,6 @@ include: smbl.include
     * *tabix* - ```smbl.prog.TABIX```
     
     Defaultly, all the programs are installed into ~/.smbl/bin/.
-
 
  * Fasta:
 
