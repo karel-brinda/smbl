@@ -1,7 +1,5 @@
-include: "constants.py"
-
+import smbl
 import os.path, shutil
-
 
 # SamTools cannot be compiled on OpenSuse because it normally requires 
 # the curses library instead of ncurses
@@ -16,15 +14,15 @@ def correct_samtools_make(makefile_fn):
 
 rule __test_all_progs__:
 	input:
-		ALL_PROGS
+		smbl.prog.ALL
 
 rule prog_art:
 	message:
 		"Compiling ART"
 	output:
-		PROG_ART_ILLUMINA,
-		PROG_ART_SOLID,
-		PROG_ART_454
+		smbl.prog.ART_ILLUMINA,
+		smbl.prog.ART_SOLID,
+		smbl.prog.ART_454
 	params:
 		url="http://www.niehs.nih.gov/research/resources/assets/docs/artsrcvanillaicecream031114linuxtgz.tgz",
 		dir="art_src_VanillaIceCream_Linux"
@@ -48,7 +46,7 @@ rule prog_bcftools:
 	message:
 		"Compiling BcfTools"
 	output:
-		PROG_BCFTOOLS
+		smbl.prog.BCFTOOLS
 	shell:
 		"""
 			rm -fR src_ext/bcftools
@@ -66,7 +64,8 @@ rule prog_dwgsim:
 	message:
 		"Compiling DwgSim"
 	output:
-		PROG_DWGSIM, PROG_DWGSIM_EVAL
+		smbl.prog.DWGSIM,
+		smbl.prog.DWGSIM_EVAL
 	run:
 		shell(
 			"""
@@ -93,7 +92,8 @@ rule prog_wgsim:
 	message:
 		"Compiling WgSim"
 	output:
-		PROG_WGSIM, PROG_WGSIM_EVAL
+		smbl.prog.WGSIM,
+		smbl.prog.WGSIM_EVAL
 	run:
 		shell(
 			"""
@@ -113,7 +113,7 @@ rule prog_bwa:
 	message:
 		"Compiling BWA "
 	output:
-		PROG_BWA
+		smbl.prog.BWA
 	shell:
 		"""
 			mkdir -p src_ext
@@ -130,8 +130,8 @@ rule prog_htslib:
 	message:
 		"Compiling HtsLib"
 	output:
-		PROG_TABIX,
-		PROG_BGZIP
+		smbl.prog.TABIX,
+		smbl.prog.BGZIP
 	shell:
 		"""
 			rm -fR src_ext/htslib
@@ -150,7 +150,7 @@ rule prog_samtools:
 	message:
 		"Compiling SamTools"
 	output:
-		PROG_SAMTOOLS
+		smbl.prog.SAMTOOLS
 	run:
 		shell(
 			"""

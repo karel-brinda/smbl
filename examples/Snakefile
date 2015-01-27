@@ -1,15 +1,11 @@
-import SMBL
-include: SMBL.include
-
-USE_HOME=1
-
-#include: a
+import smbl
+include: smbl.include
 
 rule all:
         input:
-                PROG_DWGSIM,
-                PROG_BWA,
-                FA_EXAMPLE
+                smbl.prog.DWGSIM,
+                smbl.prog.BWA,
+                smbl.fasta.EXAMPLE
         params:
                 PREF="simulated_reads",
                 INDEX="bwa_index"
