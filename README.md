@@ -1,5 +1,7 @@
 # SMBL - SnakeMake Bioinformatics Library
 
+In case of any problem, don't hesitate to contact me on karel.brinda@gmail.com.
+
 ## Short description
 
 **SMBL** is a library of some useful rules and Python functions which can be used in Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. It makes possible to automatically
@@ -49,7 +51,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bgzip           | ```smbl.prog.BGZIP```        | http://github.com/samtools/htslib
 | bwa             | ```smbl.prog.BWA```          | http://github.com/lh3/bwa |
 | dwgsim          | ```smbl.prog.DWGSIM```       | http://github.com/nh13/dwgsim |
-| dwgsim\_eval    | ```smbl.prog.DWGSIM_EVAL`` ` | http://github.com/nh13/dwgsim |
+| dwgsim\_eval    | ```smbl.prog.DWGSIM_EVAL```  | http://github.com/nh13/dwgsim |
 | samtools        | ```smbl.prog.SAMTOOLS```     | http://github.com/samtools/samtools |
 | tabix           | ```smbl.prog.TABIX```        | http://github.com/samtools/htslib |
 | twoBitToFa      | ```smbl.prog.TWOBITTOFA```   | http://hgdownload.cse.ucsc.edu/admin/exe/ |
