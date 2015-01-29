@@ -1,38 +1,72 @@
 # SMBL - SnakeMake Bioinformatics Library
 
-## Installation
+## Short description
+
+**SMBL** is a library of some useful rules and Python functions which can be used in Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. It makes possible to automatically
+download various bioinformatics programs like read mappers, read simulators, conversion tools, etc.
+It supports also downloading and conversion of some important references in FASTA format (e.g., human genome).
+
+## Installation / upgrade
+
+To install SMBL, you need to have Unix-like operating system (e.g., Linux, MacOS) and Python at least 3.2.
+Installation / upgrade can be performed using the following command.
+
 ```bash
 pip install --upgrade smbl
 ```
 
+If SnakeMake has not been installed, yet, it will
+be installed automatically with SMBL.
+
+The current GIT version of SMBL can be installed by 
+```bash
+git clone --depth 1 http://github.com/karel-brinda/smbl
+cd smbl
+./install.sh
+```
+
 ## Usage
 
-**SMBL** is a library of some useful rules and Python functions which can be used in bioinformatics Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. Files should be included using
+To use SMBL, you have to import the *smbl*  Python package and include a file with all rules using:
 ```python
 import smbl
 include: smbl.include
 ```
 
- * **Programs** (listed in alphabetical order together with variables with pathes):
-    * *art_454* - ```smbl.prog.ART_454```
-    * *art_illumina* - ```smbl.prog.ART_ILLUMINA```
-    * *art_solid* - ```smbl.prog.ART_SOLID```
-    * *bcftools* - ```smbl.prog.BCFTOOLS```
-    * *bgzip* - ```smbl.prog.BGZIP```
-    * *bwa* - ```smbl.prog.BWA```
-    * *dwgsim* - ```smbl.prog.DWGSIM```
-    * *samtools* - ```smbl.prog.SAMTOOLS```
-    * *tabix* - ```smbl.prog.TABIX```
+Then you can use all supported programs or data. When they appear as input of a rule, they will be downloaded or compiled.
+
+All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into ```~/.smbl/fa/```.
+
+
+### Programs
+
+| Program         | Variable with its filename   | Link |
+|-----------------|------------------------------|------|
+| art\_454        | ```smbl.prog.ART_454```      | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| art\_illumina   | ```smbl.prog.ART_ILLUMINA``` | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| art\_solid      | ```smbl.prog.ART_SOLID```    | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| bcftools        | ```smbl.prog.BCFTOOLS```     | http://github.com/samtools/bcftools |
+| bgzip           | ```smbl.prog.BGZIP```        | http://github.com/samtools/htslib
+| bwa             | ```smbl.prog.BWA```          | http://github.com/lh3/bwa |
+| dwgsim          | ```smbl.prog.DWGSIM```       | http://github.com/nh13/dwgsim |
+| dwgsim\_eval    | ```smbl.prog.DWGSIM_EVAL`` ` | http://github.com/nh13/dwgsim |
+| samtools        | ```smbl.prog.SAMTOOLS```     | http://github.com/samtools/samtools |
+| tabix           | ```smbl.prog.TABIX```        | http://github.com/samtools/htslib |
+| twoBitToFa      | ```smbl.prog.TWOBITTOFA```   | http://hgdownload.cse.ucsc.edu/admin/exe/ |
+| wgsim           | ```smbl.prog.WGSIM```        | http://github.com/lh3/wgsim |
+| wgsim\_eval.pl  | ```smbl.prog.WGSIM_EVAL```   | http://github.com/lh3/wgsim |
     
-    Defaultly, all the programs are installed into ~/.smbl/bin/.
 
- * Fasta:
+### FASTA FILES
 
-    * ```smbl.fasta.EXAMPLE``` - an example Fasta file
+| FASTA file                   | Variable with its filename   |
+|------------------------------|------------------------------|
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE```     |
+| Human genome HG38 (GRCh38)   | ```smbl.fasta.HG38```, ```smbl.fasta.HUMAN_GRCH38 ``` |
 
 ## Example
 
-Then create this simple *Snakefile*:
+Try to create this simple *Snakefile*:
 ```python
 import smbl
 include: smbl.include
@@ -60,7 +94,7 @@ snakemake
 
 What happens:
 
- 1. An example Fasta is downloaded
- 2. DwgSim and BWA are downloaded, compiled and installed into ```~/.smbl/bin```
+ 1. An example FASTA file is downloaded
+ 2. DwgSim and BWA are downloaded, compiled and installed
  3. DwgSim simulates reads from the example Fasta file
  4. These reads are mapped back to the reference by BWA (*alignment.sam* is created)
