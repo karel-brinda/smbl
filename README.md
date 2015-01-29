@@ -52,6 +52,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
 | dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
+| mason            | ```smbl.prog.MASON```               | http://github.com/seqan/seqan |
 | samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
 | storm-color      | ```smbl.prog.STORM_COLOR```         | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
 | storm-nucleotide | ```smbl.prog.STORM_NUCLEOTIDE```    | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
@@ -61,7 +62,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | wgsim\_eval.pl   | ```smbl.prog.WGSIM_EVAL```          | http://github.com/lh3/wgsim |
     
 
-### FASTA FILES
+### FASTA files
 
 | FASTA file                   | Variable with its filename   |
 |------------------------------|------------------------------|

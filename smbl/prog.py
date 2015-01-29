@@ -9,6 +9,7 @@ BGZIP              = os.path.join(smbl.bin_dir,"bgzip")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
 DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
+MASON              = os.path.join(smbl.bin_dir,"mason")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 STORM_COLOR        = os.path.join(smbl.bin_dir,"storm-color")
 STORM_NUCLEOTIDE   = os.path.join(smbl.bin_dir,"storm-nucleotide")
@@ -26,6 +27,7 @@ ALL = [
 		BWA,
 		DWGSIM,
 		DWGSIM_EVAL,
+		MASON,
 		SAMTOOLS,
 		STORM_COLOR,
 		STORM_NUCLEOTIDE,

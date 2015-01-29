@@ -220,6 +220,28 @@ rule prog_storm:
 			"""
 		)
 
+rule prog_mason:
+	message:
+		"Compiling Mason"
+	output:
+		smbl.prog.MASON
+	params:
+		src=os.path.join(smbl.src_dir,"mason")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+				git clone --depth 1 http://github.com/seqan/seqan/
+				cd seqan
+				cmake .
+				make mason
+				cp {params.src}/seqan/bin/mason {output[0]}
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"
