@@ -1,8 +1,6 @@
 import sys
 from setuptools import setup , find_packages
 
-#DISTUTILS_DEBUG="yesss"
-
 if sys.version_info < (3,2):
 	print("At least Python 3.2 is required.\n", file=sys.stderr)
 	exit(1)
@@ -12,10 +10,7 @@ setup(
 	packages = ['smbl'], # this must be the same as the name above
 	package_dir = {"smbl" : "smbl"},
 	package_data = {"smbl" : ["*.snake"] },
-	#include_package_data=True,
-	#packages=setuptools.find_packages(),
-	#include_package_data=True,  # use MANIFEST.in during install
-	version = '0.0.1',
+	version = '0.0.3',
 	description = 'SnakeMake Bioinformatics Library',
 	long_description = """\
 SnakeMake Bioinformatics Library
@@ -32,8 +27,8 @@ tools and download data (e.g., in FASTA format).
 	author_email = 'karel.brinda@gmail.com',
 	url = 'https://github.com/karel-brinda/smbl',
 	license = "MIT",
-	#download_url = 'https://github.com/karel-brinda/smbl/tarball/0.0.1', # I'll explain this in a second
-	keywords = ['Snakemake', 'bioinformatics'], # arbitrary keywords
+	#download_url = 'https://github.com/karel-brinda/smbl/tarball/0.0.1',
+	keywords = ['Snakemake', 'bioinformatics'],
 	classifiers = [
 		"Development Status :: 3 - Alpha",
 		"Environment :: Console",

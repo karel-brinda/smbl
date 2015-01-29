@@ -14,6 +14,22 @@ rule example_fasta:
 		curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna
 		"""
 
+rule human_hg38:
+	input:
+		smbl.prog.TWOBITTOFA
+	output:
+		smbl.fasta.HUMAN_HG38
+	params:
+		src=smbl.src_dir,
+	shell:
+		"""
+		rm -fR {params.src}/hg38
+		mkdir -p {params.src}/hg38
+		curl --insecure -o {params.src}/hg38/hg38.2bit http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit
+		{input[0]} {params.src}/hg38/hg38.2bit {output[0]}
+		rm -fR {params.src}/hg38
+		"""
+
 rule index_fa:
 	output:
 		"{filename}.fa.fai"

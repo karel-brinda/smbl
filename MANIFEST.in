@@ -1,2 +1,2 @@
-include smbl_snake/*.snake LICENCE README.md
+include smbl_snake/*.snake LICENSE README.md
 

@@ -1,5 +1,7 @@
 import smbl
-import os.path, shutil
+import os.path
+import shutil
+import platform
 
 # SamTools cannot be compiled on OpenSuse because it normally requires 
 # the curses library instead of ncurses
@@ -24,40 +26,52 @@ rule prog_art:
 		smbl.prog.ART_SOLID,
 		smbl.prog.ART_454
 	params:
-		url="http://www.niehs.nih.gov/research/resources/assets/docs/artsrcvanillaicecream031114linuxtgz.tgz",
-		dir="art_src_VanillaIceCream_Linux"
-	shell:
+		src=smbl.src_dir,
+		dir="art_bin_VanillaIceCream"
+	run:
+		if smbl.is_linux() and smbl.is_os_64bit:
+			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux64tgz.tgz"
+		elif smbl.is_linux():
+			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux32tgz.tgz"
+		elif smbl.is_mac() and smbl.is_os_64bit:
+			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos64tgz.tgz"
+		elif smbl.is_mac():
+			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz"
+		else:
+			raise RunTimeError("Unsupported OS")
+
+		shell(
 		"""
-			mkdir -p src_ext
-			cd src_ext
-			curl -o art.tgz {params.url}
+			rm -fR {params.src}/art
+			mkdir -p {params.src}/art
+			cd {params.src}/art
+			curl -o art.tgz """+ url + """
 			tar xvf art.tgz
-			cd {params.dir}
-			./configure
-			make
-			cd ..
-			cd ..
-			cp src_ext/{params.dir}/art_illumina {output[0]}
-			cp src_ext/{params.dir}/art_SOLiD {output[1]}
-			cp src_ext/{params.dir}/art_454 {output[2]}
+			cp {params.src}/art/{params.dir}/art_illumina {output[0]}
+			cp {params.src}/art/{params.dir}/art_SOLiD {output[1]}
+			cp {params.src}/art/{params.dir}/art_454 {output[2]}
+			#rm -fR {params.src}/art
 		"""
+		)
 
 rule prog_bcftools:
 	message:
 		"Compiling BcfTools"
 	output:
 		smbl.prog.BCFTOOLS
+	params:
+		src=smbl.src_dir
 	shell:
 		"""
-			rm -fR src_ext/bcftools
-			mkdir -p src_ext/bcftools
-			cd src_ext/bcftools
+			rm -fR {params.src}/bcftools
+			mkdir -p {params.src}/bcftools
+			cd {params.src}/bcftools
 			git clone --depth=1 http://github.com/samtools/bcftools
 			git clone --depth=1 http://github.com/samtools/htslib
 			cd bcftools
 			make
-			cd ../../..
-			cp src_ext/bcftools/bcftools/bcftools {output[0]}
+			cp {params.src}/bcftools/bcftools/bcftools {output[0]}
+			rm -fR {params.src}/bcftools
 		"""
 
 rule prog_dwgsim:
@@ -66,25 +80,28 @@ rule prog_dwgsim:
 	output:
 		smbl.prog.DWGSIM,
 		smbl.prog.DWGSIM_EVAL
+	params:
+		src=smbl.src_dir
 	run:
 		shell(
 			"""
-				mkdir -p src_ext
-				cd src_ext
-				rm -fR dwgsim
+				rm -fR {params.src}/dwgsim
+				mkdir -p {params.src}/dwgsim
+				cd {params.src}/dwgsim
 				git clone --depth=1 http://github.com/nh13/DWGSIM dwgsim
 				cd dwgsim
 				git submodule init
 				git submodule update
-				""")
-		correct_samtools_make(os.path.join("src_ext","dwgsim","samtools","Makefile"))
+			"""
+		)
+		correct_samtools_make(os.path.join(smbl.src_dir,"dwgsim","dwgsim","samtools","Makefile"))
 		shell(
 			"""
-				cd src_ext/dwgsim
+				cd {params.src}/dwgsim/dwgsim
 				make
-				cd ../..
-				cp src_ext/dwgsim/dwgsim {output[0]}
-				cp src_ext/dwgsim/dwgsim_eval {output[1]}
+				cp {params.src}/dwgsim/dwgsim/dwgsim {output[0]}
+				cp {params.src}/dwgsim/dwgsim/dwgsim_eval {output[1]}
+				rm -fR {params.src}/dwgsim
 			"""
 		)
 
@@ -94,36 +111,41 @@ rule prog_wgsim:
 	output:
 		smbl.prog.WGSIM,
 		smbl.prog.WGSIM_EVAL
+	params:
+		src=smbl.src_dir
 	run:
 		shell(
 			"""
-				mkdir -p src_ext
-				cd src_ext
-				rm -fR wgsim
+				rm -fR {params.src}/wgsim
+				mkdir -p {params.src}/wgsim
+				cd {params.src}/wgsim
 				git clone --depth=1 http://github.com/lh3/wgsim
 				cd wgsim
 				gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
-				cd ../..
-				cp src_ext/wgsim/wgsim {output[0]}
-				cp src_ext/wgsim/wgsim_eval.pl {output[1]}
+				cp {params.src}/wgsim/wgsim/wgsim {output[0]}
+				cp {params.src}/wgsim/wgsim/wgsim_eval.pl {output[1]}
+				rm -fR {params.src}/wgsim
 			"""
 		)
+
 # BWA
 rule prog_bwa:
 	message:
 		"Compiling BWA "
 	output:
 		smbl.prog.BWA
+	params:
+		src=smbl.src_dir
 	shell:
 		"""
-			mkdir -p src_ext
-			cd src_ext
-			rm -fR bwa
+			rm -fR {params.src}/bwa
+			mkdir -p {params.src}/bwa
+			cd {params.src}/bwa
 			git clone --depth=1 http://github.com/lh3/bwa
 			cd bwa
 			make
-			cd ../..
-			cp src_ext/bwa/bwa {output[0]}
+			cp {params.src}/bwa/bwa/bwa {output[0]}
+			rm -fR {params.src}/bwa
 		"""
 
 rule prog_htslib:
@@ -132,18 +154,20 @@ rule prog_htslib:
 	output:
 		smbl.prog.TABIX,
 		smbl.prog.BGZIP
+	params:
+		src=smbl.src_dir
 	shell:
 		"""
-			rm -fR src_ext/htslib
-			mkdir -p src_ext/htslib
-			cd src_ext/htslib
+			rm -fR {params.src}/htslib
+			mkdir -p {params.src}/htslib
+			cd {params.src}/htslib
 			git clone --depth=1 --branch=develop http://github.com/samtools/bcftools
 			git clone --depth=1 http://github.com/samtools/htslib
 			cd htslib
 			make
-			cd ../../..
-			cp src_ext/htslib/htslib/tabix {output[0]}
-			cp src_ext/htslib/htslib/bgzip {output[1]}
+			cp {params.src}/htslib/htslib/tabix {output[0]}
+			cp {params.src}/htslib/htslib/bgzip {output[1]}
+			rm -fR {params.src}/htslib
 		"""
 
 rule prog_samtools:
@@ -151,22 +175,44 @@ rule prog_samtools:
 		"Compiling SamTools"
 	output:
 		smbl.prog.SAMTOOLS
+	params:
+		src=smbl.src_dir
 	run:
 		shell(
 			"""
-				rm -fR src_ext/samtools
-				mkdir -p src_ext/samtools
-				cd src_ext/samtools
+				rm -fR {params.src}/samtools
+				mkdir -p {params.src}/samtools
+				cd {params.src}/samtools
 				git clone --depth=1 http://github.com/samtools/samtools
 				git clone --depth=1 http://github.com/samtools/htslib
 			"""
 		)
-		correct_samtools_make("src_ext/samtools/samtools/Makefile")
+		correct_samtools_make(os.path.join(smbl.src_dir,"samtools","samtools","Makefile"))
 		shell(
 			"""
-				cd src_ext/samtools/samtools
+				cd {params.src}/samtools/samtools
 				make
-				cd ../../..
-				cp src_ext/samtools/samtools/samtools {output[0]}
+				cp {params.src}/samtools/samtools/samtools {output[0]}
+				rm -fR {params.src}/samtools
 			"""
 		)
+
+rule prog_twobittofa:
+	message:
+		"Downloading twoBitToFa"
+	output:
+		smbl.prog.TWOBITTOFA
+	run:
+		if smbl.is_linux() and smbl.is_os_64bit:
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa"
+		elif smbl.is_mac() and smbl.is_os_64bit:
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa"
+		elif smbl.is_mac():
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.i386/twoBitToFa"
+		else:
+			raise RunTimeError("For your OS, twoBitToFa is not precompiled")
+
+		shell("""
+			curl --insecure -o {prog} {url}
+			chmod +x {prog}
+		""".format(prog=output[0],url=url))
