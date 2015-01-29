@@ -197,6 +197,29 @@ rule prog_samtools:
 			"""
 		)
 
+rule prog_storm:
+	message:
+		"Compiling SToRM"
+	output:
+		smbl.prog.STORM_NUCLEOTIDE,
+		smbl.prog.STORM_COLOR
+	params:
+		src=os.path.join(smbl.src_dir,"storm")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+				svn checkout svn://scm.gforge.inria.fr/svnroot/storm/trunk storm
+				cd storm
+				make
+				cp {params.src}/storm/storm-nucleotide {output[0]}
+				cp {params.src}/storm/storm-color {output[1]}
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"

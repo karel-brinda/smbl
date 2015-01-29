@@ -42,21 +42,23 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 
 ### Programs
 
-| Program         | Variable with its filename   | Link |
-|-----------------|------------------------------|------|
-| art\_454        | ```smbl.prog.ART_454```      | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
-| art\_illumina   | ```smbl.prog.ART_ILLUMINA``` | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
-| art\_solid      | ```smbl.prog.ART_SOLID```    | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
-| bcftools        | ```smbl.prog.BCFTOOLS```     | http://github.com/samtools/bcftools |
-| bgzip           | ```smbl.prog.BGZIP```        | http://github.com/samtools/htslib
-| bwa             | ```smbl.prog.BWA```          | http://github.com/lh3/bwa |
-| dwgsim          | ```smbl.prog.DWGSIM```       | http://github.com/nh13/dwgsim |
-| dwgsim\_eval    | ```smbl.prog.DWGSIM_EVAL```  | http://github.com/nh13/dwgsim |
-| samtools        | ```smbl.prog.SAMTOOLS```     | http://github.com/samtools/samtools |
-| tabix           | ```smbl.prog.TABIX```        | http://github.com/samtools/htslib |
-| twoBitToFa      | ```smbl.prog.TWOBITTOFA```   | http://hgdownload.cse.ucsc.edu/admin/exe/ |
-| wgsim           | ```smbl.prog.WGSIM```        | http://github.com/lh3/wgsim |
-| wgsim\_eval.pl  | ```smbl.prog.WGSIM_EVAL```   | http://github.com/lh3/wgsim |
+| Program          | Variable with its filename          | Link |
+|------------------|-------------------------------------|------|
+| art\_454         | ```smbl.prog.ART_454```             | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| art\_illumina    | ```smbl.prog.ART_ILLUMINA```        | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| art\_solid       | ```smbl.prog.ART_SOLID```           | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
+| bcftools         | ```smbl.prog.BCFTOOLS```            | http://github.com/samtools/bcftools |
+| bgzip            | ```smbl.prog.BGZIP```               | http://github.com/samtools/htslib
+| bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
+| dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
+| dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
+| samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
+| storm-color      | ```smbl.prog.STORM_COLOR```         | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
+| storm-nucleotide | ```smbl.prog.STORM_NUCLEOTIDE```    | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
+| tabix            | ```smbl.prog.TABIX```               | http://github.com/samtools/htslib |
+| twoBitToFa       | ```smbl.prog.TWOBITTOFA```          | http://hgdownload.cse.ucsc.edu/admin/exe/ |
+| wgsim            | ```smbl.prog.WGSIM```               | http://github.com/lh3/wgsim |
+| wgsim\_eval.pl   | ```smbl.prog.WGSIM_EVAL```          | http://github.com/lh3/wgsim |
     
 
 ### FASTA FILES
