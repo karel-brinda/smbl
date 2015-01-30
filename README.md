@@ -48,6 +48,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | art\_illumina    | ```smbl.prog.ART_ILLUMINA```        | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
 | art\_solid       | ```smbl.prog.ART_SOLID```           | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
 | bcftools         | ```smbl.prog.BCFTOOLS```            | http://github.com/samtools/bcftools |
+| bfast            | ```smbl.prog.BFAST```               | http://github.com/nh13/bfast |
 | bgzip            | ```smbl.prog.BGZIP```               | http://github.com/samtools/htslib
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |

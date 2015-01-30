@@ -5,6 +5,7 @@ ART_454            = os.path.join(smbl.bin_dir,"art_454")
 ART_ILLUMINA       = os.path.join(smbl.bin_dir,"art_illumina")
 ART_SOLID          = os.path.join(smbl.bin_dir,"art_solid")
 BCFTOOLS           = os.path.join(smbl.bin_dir,"bcftools")
+BFAST              = os.path.join(smbl.bin_dir,"bfast")
 BGZIP              = os.path.join(smbl.bin_dir,"bgzip")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
@@ -23,6 +24,7 @@ ALL = [
 		ART_ILLUMINA,
 		ART_SOLID,
 		BCFTOOLS,
+		BFAST,
 		BGZIP,
 		BWA,
 		DWGSIM,

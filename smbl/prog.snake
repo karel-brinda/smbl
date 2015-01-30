@@ -88,7 +88,7 @@ rule prog_dwgsim:
 				rm -fR {params.src}/dwgsim
 				mkdir -p {params.src}/dwgsim
 				cd {params.src}/dwgsim
-				git clone --depth=1 http://github.com/nh13/DWGSIM dwgsim
+				git clone --depth=1 http://github.com/nh13/dwgsim
 				cd dwgsim
 				git submodule init
 				git submodule update
@@ -238,6 +238,29 @@ rule prog_mason:
 				cmake .
 				make mason
 				cp {params.src}/seqan/bin/mason {output[0]}
+				rm -fR {params.src}
+			"""
+		)
+
+rule prog_bfast:
+	message:
+		"Compiling BFast"
+	output:
+		smbl.prog.BFAST
+	params:
+		src=os.path.join(smbl.src_dir,"bfast")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+				git clone --depth 1 https://github.com/nh13/bfast
+				cd bfast
+				sh autogen.sh
+				./configure
+				make
+				cp {params.src}/bfast/bfast/bfast {output[0]}
 				rm -fR {params.src}
 			"""
 		)
