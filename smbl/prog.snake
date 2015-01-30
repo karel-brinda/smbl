@@ -265,7 +265,7 @@ rule prog_bfast:
 			"""
 		)
 
-rule gem:
+rule prog_gem:
 	message:
 		"Installing GEM"
 	output:
@@ -275,6 +275,9 @@ rule gem:
 	params:
 		src=os.path.join(smbl.src_dir,"gem")
 	run:
+		if not smbl.is_linux():
+			raise RunTimeError("Unsupported OS")
+
 		shell(
 			"""
 				rm -fR {params.src}
@@ -290,6 +293,27 @@ rule gem:
 			"""
 		)
 
+rule prog_freec:
+	message:
+		"Installing FREEC"
+	output:
+		smbl.prog.FREEC
+	params:
+		src=os.path.join(smbl.src_dir,"freec")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+				wget http://bioinfo-out.curie.fr/projects/freec/src/FREEC_Linux64.tar.gz
+				tar xf FREEC_Linux64.tar.gz
+				make clean
+				make
+				cp freec {output[0]}
+				rm -fR {params.src}
+			"""
+		)
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"

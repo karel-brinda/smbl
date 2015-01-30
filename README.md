@@ -53,6 +53,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
 | dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
+| freec            | ```smbl.prog.FREEC```               | http://bioinfo-out.curie.fr/projects/freec/ |
 | gem-indexer      | ```smbl.prog.GEM_INDEXER```         | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-mapper       | ```smbl.prog.GEM_MAPPER```          | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-2-sam        | ```smbl.prog.GEM_2_SAM```           | http://algorithms.cnag.cat/wiki/The_GEM_library |

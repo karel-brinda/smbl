@@ -10,6 +10,7 @@ BGZIP              = os.path.join(smbl.bin_dir,"bgzip")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
 DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
+FREEC              = os.path.join(smbl.bin_dir,"freec")
 GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
 GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
@@ -32,6 +33,7 @@ ALL = [
 		BWA,
 		DWGSIM,
 		DWGSIM_EVAL,
+		FREEC,
 		GEM_INDEXER,
 		GEM_MAPPER,
 		GEM_2_SAM,
