@@ -10,6 +10,9 @@ BGZIP              = os.path.join(smbl.bin_dir,"bgzip")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
 DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
+GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
+GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
+GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
 MASON              = os.path.join(smbl.bin_dir,"mason")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 STORM_COLOR        = os.path.join(smbl.bin_dir,"storm-color")
@@ -29,6 +32,9 @@ ALL = [
 		BWA,
 		DWGSIM,
 		DWGSIM_EVAL,
+		GEM_INDEXER,
+		GEM_MAPPER,
+		GEM_2_SAM,
 		MASON,
 		SAMTOOLS,
 		STORM_COLOR,

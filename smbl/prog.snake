@@ -265,6 +265,31 @@ rule prog_bfast:
 			"""
 		)
 
+rule gem:
+	message:
+		"Installing GEM"
+	output:
+		smbl.prog.GEM_INDEXER,
+		smbl.prog.GEM_MAPPER,
+		smbl.prog.GEM_2_SAM
+	params:
+		src=os.path.join(smbl.src_dir,"gem")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+				wget -O gem.tbz2 http://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2/download
+				tar xf gem.tbz2
+				cd GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin
+				cp gem-indexer {output[0]}
+				cp gem-mapper {output[1]}
+				cp gem-2-sam {output[2]}
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"
