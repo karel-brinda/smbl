@@ -329,13 +329,105 @@ rule prog_perm:
 				mkdir -p {params.src}
 				cd {params.src}
 
-				wget wget https://perm.googlecode.com/files/PerM4Source.tar.gz
+				wget https://perm.googlecode.com/files/PerM4Source.tar.gz
 				tar xf PerM4Source.tar.gz
 				cd Source
 				make
 				cp perm {output[0]}
 
 				rm -fR {params.src}
+			"""
+		)
+
+rule prog_mrsfast:
+	message:
+		"Compiling mrsFAST"
+	output:
+		smbl.prog.MRSFAST
+	params:
+		src=os.path.join(smbl.src_dir,"mrsfast")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				git clone --depth 1 git://git.code.sf.net/p/mrsfast/code
+				cd code
+				make
+				cp mrsfast {output[0]}
+
+				rm -fR {params.src}
+			"""
+		)
+
+rule prog_mrfast:
+	message:
+		"Compiling mrFAST"
+	output:
+		smbl.prog.MRFAST
+	params:
+		src=os.path.join(smbl.src_dir,"mrfast")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				git clone --depth 1 http://github.com/BilkentCompGen/mrfast
+				cd mrfast
+				make
+				cp mrfast {output[0]}
+
+				#rm -fR {params.src}
+			"""
+		)
+
+rule prog_drfast:
+	message:
+		"Compiling drFAST"
+	output:
+		smbl.prog.DRFAST
+	params:
+		src=os.path.join(smbl.src_dir,"drfast")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				git clone --depth 1 http://github.com/BilkentCompGen/drfast
+				cd drfast
+				make
+				cp drfast {output[0]}
+
+				#rm -fR {params.src}
+			"""
+		)
+
+rule prog_sirfast:
+	message:
+		"Compiling sirFAST"
+	output:
+		smbl.prog.SIRFAST
+	params:
+		src=os.path.join(smbl.src_dir,"sirfast")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				git clone --depth 1 http://github.com/BilkentCompGen/sirfast
+				cd sirfast
+				make
+				cp sirfast {output[0]}
+
+				#rm -fR {params.src}
 			"""
 		)
 

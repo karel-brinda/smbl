@@ -53,13 +53,17 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
 | dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
+| drfast           | ```smbl.prog.DRFAST```              | http://github.com/BilkentCompGen/drfast |
 | freec            | ```smbl.prog.FREEC```               | http://bioinfo-out.curie.fr/projects/freec/ |
 | gem-indexer      | ```smbl.prog.GEM_INDEXER```         | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-mapper       | ```smbl.prog.GEM_MAPPER```          | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-2-sam        | ```smbl.prog.GEM_2_SAM```           | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | mason            | ```smbl.prog.MASON```               | http://github.com/seqan/seqan |
+| mrfast           | ```smbl.prog.MRFAST```              | http://github.com/BilkentCompGen/mrfast |
+| mrsfast          | ```smbl.prog.MRSFAST```             | http://mrsfast.sourceforge.net/ |
 | perm             | ```smbl.prog.PERM```                | http://code.google.com/p/perm/ |
 | samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
+| sirfast          | ```smbl.prog.SIRFAST```             | http://github.com/BilkentCompGen/sirfast |
 | storm-color      | ```smbl.prog.STORM_COLOR```         | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
 | storm-nucleotide | ```smbl.prog.STORM_NUCLEOTIDE```    | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
 | tabix            | ```smbl.prog.TABIX```               | http://github.com/samtools/htslib |
