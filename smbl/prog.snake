@@ -314,6 +314,31 @@ rule prog_freec:
 				rm -fR {params.src}
 			"""
 		)
+
+rule prog_perm:
+	message:
+		"Compiling PerM"
+	output:
+		smbl.prog.PERM
+	params:
+		src=os.path.join(smbl.src_dir,"perm")
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				wget wget https://perm.googlecode.com/files/PerM4Source.tar.gz
+				tar xf PerM4Source.tar.gz
+				cd Source
+				make
+				cp perm {output[0]}
+
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"

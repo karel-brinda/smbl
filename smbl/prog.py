@@ -15,6 +15,7 @@ GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
 GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
 MASON              = os.path.join(smbl.bin_dir,"mason")
+PERM               = os.path.join(smbl.bin_dir,"perm")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 STORM_COLOR        = os.path.join(smbl.bin_dir,"storm-color")
 STORM_NUCLEOTIDE   = os.path.join(smbl.bin_dir,"storm-nucleotide")
@@ -38,6 +39,7 @@ ALL = [
 		GEM_MAPPER,
 		GEM_2_SAM,
 		MASON,
+		PERM,
 		SAMTOOLS,
 		STORM_COLOR,
 		STORM_NUCLEOTIDE,

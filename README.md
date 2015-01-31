@@ -58,6 +58,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | gem-mapper       | ```smbl.prog.GEM_MAPPER```          | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-2-sam        | ```smbl.prog.GEM_2_SAM```           | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | mason            | ```smbl.prog.MASON```               | http://github.com/seqan/seqan |
+| perm             | ```smbl.prog.PERM```                | http://code.google.com/p/perm/ |
 | samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
 | storm-color      | ```smbl.prog.STORM_COLOR```         | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
 | storm-nucleotide | ```smbl.prog.STORM_NUCLEOTIDE```    | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
