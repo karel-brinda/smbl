@@ -381,7 +381,7 @@ rule prog_mrfast:
 				make
 				cp mrfast {output[0]}
 
-				#rm -fR {params.src}
+				rm -fR {params.src}
 			"""
 		)
 
@@ -404,7 +404,7 @@ rule prog_drfast:
 				make
 				cp drfast {output[0]}
 
-				#rm -fR {params.src}
+				rm -fR {params.src}
 			"""
 		)
 
@@ -427,7 +427,39 @@ rule prog_sirfast:
 				make
 				cp sirfast {output[0]}
 
-				#rm -fR {params.src}
+				rm -fR {params.src}
+			"""
+		)
+
+rule prog_bowtie2:
+	message:
+		"Compiling Bowtie2"
+	output:
+		smbl.prog.BOWTIE2,
+		smbl.prog.BOWTIE2_ALIGN_L,
+		smbl.prog.BOWTIE2_ALIGN_S,
+		smbl.prog.BOWTIE2_BUILD,
+		smbl.prog.BOWTIE2_BUILD_L,
+		smbl.prog.BOWTIE2_BUILD_S,
+		smbl.prog.BOWTIE2_INSPECT,
+		smbl.prog.BOWTIE2_INSPECT_L,
+		smbl.prog.BOWTIE2_INSPECT_S
+	params:
+		src=os.path.join(smbl.src_dir,"bowtie"),
+		bindir=os.path.dirname(smbl.prog.BOWTIE2)
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				git clone --depth 1 http://github.com/BenLangmead/bowtie2
+				cd bowtie2
+				make
+				cp bowtie2* {params.bindir}
+
+				rm -fR {params.src}
 			"""
 		)
 

@@ -50,6 +50,9 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bcftools         | ```smbl.prog.BCFTOOLS```            | http://github.com/samtools/bcftools |
 | bfast            | ```smbl.prog.BFAST```               | http://github.com/nh13/bfast |
 | bgzip            | ```smbl.prog.BGZIP```               | http://github.com/samtools/htslib
+| bowtie2          | ```smbl.prog.BOWTIE2```             | http://github.com/BenLangmead/bowtie2 |
+| bowtie2-build    | ```smbl.prog.BOWTIE2_BUILD```       | http://github.com/BenLangmead/bowtie2 |
+| bowtie2-inspect  | ```smbl.prog.BOWTIE2_INSPECT```     | http://github.com/BenLangmead/bowtie2 |
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
 | dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |

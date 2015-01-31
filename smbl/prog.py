@@ -7,6 +7,15 @@ ART_SOLID          = os.path.join(smbl.bin_dir,"art_solid")
 BCFTOOLS           = os.path.join(smbl.bin_dir,"bcftools")
 BFAST              = os.path.join(smbl.bin_dir,"bfast")
 BGZIP              = os.path.join(smbl.bin_dir,"bgzip")
+BOWTIE2            = os.path.join(smbl.bin_dir,"bowtie2")
+BOWTIE2_ALIGN_L    = os.path.join(smbl.bin_dir,"bowtie2-align-l")
+BOWTIE2_ALIGN_S    = os.path.join(smbl.bin_dir,"bowtie2-align-s")
+BOWTIE2_BUILD      = os.path.join(smbl.bin_dir,"bowtie2-build")
+BOWTIE2_BUILD_L    = os.path.join(smbl.bin_dir,"bowtie2-build-l")
+BOWTIE2_BUILD_S    = os.path.join(smbl.bin_dir,"bowtie2-build-s")
+BOWTIE2_INSPECT    = os.path.join(smbl.bin_dir,"bowtie2-inspect")
+BOWTIE2_INSPECT_L  = os.path.join(smbl.bin_dir,"bowtie2-inspect-l")
+BOWTIE2_INSPECT_S  = os.path.join(smbl.bin_dir,"bowtie2-inspect-s")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
 DRFAST             = os.path.join(smbl.bin_dir,"drfast")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
@@ -35,6 +44,17 @@ ALL = [
 		BCFTOOLS,
 		BFAST,
 		BGZIP,
+
+		BOWTIE2,
+		BOWTIE2_ALIGN_L,
+		BOWTIE2_ALIGN_S,
+		BOWTIE2_BUILD,
+		BOWTIE2_BUILD_L,
+		BOWTIE2_BUILD_S,
+		BOWTIE2_INSPECT,
+		BOWTIE2_INSPECT_L,
+		BOWTIE2_INSPECT_S,
+
 		BWA,
 		DWGSIM,
 		DWGSIM_EVAL,
