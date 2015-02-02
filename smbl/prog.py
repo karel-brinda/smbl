@@ -24,6 +24,8 @@ FREEC              = os.path.join(smbl.bin_dir,"freec")
 GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
 GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
+LASTAL             = os.path.join(smbl.bin_dir,"lastal")
+LASTDB             = os.path.join(smbl.bin_dir,"lastdb")
 MASON              = os.path.join(smbl.bin_dir,"mason")
 MRFAST             = os.path.join(smbl.bin_dir,"mrfast")
 MRSFAST            = os.path.join(smbl.bin_dir,"mrsfast")
@@ -62,6 +64,8 @@ ALL = [
 		GEM_INDEXER,
 		GEM_MAPPER,
 		GEM_2_SAM,
+		LASTAL,
+		LASTDB,
 		MASON,
 		PERM,
 		SAMTOOLS,

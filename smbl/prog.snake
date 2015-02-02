@@ -463,6 +463,33 @@ rule prog_bowtie2:
 			"""
 		)
 
+rule prog_last:
+	message:
+		"Compiling LAST"
+	output:
+		smbl.prog.LASTAL,
+		smbl.prog.LASTDB
+	params:
+		src=os.path.join(smbl.src_dir,"last"),
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				curl -o last.zip http://last.cbrc.jp/last-541.zip
+				unzip last.zip
+				cd last-541
+				make
+				cd src
+				cp lastal {output[0]}
+				cp lastdb {output[1]}
+
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_twobittofa:
 	message:
 		"Downloading twoBitToFa"
