@@ -24,6 +24,7 @@ FREEC              = os.path.join(smbl.bin_dir,"freec")
 GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
 GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
+GNUPLOT5           = os.path.join(smbl.bin_dir,"gnuplot5")
 LASTAL             = os.path.join(smbl.bin_dir,"lastal")
 LASTDB             = os.path.join(smbl.bin_dir,"lastdb")
 MASON              = os.path.join(smbl.bin_dir,"mason")
@@ -64,6 +65,7 @@ ALL = [
 		GEM_INDEXER,
 		GEM_MAPPER,
 		GEM_2_SAM,
+		GNUPLOT5,
 		LASTAL,
 		LASTDB,
 		MASON,

@@ -10,7 +10,7 @@ setup(
 	packages = ['smbl'], # this must be the same as the name above
 	package_dir = {"smbl" : "smbl"},
 	package_data = {"smbl" : ["*.snake"] },
-	version = '0.0.6',
+	version = '0.0.7',
 	description = 'SnakeMake Bioinformatics Library',
 	long_description = """\
 SnakeMake Bioinformatics Library
