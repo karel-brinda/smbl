@@ -15,9 +15,9 @@ include = os.path.join( os.path.dirname(__file__), "include_all.snake")
 
 
 
-print("directory for programs: ",bin_dir)
-print("directory for fasta files: ",fa_dir)
-print("directory for source codes: ",src_dir)
+print("directory for programs: ",bin_dir, file=sys.stderr)
+print("directory for fasta files: ",fa_dir, file=sys.stderr)
+print("directory for source codes: ",src_dir, file=sys.stderr)
 
 snakemake.shell("mkdir -p {} {} {}".format(bin_dir,fa_dir,src_dir))
 

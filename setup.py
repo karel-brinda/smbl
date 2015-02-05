@@ -10,14 +10,15 @@ setup(
 	packages = ['smbl'], # this must be the same as the name above
 	package_dir = {"smbl" : "smbl"},
 	package_data = {"smbl" : ["*.snake"] },
-	version = '0.0.7',
+	version = '0.0.8',
 	description = 'SnakeMake Bioinformatics Library',
 	long_description = """\
 SnakeMake Bioinformatics Library
 --------------------------------
 
 A library for SnakeMake pipelines which makes possible to install various bioinformatics
-tools and download data (e.g., in FASTA format).
+tools and download data (e.g., in FASTA format). See http://github.com/karel-brinda/smbl
+for details.
 """,
 	install_requires=[
 		'snakemake',
@@ -25,7 +26,7 @@ tools and download data (e.g., in FASTA format).
 	zip_safe=False,
 	author = 'Karel Břinda',
 	author_email = 'karel.brinda@gmail.com',
-	url = 'https://github.com/karel-brinda/smbl',
+	url = 'http://github.com/karel-brinda/smbl',
 	license = "MIT",
 	#download_url = 'https://github.com/karel-brinda/smbl/tarball/0.0.1',
 	keywords = ['Snakemake', 'bioinformatics'],

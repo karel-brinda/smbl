@@ -490,6 +490,32 @@ rule prog_last:
 			"""
 		)
 
+rule prog_gnuplot4:
+	message:
+		"Compiling GNUPLOT4"
+	output:
+		smbl.prog.GNUPLOT4
+	params:
+		src=os.path.join(smbl.src_dir,"gnuplot"),
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				curl -o gnuplot.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.6.6/gnuplot-4.6.6.tar.gz/download -L
+				tar xf gnuplot.tar.gz
+				cd gnuplot-4.6.6
+				./configure
+				make
+				cd src
+				cp gnuplot {output[0]}
+
+				rm -fR {params.src}
+			"""
+		)
+
 rule prog_gnuplot5:
 	message:
 		"Compiling GNUPLOT5"
@@ -504,8 +530,8 @@ rule prog_gnuplot5:
 				mkdir -p {params.src}
 				cd {params.src}
 
-				curl -o gnuplot-5.0.0.tar.gz http://sourceforge.net/projects/gnuplot/files/latest/download?source=files -L
-				tar xf gnuplot-5.0.0.tar.gz
+				curl -o gnuplot.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/5.0.0/gnuplot-5.0.0.tar.gz/download -L
+				tar xf gnuplot.tar.gz
 				cd gnuplot-5.0.0
 				./configure
 				make

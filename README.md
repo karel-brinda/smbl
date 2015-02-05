@@ -61,7 +61,8 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | gem-indexer      | ```smbl.prog.GEM_INDEXER```         | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-mapper       | ```smbl.prog.GEM_MAPPER```          | http://algorithms.cnag.cat/wiki/The_GEM_library |
 | gem-2-sam        | ```smbl.prog.GEM_2_SAM```           | http://algorithms.cnag.cat/wiki/The_GEM_library |
-| gnuplot          | ```smbl.prog.GNUPLOT5```            | http://www.gnuplot.info/ |
+| gnuplot4         | ```smbl.prog.GNUPLOT4```            | http://www.gnuplot.info/ |
+| gnuplot5         | ```smbl.prog.GNUPLOT5```            | http://www.gnuplot.info/ |
 | lastal           | ```smbl.prog.LASTAL```              | http://last.cbrc.jp/ |
 | lastdb           | ```smbl.prog.LASTDB```              | http://last.cbrc.jp/ |
 | mason            | ```smbl.prog.MASON```               | http://github.com/seqan/seqan |
