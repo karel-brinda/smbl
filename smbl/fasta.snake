@@ -47,3 +47,12 @@ rule index_fasta:
 		"{filename}.fasta"
 	shell:
 		"{input[0]} faidx {input[1]}"		
+
+rule index_bam:
+	output:
+		"{filename}.bam.bai"
+	input:
+		smbl.prog.SAMTOOLS,
+		"{filename}.bam"
+	shell:
+		"{input[0]} index {input[1]}"		

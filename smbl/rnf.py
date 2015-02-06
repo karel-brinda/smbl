@@ -52,7 +52,7 @@ class Read:
 				) for x in self.blocks
 			]
 
-		read_name="___".join(
+		read_name="__".join(
 			[
 				prefix,
 				format(self.read_id,'x').zfill(id_str_size),
@@ -76,11 +76,12 @@ class Read:
 		self.blocks=[]
 		blocks_str=groups[2:-1]
 		for b_str in blocks_str:
-			if b_str[0]==",":
-				b_str=b_str[1:]
-			b=Block()
-			b.destringize(b_str)
-			self.blocks.append(b)
+			if b_str is not None:
+				if b_str[0]==",":
+					b_str=b_str[1:]
+				b=Block()
+				b.destringize(b_str)
+				self.blocks.append(b)
 		self.suffix=groups[-1]
 
 block_destr_pattern = re.compile(r'^\(([0-9]+),([0-9]+),([FRN]),([0-9]+),([0-9]+)\)$')
@@ -145,8 +146,11 @@ if __name__ == "__main__":
 
 	read=Read()
 
-	read_name_test="__000324a__(2,3,R,34,3643),(4,3,F,1,56)__"
-	#read_name_test="__000324a__(2,3,R,34,3643)__"
-	read.destringize(read_name_test)
-	print("Original read string", read_name_test)
-	print("Read after destringization", read.stringize ())
+	for read_name_test in [
+				"__000324a__(2,3,R,34,3643),(4,3,F,1,56)__",
+				"__00000000__(01,1,F,0390501,0000000)__"
+			]:
+		read.destringize(read_name_test)
+		print()
+		print("Original read string", read_name_test)
+		print("Read after destringization", read.stringize ())
