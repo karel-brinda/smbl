@@ -17,7 +17,7 @@ class RnFormatter:
 		self.chr_str_size=chr_str_size
 		self.pos_str_size=pos_str_size
 	
-	def process_read(self,read_id,read,prefix="",suffix=""):
+	def process_read(self,read):
 		return read.stringize(
 					id_str_size=self.id_str_size,
 					source_str_size=self.source_str_size,
@@ -68,6 +68,8 @@ class Read:
 		#(prefix,read_id,blocks_t,suffix)=(text).split("__")
 		#blocks=blocks_t.split("),(")
 		m=read_destr_pattern.match(text)
+		if not m:
+			raise ValueError("'{}' is not a valid read name with respect to the RNF specification".format(text))
 		groups=m.groups()
 		#todo: check number of groups
 		self.prefix=groups[0]
@@ -114,7 +116,7 @@ class Block:
 			)
 
 	def destringize(self,string):
-		print("block destr", string)
+		#print("block destr", string)
 		m=block_destr_pattern.match(string)
 		self.source=int(m.group(1))
 		self.chr=int(m.group(2))
