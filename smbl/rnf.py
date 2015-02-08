@@ -44,12 +44,22 @@ class Read:
 		prefix = ""
 		suffix = ""
 
+		sorted_blocks = sorted(self.blocks,
+								key=lambda x: (
+									x.source*(10**23) + 
+									x.chr*(10**21) +
+									x.left*(10**11) +
+									x.right*(10**1) + 
+									int(x.direction=="F")
+								)
+							)
+
 		blocks_strings=[
 				x.stringize(
 					source_str_size=source_str_size,
 					chr_str_size=chr_str_size,
 					pos_str_size=pos_str_size
-				) for x in self.blocks
+				) for x in sorted_blocks
 			]
 
 		read_name="__".join(
@@ -100,6 +110,8 @@ class Block:
 		self.direction=direction
 		self.left=int(left)
 		self.right=int(right)
+
+		assert self.right == 0 or self.right >= self.left, "Left coordinate cannot be higher than right coordinate"
 
 	def stringize(self,
 				source_str_size=1,
