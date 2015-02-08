@@ -6,12 +6,28 @@ rule __test_all_fasta__:
 	input:
 		smbl.fasta.ALL
 
-rule example_fasta:
+rule example_fasta_1:
 	output:
-		smbl.fasta.EXAMPLE
+		smbl.fasta.EXAMPLE_1
 	shell:
 		"""
-		curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna
+			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna
+		"""
+
+rule example_fasta_2:
+	output:
+		smbl.fasta.EXAMPLE_2
+	shell:
+		"""
+			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Chlamydia_trachomatis_RC_L2_s_3_uid213390/NC_021897.fna
+		"""
+
+rule example_fasta_3:
+	output:
+		smbl.fasta.EXAMPLE_3
+	shell:
+		"""
+			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna
 		"""
 
 rule human_hg38:
