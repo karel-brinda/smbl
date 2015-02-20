@@ -1,6 +1,7 @@
 import os
 import sys
 import snakemake
+import platform
 
 bin_dir = os.path.join(os.path.expanduser("~"),".smbl","bin")
 fa_dir = os.path.join(os.path.expanduser("~"),".smbl","fa")

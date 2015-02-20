@@ -17,6 +17,8 @@ BOWTIE2_INSPECT    = os.path.join(smbl.bin_dir,"bowtie2-inspect")
 BOWTIE2_INSPECT_L  = os.path.join(smbl.bin_dir,"bowtie2-inspect-l")
 BOWTIE2_INSPECT_S  = os.path.join(smbl.bin_dir,"bowtie2-inspect-s")
 BWA                = os.path.join(smbl.bin_dir,"bwa")
+CURESIM            = os.path.join(smbl.bin_dir,"curesim.jar")
+CURESIM_EVAL       = os.path.join(smbl.bin_dir,"curesim_eval.jar")
 DRFAST             = os.path.join(smbl.bin_dir,"drfast")
 DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
 DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
@@ -60,6 +62,8 @@ ALL = [
 		BOWTIE2_INSPECT_S,
 
 		BWA,
+		CURESIM,
+		CURESIM_EVAL,
 		DWGSIM,
 		DWGSIM_EVAL,
 		FREEC,

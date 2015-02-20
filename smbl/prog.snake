@@ -29,11 +29,11 @@ rule prog_art:
 		src=smbl.src_dir,
 		dir="art_bin_VanillaIceCream"
 	run:
-		if smbl.is_linux() and smbl.is_os_64bit:
+		if smbl.is_linux() and smbl.is_os_64bit():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux64tgz.tgz"
 		elif smbl.is_linux():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux32tgz.tgz"
-		elif smbl.is_mac() and smbl.is_os_64bit:
+		elif smbl.is_mac() and smbl.is_os_64bit():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos64tgz.tgz"
 		elif smbl.is_mac():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz"
@@ -236,8 +236,9 @@ rule prog_mason:
 				git clone --depth 1 http://github.com/seqan/seqan/
 				cd seqan
 				cmake .
-				make mason
-				cp {params.src}/seqan/bin/mason {output[0]}
+				cd apps/mason2
+				make
+				cp {params.src}/seqan/bin/mason_simulator {output[0]}
 				rm -fR {params.src}
 			"""
 		)
@@ -496,7 +497,7 @@ rule prog_gnuplot4:
 	output:
 		smbl.prog.GNUPLOT4
 	params:
-		src=os.path.join(smbl.src_dir,"gnuplot"),
+		src=os.path.join(smbl.src_dir,"gnuplot4"),
 	run:
 		shell(
 			"""
@@ -522,7 +523,7 @@ rule prog_gnuplot5:
 	output:
 		smbl.prog.GNUPLOT5
 	params:
-		src=os.path.join(smbl.src_dir,"gnuplot"),
+		src=os.path.join(smbl.src_dir,"gnuplot5"),
 	run:
 		shell(
 			"""
@@ -541,6 +542,57 @@ rule prog_gnuplot5:
 				rm -fR {params.src}
 			"""
 		)
+
+
+rule curesim:
+	message:
+		"Downloading CuReSim"
+	output:
+		smbl.prog.CURESIM,
+	params:
+		src=os.path.join(smbl.src_dir,"curesim"),
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				curl -o curesim.zip http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSim1.1.zip -L
+				unzip curesim.zip
+				cd CuReSim1.1
+				cp CuReSim.jar {output[0]}
+				chmod +x {output[0]}
+
+				rm -fR {params.src}
+			"""
+		)
+
+
+rule curesim_eval:
+	message:
+		"Downloading CuReSim_eval"
+	output:
+		smbl.prog.CURESIM_EVAL,
+	params:
+		src=os.path.join(smbl.src_dir,"curesim_eval"),
+	run:
+		shell(
+			"""
+				rm -fR {params.src}
+				mkdir -p {params.src}
+				cd {params.src}
+
+				curl -o curesim_eval.zip http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSimEval1.1.zip -L
+				unzip curesim_eval.zip
+				cd CuReSimEval1.1
+				cp CuReSimEval.jar {output[0]}
+				chmod +x {output[0]}
+
+				rm -fR {params.src}
+			"""
+		)
+
 
 rule prog_twobittofa:
 	message:
