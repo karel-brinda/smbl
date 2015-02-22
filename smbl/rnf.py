@@ -30,10 +30,14 @@ read_destr_pattern = re.compile(r'(.*)__([0-9abcdef]+)__(\([0-9abcdefFRN,]*\))(,
 class Read:
 	def __init__(self,
 					blocks=[],
-					read_id=0
+					read_id=0,
+					prefix="",
+					suffix="",
 				):
 		self.read_id=read_id
 		self.blocks=blocks
+		self.prefix=prefix
+		self.suffix=suffix
 
 	def stringize(self,
 					id_str_size=1,
@@ -41,14 +45,12 @@ class Read:
 					chr_str_size=1,
 					pos_str_size=1
 				):
-		prefix = ""
-		suffix = ""
 
 		sorted_blocks = sorted(self.blocks,
 								key=lambda x: (
 									x.source*(10**23) + 
 									x.chr*(10**21) +
-									x.left*(10**11) +
+									(x.left+(int(x.left==0)*x.right-1))*(10**11) +
 									x.right*(10**1) + 
 									int(x.direction=="F")
 								)
@@ -64,10 +66,10 @@ class Read:
 
 		read_name="__".join(
 			[
-				prefix,
+				self.prefix,
 				format(self.read_id,'x').zfill(id_str_size),
 				",".join(blocks_strings),
-				suffix
+				self.suffix,
 			]
 		)
 
