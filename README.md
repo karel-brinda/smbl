@@ -54,8 +54,10 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | bowtie2-build    | ```smbl.prog.BOWTIE2_BUILD```       | http://github.com/BenLangmead/bowtie2 |
 | bowtie2-inspect  | ```smbl.prog.BOWTIE2_INSPECT```     | http://github.com/BenLangmead/bowtie2 |
 | bwa              | ```smbl.prog.BWA```                 | http://github.com/lh3/bwa |
+| curesim.jar      | ```smbl.prog.CURESIM```             | http://www.pegase-biosciences.com/tools/curesim/ |
+| curesim_eval.jar | ```smbl.prog.CURESIM_EVAL```        | http://www.pegase-biosciences.com/tools/curesim/ |
 | dwgsim           | ```smbl.prog.DWGSIM```              | http://github.com/nh13/dwgsim |
-| dwgsim\_eval     | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
+| dwgsim\_eval.pl  | ```smbl.prog.DWGSIM_EVAL```         | http://github.com/nh13/dwgsim |
 | drfast           | ```smbl.prog.DRFAST```              | http://github.com/BilkentCompGen/drfast |
 | freec            | ```smbl.prog.FREEC```               | http://bioinfo-out.curie.fr/projects/freec/ |
 | gem-indexer      | ```smbl.prog.GEM_INDEXER```         | http://algorithms.cnag.cat/wiki/The_GEM_library |
@@ -69,6 +71,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | mrfast           | ```smbl.prog.MRFAST```              | http://github.com/BilkentCompGen/mrfast |
 | mrsfast          | ```smbl.prog.MRSFAST```             | http://mrsfast.sourceforge.net/ |
 | perm             | ```smbl.prog.PERM```                | http://code.google.com/p/perm/ |
+| sambamba         | ```smbl.prog.SAMBAMBA```            | http://lomereiter.github.io/sambamba/ |
 | samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
 | sirfast          | ```smbl.prog.SIRFAST```             | http://github.com/BilkentCompGen/sirfast |
 | storm-color      | ```smbl.prog.STORM_COLOR```         | http://bioinfo.lifl.fr/yass/iedera_solid/storm/ |
@@ -83,7 +86,9 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 
 | FASTA file                   | Variable with its filename   |
 |------------------------------|------------------------------|
-| An example small FASTA file  | ```smbl.fasta.EXAMPLE```     |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_1```     |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_2```     |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_3```     |
 | Human genome HG38 (GRCh38)   | ```smbl.fasta.HG38```, ```smbl.fasta.HUMAN_GRCH38 ``` |
 
 ## Example

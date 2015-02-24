@@ -10,7 +10,7 @@ setup(
 	packages = ['smbl'], # this must be the same as the name above
 	package_dir = {"smbl" : "smbl"},
 	package_data = {"smbl" : ["*.snake"] },
-	version = '0.0.11',
+	version = '0.0.12',
 	description = 'SnakeMake Bioinformatics Library',
 	long_description = """\
 SnakeMake Bioinformatics Library
@@ -33,7 +33,7 @@ Copyright (c) 2015 Karel Břinda <karel.brinda@gmail.com> (see LICENSE)
 	#download_url = 'https://github.com/karel-brinda/smbl/tarball/0.0.1',
 	keywords = ['Snakemake', 'bioinformatics'],
 	classifiers = [
-		"Development Status :: 3 - Alpha",
+		"Development Status :: 4 - Beta",
 		"Environment :: Console",
 		"Intended Audience :: Science/Research",
 		"License :: OSI Approved :: MIT License",

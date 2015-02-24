@@ -34,6 +34,7 @@ MASON              = os.path.join(smbl.bin_dir,"mason")
 MRFAST             = os.path.join(smbl.bin_dir,"mrfast")
 MRSFAST            = os.path.join(smbl.bin_dir,"mrsfast")
 PERM               = os.path.join(smbl.bin_dir,"perm")
+SAMBAMBA           = os.path.join(smbl.bin_dir,"sambamba")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 SIRFAST            = os.path.join(smbl.bin_dir,"sirfast")
 STORM_COLOR        = os.path.join(smbl.bin_dir,"storm-color")
@@ -76,6 +77,7 @@ ALL = [
 		LASTDB,
 		MASON,
 		PERM,
+		SAMBAMBA,
 		SAMTOOLS,
 		STORM_COLOR,
 		STORM_NUCLEOTIDE,

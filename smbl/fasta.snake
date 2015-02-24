@@ -9,25 +9,31 @@ rule __test_all_fasta__:
 rule example_fasta_1:
 	output:
 		smbl.fasta.EXAMPLE_1
+	message:
+		"Installing an example genome nb. 1."
 	shell:
 		"""
-			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna
+			curl -L --insecure -o "{output[0]}" "ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna"
 		"""
 
 rule example_fasta_2:
 	output:
 		smbl.fasta.EXAMPLE_2
+	message:
+		"Installing an example genome nb. 2."
 	shell:
 		"""
-			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Chlamydia_trachomatis_RC_L2_s_3_uid213390/NC_021897.fna
+			curl -L --insecure -o "{output[0]}" "ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Chlamydia_trachomatis_RC_L2_s_3_uid213390/NC_021897.fna"
 		"""
 
 rule example_fasta_3:
 	output:
 		smbl.fasta.EXAMPLE_3
+	message:
+		"Installing an example genome nb. 3."
 	shell:
 		"""
-			curl --insecure -o {output[0]} ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna
+			curl -L --insecure -o "{output[0]}" "ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna"
 		"""
 
 rule human_hg38:
@@ -35,15 +41,23 @@ rule human_hg38:
 		smbl.prog.TWOBITTOFA
 	output:
 		smbl.fasta.HUMAN_HG38
+	message:
+		"Installing the Human genome (HG38)."
 	params:
 		src=smbl.src_dir,
 	shell:
 		"""
-		rm -fR {params.src}/hg38
-		mkdir -p {params.src}/hg38
-		curl --insecure -o {params.src}/hg38/hg38.2bit http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit
-		{input[0]} {params.src}/hg38/hg38.2bit {output[0]}
-		rm -fR {params.src}/hg38
+			(
+				rm -fR "{params.src}/hg38"
+				mkdir -p "{params.src}/hg38"
+			) > /dev/null
+
+			curl -L --insecure -o "{params.src}/hg38/hg38.2bit" "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit"
+
+			(
+				"{input[0]}" "{params.src}/hg38/hg38.2bit" "{output[0]}"
+				rm -fR "{params.src}/hg38"
+			) > /dev/null
 		"""
 
 rule index_fa:
@@ -52,8 +66,14 @@ rule index_fa:
 	input:
 		smbl.prog.SAMTOOLS,
 		"{filename}.fa"
+	message:
+		"Creating index for a FASTA file ({input[1]})."
 	shell:
-		"{input[0]} faidx {input[1]}"		
+		"""
+			(
+				"{input[0]}" faidx "{input[1]}"
+			) > /dev/null
+		"""
 
 rule index_fasta:
 	output:
@@ -61,8 +81,14 @@ rule index_fasta:
 	input:
 		smbl.prog.SAMTOOLS,
 		"{filename}.fasta"
+	message:
+		"Creating index for a FASTA file ({input[1]})."
 	shell:
-		"{input[0]} faidx {input[1]}"		
+		"""
+			(
+				"{input[0]}" faidx "{input[1]}"
+			) > /dev/null
+		"""
 
 rule index_bam:
 	output:
@@ -70,5 +96,11 @@ rule index_bam:
 	input:
 		smbl.prog.SAMTOOLS,
 		"{filename}.bam"
+	message:
+		"Creating index for a BAM file ({input[1]})."
 	shell:
-		"{input[0]} index {input[1]}"		
+		"""
+			(
+				"{input[0]}" index "{input[1]}"
+			) > /dev/null
+		"""

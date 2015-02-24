@@ -1,5 +1,8 @@
+import smbl
 from snakemake.utils import min_version
+
 min_version("3.2")
+shell.prefix("set -e -o pipefail; ")
 
 include: "fasta.snake"
 
@@ -10,3 +13,18 @@ rule __test_include_all__:
 			smbl.prog.ALL
 		]
 
+rule smbl_clean:
+	shell:
+		'rm -fR "{}" "{}" "{}"'.format(smbl.bin_dir,smbl.fa_dir,smbl.src_dir)
+
+rule smbl_clean_fa:
+	shell:
+		'rm -fR "{}"'.format(smbl.fa_dir)
+
+rule smbl_clean_prog:
+	shell:
+		'rm -fR "{}"'.format(smbl.bin_dir)
+
+rule smbl_clean_src:
+	shell:
+		'rm -fR "{}"'.format(smbl.src_dir)

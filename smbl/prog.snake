@@ -3,6 +3,9 @@ import os.path
 import shutil
 import platform
 
+
+_SUFFIX_INSTALLATION="Please, be patient, it can last some time."
+
 # SamTools cannot be compiled on OpenSuse because it normally requires 
 # the curses library instead of ncurses
 def correct_samtools_make(makefile_fn):
@@ -20,13 +23,13 @@ rule __test_all_progs__:
 
 rule prog_art:
 	message:
-		"Compiling ART"
+		"Installing ART (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.ART_ILLUMINA,
 		smbl.prog.ART_SOLID,
 		smbl.prog.ART_454
 	params:
-		src=smbl.src_dir,
+		src=os.path.join(smbl.src_dir,"art"),
 		dir="art_bin_VanillaIceCream"
 	run:
 		if smbl.is_linux() and smbl.is_os_64bit():
@@ -41,234 +44,309 @@ rule prog_art:
 			raise RunTimeError("Unsupported OS")
 
 		shell(
-		"""
-			rm -fR {params.src}/art
-			mkdir -p {params.src}/art
-			cd {params.src}/art
-			curl -o art.tgz """+ url + """
-			tar xvf art.tgz
-			cp {params.src}/art/{params.dir}/art_illumina {output[0]}
-			cp {params.src}/art/{params.dir}/art_SOLiD {output[1]}
-			cp {params.src}/art/{params.dir}/art_454 {output[2]}
-			#rm -fR {params.src}/art
-		"""
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/art.tgz" \""""+ url + """\"
+
+				(
+					cd "{params.src}"
+
+					tar xf art.tgz
+					cp "{params.src}/{params.dir}/art_illumina" "{output[0]}"
+					cp "{params.src}/{params.dir}/art_SOLiD" "{output[1]}"
+					cp "{params.src}/{params.dir}/art_454" "{output[2]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
+		)
+
+rule prog_sambamba:
+	message:
+		"Installing Sambamba (a tool for manipulation with SAM, BAM and CRAM files). "+_SUFFIX_INSTALLATION
+	output:
+		smbl.prog.SAMBAMBA,
+	params:
+		src=os.path.join(smbl.src_dir,"sambamba"),
+	run:
+		if smbl.is_linux():
+			url="http://github.com/lomereiter/sambamba/releases/download/v0.5.1/sambamba_v0.5.1_linux.tar.bz2"
+		elif smbl.is_mac():
+			url="http://github.com/lomereiter/sambamba/releases/download/v0.5.1/sambamba_v0.5.1_osx.tar.bz2"
+		else:
+			raise RunTimeError("Unsupported OS")
+
+		shell(
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/sambamba.tar.bz2" \""""+ url + """\"
+		
+				(
+					cd "{params.src}"
+					tar xf sambamba.tar.bz2
+					cp "{params.src}/sambamba_v0.5.1" "{output[0]}"
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
 		)
 
 rule prog_bcftools:
 	message:
-		"Compiling BcfTools"
+		"Installing BcfTools (a package for manipulation with BCF files). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.BCFTOOLS
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"bcftools")
 	shell:
 		"""
-			rm -fR {params.src}/bcftools
-			mkdir -p {params.src}/bcftools
-			cd {params.src}/bcftools
-			git clone --depth=1 http://github.com/samtools/bcftools
-			git clone --depth=1 http://github.com/samtools/htslib
-			cd bcftools
-			make
-			cp {params.src}/bcftools/bcftools/bcftools {output[0]}
-			rm -fR {params.src}/bcftools
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
+				git clone --depth=1 http://github.com/samtools/bcftools
+				git clone --depth=1 http://github.com/samtools/htslib
+				cd bcftools
+				make -j
+				cp "{params.src}/bcftools/bcftools" "{output[0]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
 		"""
 
 rule prog_dwgsim:
 	message:
-		"Compiling DwgSim"
+		"Installing DwgSim (a read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.DWGSIM,
 		smbl.prog.DWGSIM_EVAL
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"dwgsim")
 	run:
 		shell(
 			"""
-				rm -fR {params.src}/dwgsim
-				mkdir -p {params.src}/dwgsim
-				cd {params.src}/dwgsim
-				git clone --depth=1 http://github.com/nh13/dwgsim
-				cd dwgsim
-				git submodule init
-				git submodule update
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+					cd "{params.src}"
+
+					git clone --depth=1 --recursive http://github.com/nh13/dwgsim
+				) > /dev/null
 			"""
 		)
-		correct_samtools_make(os.path.join(smbl.src_dir,"dwgsim","dwgsim","samtools","Makefile"))
+		correct_samtools_make(os.path.join(params.src,"dwgsim","samtools","Makefile"))
 		shell(
 			"""
-				cd {params.src}/dwgsim/dwgsim
-				make
-				cp {params.src}/dwgsim/dwgsim/dwgsim {output[0]}
-				cp {params.src}/dwgsim/dwgsim/dwgsim_eval {output[1]}
-				rm -fR {params.src}/dwgsim
-			"""
+				(
+					cd "{params.src}/dwgsim"
+					make -j
+					cp "{params.src}/dwgsim/dwgsim" "{output[0]}"
+					cp "{params.src}/dwgsim/dwgsim_eval" "{output[1]}"
+	
+					rm -fR "{params.src}"
+				) > /dev/null
+		"""
 		)
 
 rule prog_wgsim:
 	message:
-		"Compiling WgSim"
+		"Compiling WgSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.WGSIM,
 		smbl.prog.WGSIM_EVAL
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"wgsim")
 	run:
 		shell(
 			"""
-				rm -fR {params.src}/wgsim
-				mkdir -p {params.src}/wgsim
-				cd {params.src}/wgsim
-				git clone --depth=1 http://github.com/lh3/wgsim
-				cd wgsim
-				gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
-				cp {params.src}/wgsim/wgsim/wgsim {output[0]}
-				cp {params.src}/wgsim/wgsim/wgsim_eval.pl {output[1]}
-				rm -fR {params.src}/wgsim
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+					cd "{params.src}"
+
+					git clone --depth=1 http://github.com/lh3/wgsim
+					cd wgsim
+					gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
+					cp "{params.src}/wgsim/wgsim" "{output[0]}"
+					cp "{params.src}/wgsim/wgsim_eval.pl" "{output[1]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+
 			"""
 		)
 
 # BWA
 rule prog_bwa:
 	message:
-		"Compiling BWA "
+		"Compiling BWA (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.BWA
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"bwa")
 	shell:
 		"""
-			rm -fR {params.src}/bwa
-			mkdir -p {params.src}/bwa
-			cd {params.src}/bwa
-			git clone --depth=1 http://github.com/lh3/bwa
-			cd bwa
-			make
-			cp {params.src}/bwa/bwa/bwa {output[0]}
-			rm -fR {params.src}/bwa
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
+				git clone --depth=1 http://github.com/lh3/bwa
+				cd bwa
+				make -j
+				cp "{params.src}/bwa/bwa" "{output[0]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
+
 		"""
 
 rule prog_htslib:
 	message:
-		"Compiling HtsLib"
+		"Installing Tabix and BgZip (tools for manipulation with special formats). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.TABIX,
 		smbl.prog.BGZIP
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"htslib")
 	shell:
 		"""
-			rm -fR {params.src}/htslib
-			mkdir -p {params.src}/htslib
-			cd {params.src}/htslib
-			git clone --depth=1 --branch=develop http://github.com/samtools/bcftools
-			git clone --depth=1 http://github.com/samtools/htslib
-			cd htslib
-			make
-			cp {params.src}/htslib/htslib/tabix {output[0]}
-			cp {params.src}/htslib/htslib/bgzip {output[1]}
-			rm -fR {params.src}/htslib
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
+				git clone --depth=1 --branch=develop http://github.com/samtools/bcftools
+				git clone --depth=1 http://github.com/samtools/htslib
+				cd htslib
+				make -j
+				cp "{params.src}/htslib/tabix" "{output[0]}"
+				cp "{params.src}/htslib/bgzip" "{output[1]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
 		"""
 
 rule prog_samtools:
 	message:
-		"Compiling SamTools"
+		"Installing SamTools (a package for manipulation with SAM, BAM and CRAM files). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.SAMTOOLS
 	params:
-		src=smbl.src_dir
+		src=os.path.join(smbl.src_dir,"samtools")
 	run:
 		shell(
 			"""
-				rm -fR {params.src}/samtools
-				mkdir -p {params.src}/samtools
-				cd {params.src}/samtools
-				git clone --depth=1 http://github.com/samtools/samtools
-				git clone --depth=1 http://github.com/samtools/htslib
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+					cd "{params.src}"
+
+					git clone --depth=1 http://github.com/samtools/samtools
+					git clone --depth=1 http://github.com/samtools/htslib
+				) > /dev/null
+
 			"""
 		)
-		correct_samtools_make(os.path.join(smbl.src_dir,"samtools","samtools","Makefile"))
+		correct_samtools_make(os.path.join(params.src,"samtools","Makefile"))
 		shell(
 			"""
-				cd {params.src}/samtools/samtools
-				make
-				cp {params.src}/samtools/samtools/samtools {output[0]}
-				rm -fR {params.src}/samtools
+				(
+					cd "{params.src}/samtools"
+					make -j
+					cp "{params.src}/samtools/samtools" "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
 			"""
 		)
 
 rule prog_storm:
 	message:
-		"Compiling SToRM"
+		"Compiling SToRM (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.STORM_NUCLEOTIDE,
 		smbl.prog.STORM_COLOR
 	params:
 		src=os.path.join(smbl.src_dir,"storm")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
 				svn checkout svn://scm.gforge.inria.fr/svnroot/storm/trunk storm
 				cd storm
-				make
-				cp {params.src}/storm/storm-nucleotide {output[0]}
-				cp {params.src}/storm/storm-color {output[1]}
-				rm -fR {params.src}
-			"""
-		)
+				make -j
+				cp "{params.src}/storm/storm-nucleotide" "{output[0]}"
+				cp "{params.src}/storm/storm-color" "{output[1]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_mason:
 	message:
-		"Compiling Mason"
+		"Installing Mason (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.MASON
 	params:
 		src=os.path.join(smbl.src_dir,"mason")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
 				git clone --depth 1 http://github.com/seqan/seqan/
 				cd seqan
 				cmake .
 				cd apps/mason2
-				make
-				cp {params.src}/seqan/bin/mason_simulator {output[0]}
-				rm -fR {params.src}
-			"""
-		)
+				make -j
+				cp "{params.src}/seqan/bin/mason_simulator" "{output[0]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_bfast:
 	message:
-		"Compiling BFast"
+		"Installing BFast (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.BFAST
 	params:
 		src=os.path.join(smbl.src_dir,"bfast")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
-				git clone --depth 1 https://github.com/nh13/bfast
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
+
+				git clone --depth 1 http://github.com/nh13/bfast
 				cd bfast
 				sh autogen.sh
 				./configure
-				make
-				cp {params.src}/bfast/bfast/bfast {output[0]}
-				rm -fR {params.src}
-			"""
-		)
+				make -j
+				cp "{params.src}/bfast/bfast/bfast" "{output[0]}"
+
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_gem:
 	message:
-		"Installing GEM"
+		"Installing GEM (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.GEM_INDEXER,
 		smbl.prog.GEM_MAPPER,
@@ -281,22 +359,30 @@ rule prog_gem:
 
 		shell(
 			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
-				wget -O gem.tbz2 http://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2/download
-				tar xf gem.tbz2
-				cd GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin
-				cp gem-indexer {output[0]}
-				cp gem-mapper {output[1]}
-				cp gem-2-sam {output[2]}
-				rm -fR {params.src}
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/gem.tbz2" "http://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2/download"
+
+				(
+					cd "{params.src}"
+
+					tar xf gem.tbz2
+					cd GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin
+					cp gem-indexer "{output[0]}"
+					cp gem-mapper "{output[1]}"
+					cp gem-2-sam "{output[2]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
 			"""
 		)
 
 rule prog_freec:
 	message:
-		"Installing FREEC"
+		"Installing FREEC. "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.FREEC
 	params:
@@ -304,21 +390,29 @@ rule prog_freec:
 	run:
 		shell(
 			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
-				wget http://bioinfo-out.curie.fr/projects/freec/src/FREEC_Linux64.tar.gz
-				tar xf FREEC_Linux64.tar.gz
-				make clean
-				make
-				cp freec {output[0]}
-				rm -fR {params.src}
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/freec.tar.gz" "http://bioinfo-out.curie.fr/projects/freec/src/FREEC_Linux64.tar.gz"
+
+				(
+					cd "{params.src}"
+
+					tar xf freec.tar.gz
+					make -j clean
+					make -j
+					cp freec "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
 			"""
 		)
 
 rule prog_perm:
 	message:
-		"Compiling PerM"
+		"Compiling PerM (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.PERM
 	params:
@@ -326,115 +420,121 @@ rule prog_perm:
 	run:
 		shell(
 			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
 
-				wget https://perm.googlecode.com/files/PerM4Source.tar.gz
-				tar xf PerM4Source.tar.gz
-				cd Source
-				make
-				cp perm {output[0]}
+				curl -L --insecure -o "{params.src}/perm.tar.gz" "https://perm.googlecode.com/files/PerM4Source.tar.gz"
 
-				rm -fR {params.src}
+				(
+					cd "{params.src}"
+
+					tar xf perm.tar.gz
+					cd Source
+					make -j
+					cp perm "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
 			"""
 		)
 
 rule prog_mrsfast:
 	message:
-		"Compiling mrsFAST"
+		"Installing mrsFAST (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.MRSFAST
 	params:
 		src=os.path.join(smbl.src_dir,"mrsfast")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
 
 				git clone --depth 1 git://git.code.sf.net/p/mrsfast/code
 				cd code
 				make
-				cp mrsfast {output[0]}
+				cp mrsfast "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_mrfast:
 	message:
-		"Compiling mrFAST"
+		"Compiling mrFAST (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.MRFAST
 	params:
 		src=os.path.join(smbl.src_dir,"mrfast")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
 
 				git clone --depth 1 http://github.com/BilkentCompGen/mrfast
 				cd mrfast
-				make
-				cp mrfast {output[0]}
+				make -j
+				cp mrfast "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_drfast:
 	message:
-		"Compiling drFAST"
+		"Installing drFAST (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.DRFAST
 	params:
 		src=os.path.join(smbl.src_dir,"drfast")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
 
 				git clone --depth 1 http://github.com/BilkentCompGen/drfast
 				cd drfast
-				make
-				cp drfast {output[0]}
+				make -j
+				cp drfast "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_sirfast:
 	message:
-		"Compiling sirFAST"
+		"Installing sirFAST (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.SIRFAST
 	params:
 		src=os.path.join(smbl.src_dir,"sirfast")
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
 
 				git clone --depth 1 http://github.com/BilkentCompGen/sirfast
 				cd sirfast
-				make
-				cp sirfast {output[0]}
+				make -j
+				cp sirfast "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_bowtie2:
 	message:
-		"Compiling Bowtie2"
+		"Compiling Bowtie2 (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.BOWTIE2,
 		smbl.prog.BOWTIE2_ALIGN_L,
@@ -444,159 +544,179 @@ rule prog_bowtie2:
 		smbl.prog.BOWTIE2_BUILD_S,
 		smbl.prog.BOWTIE2_INSPECT,
 		smbl.prog.BOWTIE2_INSPECT_L,
-		smbl.prog.BOWTIE2_INSPECT_S
+		smbl.prog.BOWTIE2_INSPECT_S,
 	params:
 		src=os.path.join(smbl.src_dir,"bowtie"),
-		bindir=os.path.dirname(smbl.prog.BOWTIE2)
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+		bindir=os.path.dirname(smbl.prog.BOWTIE2),
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+				cd "{params.src}"
 
 				git clone --depth 1 http://github.com/BenLangmead/bowtie2
 				cd bowtie2
-				make
-				cp bowtie2* {params.bindir}
+				make -j
+				cp bowtie2* "{params.bindir}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
+		
 
 rule prog_last:
 	message:
-		"Compiling LAST"
+		"Installing LAST (an NGS read mapper). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.LASTAL,
 		smbl.prog.LASTDB
 	params:
 		src=os.path.join(smbl.src_dir,"last"),
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+			) > /dev/null
+	
+			curl -L --insecure -o "{params.src}/last.zip" http://last.cbrc.jp/last-541.zip
 
-				curl -o last.zip http://last.cbrc.jp/last-541.zip
+			(
+				cd "{params.src}"
+
 				unzip last.zip
 				cd last-541
-				make
+				make -j
 				cd src
-				cp lastal {output[0]}
-				cp lastdb {output[1]}
+				cp lastal "{output[0]}"
+				cp lastdb "{output[1]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_gnuplot4:
 	message:
-		"Compiling GNUPLOT4"
+		"Installing GNUPLOT4 (a program for creating graphical plots). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.GNUPLOT4
 	params:
 		src=os.path.join(smbl.src_dir,"gnuplot4"),
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+			) > /dev/null
 
-				curl -o gnuplot.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.6.6/gnuplot-4.6.6.tar.gz/download -L
+			curl -L --insecure -o "{params.src}/gnuplot.tar.gz" "http://sourceforge.net/projects/gnuplot/files/gnuplot/4.6.6/gnuplot-4.6.6.tar.gz/download"
+
+			(
+				cd "{params.src}"
+
 				tar xf gnuplot.tar.gz
 				cd gnuplot-4.6.6
 				./configure
-				make
+				make -j
 				cd src
-				cp gnuplot {output[0]}
+				cp gnuplot "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule prog_gnuplot5:
 	message:
-		"Compiling GNUPLOT5"
+		"Installing GNUPLOT5 (a program for creating graphical plots). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.GNUPLOT5
 	params:
 		src=os.path.join(smbl.src_dir,"gnuplot5"),
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+			) > /dev/null
 
-				curl -o gnuplot.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/5.0.0/gnuplot-5.0.0.tar.gz/download -L
+			curl -L --insecure -o "{params.src}/gnuplot.tar.gz" "http://sourceforge.net/projects/gnuplot/files/gnuplot/5.0.0/gnuplot-5.0.0.tar.gz/download"
+
+			(
+				cd "{params.src}"
+
 				tar xf gnuplot.tar.gz
 				cd gnuplot-5.0.0
 				./configure
-				make
+				make -j
 				cd src
-				cp gnuplot {output[0]}
+				cp gnuplot "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
-
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 rule curesim:
 	message:
-		"Downloading CuReSim"
+		"Installing CuReSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.CURESIM,
 	params:
 		src=os.path.join(smbl.src_dir,"curesim"),
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+			) > /dev/null
 
-				curl -o curesim.zip http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSim1.1.zip -L
+			curl -L --insecure -o "{params.src}/curesim.zip" "http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSim1.1.zip"
+
+			(
+				cd "{params.src}"
+
 				unzip curesim.zip
 				cd CuReSim1.1
-				cp CuReSim.jar {output[0]}
-				chmod +x {output[0]}
+				cp CuReSim.jar "{output[0]}"
+				chmod +x "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			)
+		"""
 
 
 rule curesim_eval:
 	message:
-		"Downloading CuReSim_eval"
+		"Installing CuReSim_eval (an evalution tool for CuReSim). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.CURESIM_EVAL,
 	params:
 		src=os.path.join(smbl.src_dir,"curesim_eval"),
-	run:
-		shell(
-			"""
-				rm -fR {params.src}
-				mkdir -p {params.src}
-				cd {params.src}
+	shell:
+		"""
+			(
+				rm -fR "{params.src}"
+				mkdir -p "{params.src}"
+			) > /dev/null
 
-				curl -o curesim_eval.zip http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSimEval1.1.zip -L
+			curl -L --insecure -o "{params.src}/curesim_eval.zip" "http://www.pegase-biosciences.com/wp-content/uploads/2013/04/CuReSimEval1.1.zip"
+
+			(
+				cd "{params.src}"
+
 				unzip curesim_eval.zip
 				cd CuReSimEval1.1
-				cp CuReSimEval.jar {output[0]}
-				chmod +x {output[0]}
+				cp CuReSimEval.jar "{output[0]}"
+				chmod +x "{output[0]}"
 
-				rm -fR {params.src}
-			"""
-		)
+				rm -fR "{params.src}"
+			) > /dev/null
+		"""
 
 
 rule prog_twobittofa:
 	message:
-		"Downloading twoBitToFa"
+		"Installing twoBitToFa (a tool for conversion of genomic data). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.TWOBITTOFA
 	run:
@@ -610,6 +730,6 @@ rule prog_twobittofa:
 			raise RunTimeError("For your OS, twoBitToFa is not precompiled")
 
 		shell("""
-			curl --insecure -o {prog} {url}
-			chmod +x {prog}
+			curl -L --insecure -o "{prog}" "{url}"
+			chmod +x "{prog}"
 		""".format(prog=output[0],url=url))
