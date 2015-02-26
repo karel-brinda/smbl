@@ -34,6 +34,7 @@ MASON              = os.path.join(smbl.bin_dir,"mason")
 MRFAST             = os.path.join(smbl.bin_dir,"mrfast")
 MRSFAST            = os.path.join(smbl.bin_dir,"mrsfast")
 PERM               = os.path.join(smbl.bin_dir,"perm")
+PBSIM              = os.path.join(smbl.bin_dir,"pbsim")
 SAMBAMBA           = os.path.join(smbl.bin_dir,"sambamba")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 SIRFAST            = os.path.join(smbl.bin_dir,"sirfast")
@@ -43,6 +44,7 @@ TABIX              = os.path.join(smbl.bin_dir,"tabix")
 TWOBITTOFA         = os.path.join(smbl.bin_dir,"twoBitToFa")
 WGSIM              = os.path.join(smbl.bin_dir,"wgsim")
 WGSIM_EVAL         = os.path.join(smbl.bin_dir,"wgsim_eval.pl")
+XS                 = os.path.join(smbl.bin_dir,"xs")
 
 ALL = [
 		ART_454,
@@ -76,6 +78,7 @@ ALL = [
 		LASTAL,
 		LASTDB,
 		MASON,
+		PBSIM,
 		PERM,
 		SAMBAMBA,
 		SAMTOOLS,
@@ -91,4 +94,5 @@ ALL = [
 		DRFAST,
 		SIRFAST,
 
+		XS,
 	]

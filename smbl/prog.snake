@@ -184,6 +184,37 @@ rule prog_wgsim:
 			"""
 		)
 
+rule prog_xs:
+	message:
+		"Compiling XS (an NGS read simulator). "+_SUFFIX_INSTALLATION
+	output:
+		smbl.prog.XS
+	params:
+		src=os.path.join(smbl.src_dir,"xs")
+	run:
+		shell(
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/xs.tar.gz" "http://exon.ieeta.pt/xs/xs.tar.gz"
+
+				(
+					cd "{params.src}"
+
+					tar xf xs.tar.gz
+					cd xs
+					make -j
+					cp XS "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
+		)
+
+
 # BWA
 rule prog_bwa:
 	message:
@@ -434,6 +465,37 @@ rule prog_perm:
 					cd Source
 					make -j
 					cp perm "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
+		)
+
+rule prog_pbsim:
+	message:
+		"Compiling PBsim (an NGS read simulator of PacBio reads). "+_SUFFIX_INSTALLATION
+	output:
+		smbl.prog.PBSIM
+	params:
+		src=os.path.join(smbl.src_dir,"perm")
+	run:
+		shell(
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/pbsim.tar.gz" "https://pbsim.googlecode.com/files/pbsim-1.0.3.tar.gz"
+
+				(
+					cd "{params.src}"
+
+					tar xf pbsim.tar.gz
+					cd pbsim-1.0.3
+					./configure
+					make -j
+					cp src/pbsim "{output[0]}"
 
 					rm -fR "{params.src}"
 				) > /dev/null

@@ -71,6 +71,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | mrfast           | ```smbl.prog.MRFAST```              | http://github.com/BilkentCompGen/mrfast |
 | mrsfast          | ```smbl.prog.MRSFAST```             | http://mrsfast.sourceforge.net/ |
 | perm             | ```smbl.prog.PERM```                | http://code.google.com/p/perm/ |
+| pbsim            | ```smbl.prog.PBSIM```               | https://code.google.com/p/pbsim |
 | sambamba         | ```smbl.prog.SAMBAMBA```            | http://lomereiter.github.io/sambamba/ |
 | samtools         | ```smbl.prog.SAMTOOLS```            | http://github.com/samtools/samtools |
 | sirfast          | ```smbl.prog.SIRFAST```             | http://github.com/BilkentCompGen/sirfast |
@@ -80,6 +81,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | twoBitToFa       | ```smbl.prog.TWOBITTOFA```          | http://hgdownload.cse.ucsc.edu/admin/exe/ |
 | wgsim            | ```smbl.prog.WGSIM```               | http://github.com/lh3/wgsim |
 | wgsim\_eval.pl   | ```smbl.prog.WGSIM_EVAL```          | http://github.com/lh3/wgsim |
+| xs               | ```smbl.prog.XS```                  | http://bioinformatics.ua.pt/software/xs/ |
     
 
 ### FASTA files
