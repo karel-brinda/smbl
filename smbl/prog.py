@@ -30,7 +30,13 @@ GNUPLOT4           = os.path.join(smbl.bin_dir,"gnuplot4")
 GNUPLOT5           = os.path.join(smbl.bin_dir,"gnuplot5")
 LASTAL             = os.path.join(smbl.bin_dir,"lastal")
 LASTDB             = os.path.join(smbl.bin_dir,"lastdb")
-MASON              = os.path.join(smbl.bin_dir,"mason")
+MASON_FRAG_SEQUENCING   = os.path.join(smbl.bin_dir,"mason_frag_sequencing")
+MASON_GENOME            = os.path.join(smbl.bin_dir,"mason_genome")
+MASON_MATERIALIZER      = os.path.join(smbl.bin_dir,"mason_materializer")
+MASON_METHYLATION       = os.path.join(smbl.bin_dir,"mason_methylation")
+MASON_SIMULATOR         = os.path.join(smbl.bin_dir,"mason_simulator")
+MASON_SPLICING          = os.path.join(smbl.bin_dir,"mason_splicing")
+MASON_VARIATOR          = os.path.join(smbl.bin_dir,"mason_variator")
 MRFAST             = os.path.join(smbl.bin_dir,"mrfast")
 MRSFAST            = os.path.join(smbl.bin_dir,"mrsfast")
 PERM               = os.path.join(smbl.bin_dir,"perm")
@@ -77,7 +83,14 @@ ALL = [
 		GNUPLOT5,
 		LASTAL,
 		LASTDB,
-		MASON,
+		MASON_FRAG_SEQUENCING,
+		MASON_GENOME,
+		MASON_MATERIALIZER,
+		MASON_METHYLATION,
+		MASON_SIMULATOR,
+		MASON_SPLICING,
+		MASON_VARIATOR,
+		
 		PBSIM,
 		PERM,
 		SAMBAMBA,

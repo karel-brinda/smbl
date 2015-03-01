@@ -325,30 +325,86 @@ rule prog_storm:
 			) > /dev/null
 		"""
 
+#rule prog_mason:
+#	message:
+#		"Installing Mason (an NGS read simulator). "+_SUFFIX_INSTALLATION
+#	output:
+#		smbl.prog.MASON
+#	params:
+#		src=os.path.join(smbl.src_dir,"mason")
+#	shell:
+#		"""
+#			(
+#				rm -fR "{params.src}"
+#				mkdir -p "{params.src}"
+#				cd "{params.src}"
+#
+#				git clone --depth 1 http://github.com/seqan/seqan/
+#				cd seqan
+#				cmake .
+#				cd apps/mason2
+#				make -j
+#				cp "{params.src}/seqan/bin/mason_simulator" "{output[0]}"
+#
+#				rm -fR "{params.src}"
+#			) > /dev/null
+#		"""
+
 rule prog_mason:
 	message:
-		"Installing Mason (an NGS read simulator). "+_SUFFIX_INSTALLATION
+		"Installing ART (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
-		smbl.prog.MASON
+		smbl.prog.MASON_FRAG_SEQUENCING,
+		smbl.prog.MASON_GENOME,
+		smbl.prog.MASON_MATERIALIZER,
+		smbl.prog.MASON_METHYLATION,
+		smbl.prog.MASON_SIMULATOR,
+		smbl.prog.MASON_SPLICING,
+		smbl.prog.MASON_VARIATOR,
 	params:
 		src=os.path.join(smbl.src_dir,"mason")
-	shell:
-		"""
-			(
-				rm -fR "{params.src}"
-				mkdir -p "{params.src}"
-				cd "{params.src}"
+	run:
+		if smbl.is_linux() and smbl.is_os_64bit():
+			url="http://packages.seqan.de/mason2/mason2-2.0.0-Linux-x86_64.tar.bz2"
+			dir="mason2-2.0.0-Linux-x86_64"
+		elif smbl.is_linux():
+			url="http://packages.seqan.de/mason2/mason2-2.0.0-Linux-i686.tar.bz2"
+			dir="mason2-2.0.0-Linux-i686"
+		elif smbl.is_mac() and smbl.is_os_64bit():
+			url="http://packages.seqan.de/mason2/mason2-2.0.0-Mac-x86_64.tar.bz2"
+			dir="mason2-2.0.0-Mac-x86_64"
+		elif smbl.is_mac():
+			url="http://packages.seqan.de/mason2/mason2-2.0.0-Mac-i686.tar.bz2"
+			dir="mason2-2.0.0-Mac-i686"
+		else:
+			raise RunTimeError("Unsupported OS")
 
-				git clone --depth 1 http://github.com/seqan/seqan/
-				cd seqan
-				cmake .
-				cd apps/mason2
-				make -j
-				cp "{params.src}/seqan/bin/mason_simulator" "{output[0]}"
+		shell(
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
 
-				rm -fR "{params.src}"
-			) > /dev/null
-		"""
+				curl -L --insecure -o "{params.src}/mason.tar.bz2" \""""+ url + """\"
+
+				(
+					cd \"{params.src}\"
+					tar xf mason.tar.bz2
+					cd \"{params.src}/"""+dir+"""/bin\"
+
+					cp "mason_frag_sequencing" "{output[0]}"
+					cp "mason_genome" "{output[1]}"
+					cp "mason_materializer" "{output[2]}"
+					cp "mason_methylation" "{output[3]}"
+					cp "mason_simulator" "{output[4]}"
+					cp "mason_splicing" "{output[5]}"
+					cp "mason_variator" "{output[6]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
+		)
 
 rule prog_bfast:
 	message:

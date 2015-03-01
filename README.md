@@ -67,7 +67,13 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | gnuplot5         | ```smbl.prog.GNUPLOT5```            | http://www.gnuplot.info/ |
 | lastal           | ```smbl.prog.LASTAL```              | http://last.cbrc.jp/ |
 | lastdb           | ```smbl.prog.LASTDB```              | http://last.cbrc.jp/ |
-| mason            | ```smbl.prog.MASON```               | http://github.com/seqan/seqan |
+| mason_frag_sequencing  | ```smbl.prog.MASON_FRAG_SEQUENCING```   | http://packages.seqan.de/mason2/ |
+| mason_genome           | ```smbl.prog.MASON_GENOME```            | http://packages.seqan.de/mason2/ |
+| mason_materializer     | ```smbl.prog.MASON_MATERIALIZER```      | http://packages.seqan.de/mason2/ |
+| mason_methylation      | ```smbl.prog.MASON_METHYLATION```       | http://packages.seqan.de/mason2/ |
+| mason_simulator        | ```smbl.prog.MASON_SIMULATOR```         | http://packages.seqan.de/mason2/ |
+| mason_splicing         | ```smbl.prog.MASON_SPLICING```          | http://packages.seqan.de/mason2/ |
+| mason_variator         | ```smbl.prog.MASON_VARIATOR```          | http://packages.seqan.de/mason2/ |
 | mrfast           | ```smbl.prog.MRFAST```              | http://github.com/BilkentCompGen/mrfast |
 | mrsfast          | ```smbl.prog.MRSFAST```             | http://mrsfast.sourceforge.net/ |
 | perm             | ```smbl.prog.PERM```                | http://code.google.com/p/perm/ |
