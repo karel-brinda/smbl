@@ -2,10 +2,12 @@
 
 set -e -o pipefail; 
 
-cd tests
+rm -fR ~/.sbml
 
-./clean_files.sh
-./test_all.sh
-./clean_files.sh
-./test_all_cores.sh
-./clean_files.sh
+snakemake -s ./smbl/prog.snake
+snakemake -s ./smbl/fasta.snake
+
+rm -fR ~/.sbml
+
+snakemake -s ./smbl/prog.snake --cores
+snakemake -s ./smbl/fasta.snake --cores
