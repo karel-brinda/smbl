@@ -352,7 +352,7 @@ rule prog_storm:
 
 rule prog_mason:
 	message:
-		"Installing ART (an NGS read simulator). "+_SUFFIX_INSTALLATION
+		"Installing Mason (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
 		smbl.prog.MASON_FRAG_SEQUENCING,
 		smbl.prog.MASON_GENOME,
