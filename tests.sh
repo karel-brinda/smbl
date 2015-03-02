@@ -10,6 +10,33 @@ echo "===================================================================="
 echo
 echo
 echo
+echo "                 TEST: simple example" 
+echo
+echo
+echo
+echo "===================================================================="
+echo
+echo
+echo
+
+(
+	set -ex -o pipefail; 
+
+	rm -fR ~/.smbl
+	cd examples
+	snakemake -p
+)
+
+echo
+echo
+echo
+echo
+echo
+echo
+echo "===================================================================="
+echo
+echo
+echo
 echo "                 TEST: single-threading installation" 
 echo
 echo
