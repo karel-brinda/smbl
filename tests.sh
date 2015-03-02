@@ -15,6 +15,9 @@ echo
 echo
 echo
 echo "===================================================================="
+echo
+echo
+echo
 
 (
 	set -ex -o pipefail; 
@@ -39,11 +42,14 @@ echo
 echo
 echo
 echo "===================================================================="
+echo
+echo
+echo
 
 (
 	set -ex -o pipefail; 
 	rm -fR ~/.smbl
 
-	snakemake -s ./smbl/prog.snake --cores
-	snakemake -s ./smbl/fasta.snake --cores
+	snakemake -s ./smbl/prog.snake --cores 12
+	snakemake -s ./smbl/fasta.snake --cores 12
 )
