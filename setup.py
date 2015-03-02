@@ -5,12 +5,18 @@ if sys.version_info < (3,2):
 	print("At least Python 3.2 is required.\n", file=sys.stderr)
 	exit(1)
 
+exec(open("smbl/version.py").read())
+
 setup(
 	name = 'smbl',
 	packages = ['smbl'], # this must be the same as the name above
-	package_dir = {"smbl" : "smbl"},
-	package_data = {"smbl" : ["*.snake"] },
-	version = '0.0.12',
+	package_dir = {
+		"smbl" : "smbl"
+	},
+	package_data = {
+		"smbl" : ["*.snake"]
+	},
+	version = __version__,
 	description = 'SnakeMake Bioinformatics Library',
 	long_description = """\
 SnakeMake Bioinformatics Library

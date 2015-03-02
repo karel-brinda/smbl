@@ -18,7 +18,11 @@ from smbl.rnf import *
 import smbl.fasta
 import smbl.prog
 
-include = os.path.join( os.path.dirname(__file__), "include_all.snake")
+def include():
+	return os.path.join(
+			os.path.dirname(__file__),
+			"include_all.snake"
+		)
 
 snakemake.shell(
 		"""

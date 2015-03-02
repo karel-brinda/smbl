@@ -21,10 +21,11 @@ echo
 
 (
 	set -ex -o pipefail; 
-	rm -fR ~/.smbl
 
-	snakemake -s ./smbl/prog.snake
-	snakemake -s ./smbl/fasta.snake
+	rm -fR ~/.smbl
+	snakemake -p -s ./smbl/prog.snake
+	rm -fR ~/.smbl
+	snakemake -p -s ./smbl/fasta.snake
 )
 
 echo
@@ -48,8 +49,9 @@ echo
 
 (
 	set -ex -o pipefail; 
-	rm -fR ~/.smbl
 
-	snakemake -s ./smbl/prog.snake --cores 12
-	snakemake -s ./smbl/fasta.snake --cores 12
+	rm -fR ~/.smbl
+	snakemake -p -s ./smbl/prog.snake --cores 12
+	rm -fR ~/.smbl
+	snakemake -p -s ./smbl/fasta.snake --cores 12
 )

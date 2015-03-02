@@ -34,7 +34,7 @@ cd smbl
 To use SMBL, you have to import the *smbl*  Python package and include a file with all rules using:
 ```python
 import smbl
-include: smbl.include
+include: smbl.include()
 ```
 
 Then you can use all supported programs or data. When they appear as input of a rule, they will be downloaded or compiled.
@@ -44,8 +44,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 
 ### Programs
 
-| Program                | Variable with its filename              
-| Link |
+| Program                | Variable with its filename              | Link |
 |------------------------|-----------------------------------------|------|
 | art\_454               | ```smbl.prog.ART_454```                 | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
 | art\_illumina          | ```smbl.prog.ART_ILLUMINA```            | http://www.niehs.nih.gov/research/resources/software/biostatistics/art/ |
@@ -98,9 +97,9 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 
 | FASTA file                   | Variable with its filename   |
 |------------------------------|------------------------------|
-| An example small FASTA file  | ```smbl.fasta.EXAMPLE_1```     |
-| An example small FASTA file  | ```smbl.fasta.EXAMPLE_2```     |
-| An example small FASTA file  | ```smbl.fasta.EXAMPLE_3```     |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_1```   |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_2```   |
+| An example small FASTA file  | ```smbl.fasta.EXAMPLE_3```   |
 | Human genome HG38 (GRCh38)   | ```smbl.fasta.HG38```, ```smbl.fasta.HUMAN_GRCH38 ``` |
 
 ## Example
@@ -108,7 +107,7 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 Try to create this simple *Snakefile*:
 ```python
 import smbl
-include: smbl.include
+include: smbl.include()
 
 rule all:
         input:

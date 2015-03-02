@@ -1,5 +1,5 @@
 import smbl
-include: smbl.include
+include: smbl.include()
 
 rule all:
         input:
