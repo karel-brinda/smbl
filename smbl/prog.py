@@ -41,6 +41,7 @@ MRFAST             = os.path.join(smbl.bin_dir,"mrfast")
 MRSFAST            = os.path.join(smbl.bin_dir,"mrsfast")
 PERM               = os.path.join(smbl.bin_dir,"perm")
 PBSIM              = os.path.join(smbl.bin_dir,"pbsim")
+PICARD             = os.path.join(smbl.bin_dir,"picard.jar")
 SAMBAMBA           = os.path.join(smbl.bin_dir,"sambamba")
 SAMTOOLS           = os.path.join(smbl.bin_dir,"samtools")
 SIRFAST            = os.path.join(smbl.bin_dir,"sirfast")
@@ -93,6 +94,7 @@ ALL = [
 		
 		PBSIM,
 		PERM,
+		PICARD,
 		SAMBAMBA,
 		SAMTOOLS,
 		STORM_COLOR,

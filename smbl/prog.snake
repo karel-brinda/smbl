@@ -215,7 +215,37 @@ rule prog_xs:
 		)
 
 
-# BWA
+rule prog_picardtools:
+	message:
+		"Installing Picard Tools. "+_SUFFIX_INSTALLATION
+	output:
+		smbl.prog.PICARD
+	params:
+		src=os.path.join(smbl.src_dir,"picard"),
+	run:
+		shell(
+			"""
+				(
+					rm -fR "{params.src}"
+					mkdir -p "{params.src}"
+				) > /dev/null
+
+				curl -L --insecure -o "{params.src}/picard-tools-1.129.zip" "https://github.com/broadinstitute/picard/releases/download/1.129/picard-tools-1.129.zip"
+
+				(
+					cd "{params.src}"
+
+					unzip picard-tools-1.129.zip
+					cd picard-tools-1.129
+					chmod +x picard.jar
+					cp picard.jar "{output[0]}"
+
+					rm -fR "{params.src}"
+				) > /dev/null
+			"""
+		)
+
+
 rule prog_bwa:
 	message:
 		"Compiling BWA (an NGS read mapper). "+_SUFFIX_INSTALLATION
@@ -533,7 +563,7 @@ rule prog_pbsim:
 	output:
 		smbl.prog.PBSIM
 	params:
-		src=os.path.join(smbl.src_dir,"perm")
+		src=os.path.join(smbl.src_dir,"pbsim")
 	run:
 		shell(
 			"""
