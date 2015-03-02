@@ -1,5 +1,7 @@
 # SMBL - SnakeMake Bioinformatics Library
 
+[![Build Status](https://travis-ci.org/karel-brinda/smbl.svg?branch=master)](https://travis-ci.org/karel-brinda/smbl) 
+
 In case of any problem, don't hesitate to contact me on karel.brinda@gmail.com.
 
 ## Short description
