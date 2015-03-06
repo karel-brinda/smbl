@@ -13,7 +13,10 @@ def correct_samtools_make(makefile_fn):
 	if not os.path.isfile(makefile_backup_fn):
 		with open(makefile_fn, 'r') as makefile:
 			content = makefile.read()
-			content = content.replace("-lcurses","-lncurses")
+			if smbl.is_linux():
+				content = content.replace("-lcurses","-lncurses")
+			elif smbl.is_cygwin():
+				content = content.replace("-D_FILE_OFFSET_BITS=64","-D_FILE_OFFSET_BITS=64 -Dexpl=exp -Dlogl=log")
 		with open(makefile_fn, 'w') as makefile:
 			makefile.write(content)
 
@@ -32,16 +35,16 @@ rule prog_art:
 		src=os.path.join(smbl.src_dir,"art"),
 		dir="art_bin_VanillaIceCream"
 	run:
-		if smbl.is_linux() and smbl.is_os_64bit():
+		if (smbl.is_linux() or smbl.is_cygwin()) and smbl.is_os_64bit():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux64tgz.tgz"
-		elif smbl.is_linux():
+		elif (smbl.is_linux() or smbl.is_cygwin()):
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux32tgz.tgz"
 		elif smbl.is_mac() and smbl.is_os_64bit():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos64tgz.tgz"
 		elif smbl.is_mac():
 			url="http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz"
 		else:
-			raise RunTimeError("Unsupported OS")
+			raise NotImplementedError("Unsupported OS")
 
 		shell(
 			"""
@@ -73,12 +76,12 @@ rule prog_sambamba:
 	params:
 		src=os.path.join(smbl.src_dir,"sambamba"),
 	run:
-		if smbl.is_linux():
+		if (smbl.is_linux() or smbl.is_cygwin()):
 			url="http://github.com/lomereiter/sambamba/releases/download/v0.5.1/sambamba_v0.5.1_linux.tar.bz2"
 		elif smbl.is_mac():
 			url="http://github.com/lomereiter/sambamba/releases/download/v0.5.1/sambamba_v0.5.1_osx.tar.bz2"
 		else:
-			raise RunTimeError("Unsupported OS")
+			raise NotImplementedError("Unsupported OS")
 
 		shell(
 			"""
@@ -394,10 +397,10 @@ rule prog_mason:
 	params:
 		src=os.path.join(smbl.src_dir,"mason")
 	run:
-		if smbl.is_linux() and smbl.is_os_64bit():
+		if (smbl.is_linux() or smbl.is_cygwin()) and smbl.is_os_64bit():
 			url="http://packages.seqan.de/mason2/mason2-2.0.0-Linux-x86_64.tar.bz2"
 			dir="mason2-2.0.0-Linux-x86_64"
-		elif smbl.is_linux():
+		elif (smbl.is_linux() or smbl.is_cygwin()):
 			url="http://packages.seqan.de/mason2/mason2-2.0.0-Linux-i686.tar.bz2"
 			dir="mason2-2.0.0-Linux-i686"
 		elif smbl.is_mac() and smbl.is_os_64bit():
@@ -407,7 +410,7 @@ rule prog_mason:
 			url="http://packages.seqan.de/mason2/mason2-2.0.0-Mac-i686.tar.bz2"
 			dir="mason2-2.0.0-Mac-i686"
 		else:
-			raise RunTimeError("Unsupported OS")
+			raise NotImplementedError("Unsupported OS")
 
 		shell(
 			"""
@@ -471,8 +474,8 @@ rule prog_gem:
 	params:
 		src=os.path.join(smbl.src_dir,"gem")
 	run:
-		if not smbl.is_linux():
-			raise RunTimeError("Unsupported OS")
+		if not (smbl.is_linux() or smbl.is_cygwin()):
+			raise NotImplementedError("Unsupported OS")
 
 		shell(
 			"""
@@ -804,7 +807,7 @@ rule prog_gnuplot5:
 			) > /dev/null
 		"""
 
-rule curesim:
+rule prog_curesim:
 	message:
 		"Installing CuReSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
 	output:
@@ -833,7 +836,7 @@ rule curesim:
 		"""
 
 
-rule curesim_eval:
+rule prog_curesim_eval:
 	message:
 		"Installing CuReSim_eval (an evalution tool for CuReSim). "+_SUFFIX_INSTALLATION
 	output:
@@ -868,14 +871,14 @@ rule prog_twobittofa:
 	output:
 		smbl.prog.TWOBITTOFA
 	run:
-		if smbl.is_linux() and smbl.is_os_64bit:
+		if (smbl.is_linux() or smbl.is_cygwin()) and smbl.is_os_64bit:
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa"
 		elif smbl.is_mac() and smbl.is_os_64bit:
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa"
 		elif smbl.is_mac():
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.i386/twoBitToFa"
 		else:
-			raise RunTimeError("For your OS, twoBitToFa is not precompiled")
+			raise NotImplementedError("For your OS, twoBitToFa is not precompiled")
 
 		shell("""
 			curl -L --insecure -o "{prog}" "{url}"

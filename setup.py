@@ -1,10 +1,6 @@
 import sys
 from setuptools import setup , find_packages
 
-if sys.version_info < (3,2):
-	print("At least Python 3.2 is required.\n", file=sys.stderr)
-	exit(1)
-
 exec(open("smbl/version.py").read())
 
 setup(
