@@ -5,7 +5,11 @@ exec(open("smbl/version.py").read())
 
 setup(
 	name = 'smbl',
-	packages = ['smbl','smbl.fasta','smbl.prog','smbl.rnf'], # this must be the same as the name above
+	packages = [
+		'smbl',
+		'smbl.fasta',
+		'smbl.prog',
+	],
 	package_dir = {
 		"smbl" : "smbl",
 		"smbl.fasta" : "smbl/fasta",
@@ -37,7 +41,7 @@ Copyright (c) 2015 Karel Břinda <karel.brinda@gmail.com> (see LICENSE)
 	url = 'http://github.com/karel-brinda/smbl',
 	license = "MIT",
 	#download_url = 'https://github.com/karel-brinda/smbl/tarball/0.0.1',
-	keywords = ['Snakemake', 'bioinformatics'],
+	keywords = ['Snakemake', 'bioinformatics','pipelines','Next Generation Sequencing'],
 	classifiers = [
 		"Development Status :: 4 - Beta",
 		"Environment :: Console",
