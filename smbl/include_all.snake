@@ -4,7 +4,7 @@ from snakemake.utils import min_version
 min_version("3.2")
 shell.prefix("set -e -o pipefail; ")
 
-include: "fasta.snake"
+include: "fasta/fasta.snake"
 
 rule __test_include_all__:
 	input:

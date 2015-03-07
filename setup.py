@@ -5,12 +5,16 @@ exec(open("smbl/version.py").read())
 
 setup(
 	name = 'smbl',
-	packages = ['smbl'], # this must be the same as the name above
+	packages = ['smbl','smbl.fasta','smbl.prog','smbl.rnf'], # this must be the same as the name above
 	package_dir = {
-		"smbl" : "smbl"
+		"smbl" : "smbl",
+		"smbl.fasta" : "smbl/fasta",
+		"smbl.prog": "smbl/prog",
 	},
 	package_data = {
-		"smbl" : ["*.snake"]
+		"smbl" : ["*.snake"],
+		"smbl.fasta" : ["*.snake"],
+		"smbl.prog" : ["*.snake"],
 	},
 	version = __version__,
 	description = 'SnakeMake Bioinformatics Library',

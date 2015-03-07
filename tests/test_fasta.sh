@@ -2,4 +2,4 @@
 
 set -e -o pipefail; 
 
-snakemake -s ../smbl/fasta.snake
+snakemake -s ../smbl/fasta/fasta.snake

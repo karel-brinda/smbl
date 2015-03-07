@@ -1,6 +1,6 @@
 import smbl
 
-include: "prog.snake"
+include: "../prog/prog.snake"
 
 rule __test_all_fasta__:
 	input:
