@@ -14,7 +14,6 @@ bin_dir  = os.path.join(smbl_dir,"bin")
 fa_dir   = os.path.join(smbl_dir,"fa")
 src_dir  = os.path.join(smbl_dir,"src")
 
-from smbl.rnf import *
 import smbl.fasta
 import smbl.prog
 
