@@ -1,5 +1,5 @@
 import smbl
-from .program import Program
+#from .program import Program
 
 import snakemake
 
@@ -109,12 +109,12 @@ class BwaMem(Bwa):
 			)
 		)
 
-class BwaAln(Bwa):
-	def __init__():
-		raise NotImplementedError()
-
-class BwaSw(Bwa):
-	def __init__():
-		raise NotImplementedError()
-
-
+#class BwaAln(Bwa):
+#	def __init__(self):
+#		raise NotImplementedError()
+#
+#class BwaSw(Bwa):
+#	def __init__(self):
+#		raise NotImplementedError()
+#
+#
