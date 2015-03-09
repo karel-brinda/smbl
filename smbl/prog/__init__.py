@@ -1,6 +1,8 @@
 import os
 import smbl
 
+from .bwa import *
+
 ART_454            = os.path.join(smbl.bin_dir,"art_454")
 ART_ILLUMINA       = os.path.join(smbl.bin_dir,"art_illumina")
 ART_SOLID          = os.path.join(smbl.bin_dir,"art_solid")
@@ -54,6 +56,8 @@ WGSIM_EVAL         = os.path.join(smbl.bin_dir,"wgsim_eval.pl")
 XS                 = os.path.join(smbl.bin_dir,"xs")
 
 ALL = [
+		Bwa,
+
 		ART_454,
 		ART_ILLUMINA,
 		ART_SOLID,
