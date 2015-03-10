@@ -109,6 +109,38 @@ class BwaMem(Bwa):
 			)
 		)
 
+class BwaSw(Bwa):
+	def __init__(
+				self,
+				fasta,
+				bam,
+				fastq_1,
+				fastq_2=None,
+			):
+
+		super().__init__(
+					fasta=fasta,
+					fastq_1=fastq_1,
+					fastq_2=fastq_2,
+					bam=bam,
+				)
+
+	def map_reads(self,number_of_threads=1):
+		if self._fq2_fn==None:
+			reads_string='"{}"'.format(self._fq1_fn)
+		else:
+			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
+
+		snakemake.shell("""\"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
+				bwa=smbl.prog.BWA,
+				samtools=smbl.prog.SAMTOOLS,
+				idx=self._fa_fn,
+				reads_string=reads_string,
+				bam=self._bam_fn,
+				threads=number_of_threads,
+			)
+		)
+
 #class BwaAln(Bwa):
 #	def __init__(self):
 #		raise NotImplementedError()
