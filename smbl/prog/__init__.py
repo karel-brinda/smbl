@@ -3,6 +3,17 @@ import smbl
 
 from .bwa import *
 
+__RULES_INSTALLATION = []
+__PROGRAM_INSTANCES = []
+
+
+def add_program_instance(instance):
+	__PROGRAM_INSTANCES.append(instance)
+
+def program_instances():
+	return __PROGRAM_INSTANCES
+
+
 ART_454            = os.path.join(smbl.bin_dir,"art_454")
 ART_ILLUMINA       = os.path.join(smbl.bin_dir,"art_illumina")
 ART_SOLID          = os.path.join(smbl.bin_dir,"art_solid")

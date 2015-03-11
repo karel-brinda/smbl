@@ -1,10 +1,8 @@
 import smbl
-#from .program import Program
-
 import snakemake
+from .program import Program, Rule
 
-#class Bwa(Program):
-class Bwa:
+class Bwa(Program):
 	def __init__(
 				self,
 				fasta,
@@ -12,11 +10,32 @@ class Bwa:
 				fastq_1,
 				fastq_2=None,
 			):
+
+		super().__init__()
+
+
+
 		self._fa_fn=fasta
 		self._fq1_fn=fastq_1
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 		self._prefix=bam[:-4]
+
+		self.add_rule(
+			Rule(
+				input=self.make_index_input(),
+				output=self.make_index_output(),
+				run=self.make_index,
+			)
+		)
+
+		self.add_rule(
+			Rule(
+				input=self.map_reads_input(),
+				output=self.map_reads_output(),
+				run=self.map_reads,
+			)
+		)
 
 	def fq_fn(self):
 		if self._fq2_fn==None:

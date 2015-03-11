@@ -3,6 +3,26 @@ import os.path
 import shutil
 import platform
 
+for i, instance in enumerate(smbl.prog.program_instances()):
+	print(instance)
+	for j, rrule in enumerate(instance.rules):
+		print(rrule)
+		rule:
+			"""
+				Rules for samples (final FASTQ files)
+			"""
+			input:
+				rrule.input
+			output:
+				rrule.output
+			params:
+				i=str(i),
+				j=str(j),
+			run:
+				print(smbl.prog.program_instances()[int(params.i)].rules)
+				(smbl.prog.program_instances()[int(params.i)].rules[j].run)()
+
+
 
 _SUFFIX_INSTALLATION="Please, be patient, it can last some time."
 
