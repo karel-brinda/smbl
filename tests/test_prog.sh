@@ -2,4 +2,4 @@
 
 set -e -o pipefail; 
 
-snakemake -s ../smbl/prog/prog.snake
+snakemake -s ../smbl/prog/prog.snake -p

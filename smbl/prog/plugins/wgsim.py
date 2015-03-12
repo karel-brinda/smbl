@@ -37,7 +37,7 @@ class WgSim(__program.Program):
 				rm -fR "{src_dir}"
 				mkdir -p "{build_dir}"
 				git clone --depth=1 http://github.com/lh3/wgsim "{build_dir}"
-				cd "{build_dir}" && make --jobs
+				cd "{build_dir}" && gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
 				cp "{FROM[0]}" "{TO[0]}"
 				cp "{FROM[1]}" "{TO[1]}"
 				rm -fR "{src_dir}"
@@ -46,5 +46,5 @@ class WgSim(__program.Program):
 					build_dir=build_dir,
 					FROM=FROM,
 					TO=TO,
-				)
+				),
 			)

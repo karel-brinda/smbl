@@ -30,11 +30,13 @@ snakemake.shell(
 		""".format(bin_dir,fa_dir,src_dir)
 	)
 
-def run_commands(commands):
+def run_commands(commands, verbose=False):
 	for command in commands.split(os.linesep):
 		command = command.strip()
 		if command == "":
 			continue
+		if verbose==False:
+			command = "({})>/dev/null".format(command)
 		snakemake.shell(command)
 
 def is_linux():
