@@ -16,6 +16,7 @@ src_dir  = os.path.join(smbl_dir,"src")
 
 import smbl.fasta
 import smbl.prog
+#import smbl.prog.plugins
 
 def include():
 	return os.path.join(
@@ -44,4 +45,3 @@ def is_mac():
 
 def is_os_64bit():
     return platform.machine().endswith('64')
-

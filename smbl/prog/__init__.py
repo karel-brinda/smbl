@@ -1,7 +1,12 @@
 import os
 import smbl
+import smbl.prog.plugins
 
-from .bwa import *
+
+all_platforms = ["linux","windows","macos","cygwin"]
+
+from smbl.prog.plugins import *
+
 
 __RULES_INSTALLATION = []
 __PROGRAM_INSTANCES = []

@@ -1,8 +1,11 @@
 import smbl
 import snakemake
-from .program import Program, Rule
 
-class Bwa(Program):
+import __program
+
+print("Loading plugin for BWA")
+
+class Bwa(__program.Program):
 	def __init__(
 				self,
 				fasta,
@@ -14,7 +17,6 @@ class Bwa(Program):
 		super().__init__()
 
 
-
 		self._fa_fn=fasta
 		self._fq1_fn=fastq_1
 		self._fq2_fn=fastq_2
@@ -22,7 +24,7 @@ class Bwa(Program):
 		self._prefix=bam[:-4]
 
 		self.add_rule(
-			Rule(
+			smbl.prog.plugins.Rule(
 				input=self.make_index_input(),
 				output=self.make_index_output(),
 				run=self.make_index,
@@ -30,7 +32,7 @@ class Bwa(Program):
 		)
 
 		self.add_rule(
-			Rule(
+			smbl.prog.plugins.Rule(
 				input=self.map_reads_input(),
 				output=self.map_reads_output(),
 				run=self.map_reads,
@@ -159,13 +161,3 @@ class BwaSw(Bwa):
 				threads=number_of_threads,
 			)
 		)
-
-#class BwaAln(Bwa):
-#	def __init__(self):
-#		raise NotImplementedError()
-#
-#class BwaSw(Bwa):
-#	def __init__(self):
-#		raise NotImplementedError()
-#
-#
