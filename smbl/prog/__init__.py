@@ -7,18 +7,6 @@ all_platforms = ["linux","windows","macos","cygwin"]
 
 from smbl.prog.plugins import *
 
-
-__RULES_INSTALLATION = []
-__PROGRAM_INSTANCES = []
-
-
-def add_program_instance(instance):
-	__PROGRAM_INSTANCES.append(instance)
-
-def program_instances():
-	return __PROGRAM_INSTANCES
-
-
 ART_454            = os.path.join(smbl.bin_dir,"art_454")
 ART_ILLUMINA       = os.path.join(smbl.bin_dir,"art_illumina")
 ART_SOLID          = os.path.join(smbl.bin_dir,"art_solid")
@@ -34,7 +22,7 @@ BOWTIE2_BUILD_S    = os.path.join(smbl.bin_dir,"bowtie2-build-s")
 BOWTIE2_INSPECT    = os.path.join(smbl.bin_dir,"bowtie2-inspect")
 BOWTIE2_INSPECT_L  = os.path.join(smbl.bin_dir,"bowtie2-inspect-l")
 BOWTIE2_INSPECT_S  = os.path.join(smbl.bin_dir,"bowtie2-inspect-s")
-BWA                = os.path.join(smbl.bin_dir,"bwa")
+#BWA                = os.path.join(smbl.bin_dir,"bwa")
 CURESIM            = os.path.join(smbl.bin_dir,"curesim.jar")
 CURESIM_EVAL       = os.path.join(smbl.bin_dir,"curesim_eval.jar")
 DRFAST             = os.path.join(smbl.bin_dir,"drfast")

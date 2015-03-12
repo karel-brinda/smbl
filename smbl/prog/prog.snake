@@ -3,24 +3,27 @@ import os.path
 import shutil
 import platform
 
-for i, instance in enumerate(smbl.prog.program_instances()):
-	print(instance)
-	for j, rrule in enumerate(instance.rules):
-		print(rrule)
-		rule:
-			"""
-				Rules for samples (final FASTQ files)
-			"""
-			input:
-				rrule.input
-			output:
-				rrule.output
-			params:
-				i=str(i),
-				j=str(j),
-			run:
-				print(smbl.prog.program_instances()[int(params.i)].rules)
-				(smbl.prog.program_instances()[int(params.i)].rules[j].run)()
+for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
+	print("plugin",plugin)
+	rule:
+		output:
+			plugin.get_files()
+		params:
+			i=str(i),
+		run:
+			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install)()
+
+for i, rule in enumerate(smbl.prog.plugins.get_registered_rules()):
+	rule:
+		input:
+			rule.get_input()
+		output:
+			rule.get_output()
+		params:
+			i=str(i),
+		run:
+			smbl.prog.plugins.get_registered_rules()[int(params.i)].run()
+
 
 
 
@@ -269,30 +272,6 @@ rule prog_picardtools:
 		)
 
 
-rule prog_bwa:
-	message:
-		"Compiling BWA (an NGS read mapper). "+_SUFFIX_INSTALLATION
-	output:
-		smbl.prog.BWA
-	params:
-		src=os.path.join(smbl.src_dir,"bwa")
-	shell:
-		"""
-			(
-				rm -fR "{params.src}"
-				mkdir -p "{params.src}"
-				cd "{params.src}"
-
-				git clone --depth=1 http://github.com/lh3/bwa
-				cd bwa
-				make -j
-				cp "{params.src}/bwa/bwa" "{output[0]}"
-
-				rm -fR "{params.src}"
-			) > /dev/null
-
-		"""
-
 rule prog_htslib:
 	message:
 		"Installing Tabix and BgZip (tools for manipulation with special formats). "+_SUFFIX_INSTALLATION
@@ -377,31 +356,6 @@ rule prog_storm:
 				rm -fR "{params.src}"
 			) > /dev/null
 		"""
-
-#rule prog_mason:
-#	message:
-#		"Installing Mason (an NGS read simulator). "+_SUFFIX_INSTALLATION
-#	output:
-#		smbl.prog.MASON
-#	params:
-#		src=os.path.join(smbl.src_dir,"mason")
-#	shell:
-#		"""
-#			(
-#				rm -fR "{params.src}"
-#				mkdir -p "{params.src}"
-#				cd "{params.src}"
-#
-#				git clone --depth 1 http://github.com/seqan/seqan/
-#				cd seqan
-#				cmake .
-#				cd apps/mason2
-#				make -j
-#				cp "{params.src}/seqan/bin/mason_simulator" "{output[0]}"
-#
-#				rm -fR "{params.src}"
-#			) > /dev/null
-#		"""
 
 rule prog_mason:
 	message:
