@@ -1,10 +1,17 @@
 import smbl
-#from .program import Program
-
 import snakemake
+import os
 
-#class Bwa(Program):
-class Bwa:
+import __program
+
+BWA = "\~/.smbl/bin/bwa"
+
+
+##########################################
+##########################################
+
+
+class Bwa(__program.Program):
 	def __init__(
 				self,
 				fasta,
@@ -12,11 +19,57 @@ class Bwa:
 				fastq_1,
 				fastq_2=None,
 			):
+
+		super().__init__()
+
+
 		self._fa_fn=fasta
 		self._fq1_fn=fastq_1
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 		self._prefix=bam[:-4]
+
+		smbl.prog.plugins.Rule(
+			input=self.make_index_input(),
+			output=self.make_index_output(),
+			run=self.make_index,
+		)
+
+		smbl.prog.plugins.Rule(
+			input=self.map_reads_input(),
+			output=self.map_reads_output(),
+			run=self.map_reads,
+		)
+
+
+	def get_files():
+		return BWA
+
+	@staticmethod
+	def install():
+		src_dir="~/.smbl/src/bwa"
+		build_dir="~/.smbl/src/bwa/bwa"
+		makefile="~/.smbl/src/bwa/bwa/Makefile"
+		executable="~/.smbl/src/bwa/bwa/bwa"
+
+		smbl.run_commands(
+			'''
+				rm -fR "{src_dir}"
+				mkdir -p "{build_dir}"
+				git clone --depth=1 http://github.com/lh3/bwa "{build_dir}"
+				cd "{build_dir}" && make --jobs
+				cp "{executable}" "{BWA}"
+				rm -fR "{src_dir}"
+			'''.format(
+					src_dir=src_dir,
+					build_dir=build_dir,
+					makefile=makefile,
+					executable=executable,
+					BWA=BWA,
+				)
+			)
+
+	##########################################
 
 	def fq_fn(self):
 		if self._fq2_fn==None:
@@ -77,6 +130,11 @@ class Bwa:
 				self.bam_fn(),
 			]
 
+
+##########################################
+##########################################
+
+
 class BwaMem(Bwa):
 	def __init__(
 				self,
@@ -109,6 +167,11 @@ class BwaMem(Bwa):
 			)
 		)
 
+
+##########################################
+##########################################
+
+
 class BwaSw(Bwa):
 	def __init__(
 				self,
@@ -140,13 +203,3 @@ class BwaSw(Bwa):
 				threads=number_of_threads,
 			)
 		)
-
-#class BwaAln(Bwa):
-#	def __init__(self):
-#		raise NotImplementedError()
-#
-#class BwaSw(Bwa):
-#	def __init__(self):
-#		raise NotImplementedError()
-#
-#

@@ -9,11 +9,13 @@ setup(
 		'smbl',
 		'smbl.fasta',
 		'smbl.prog',
+		'smbl.prog.plugins',
 	],
 	package_dir = {
 		"smbl" : "smbl",
 		"smbl.fasta" : "smbl/fasta",
 		"smbl.prog": "smbl/prog",
+		"smbl.prog.plugins": "smbl/prog/plugins",
 	},
 	package_data = {
 		"smbl" : ["*.snake"],

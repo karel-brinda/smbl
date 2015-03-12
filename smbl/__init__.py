@@ -16,6 +16,7 @@ src_dir  = os.path.join(smbl_dir,"src")
 
 import smbl.fasta
 import smbl.prog
+#import smbl.prog.plugins
 
 def include():
 	return os.path.join(
@@ -29,6 +30,12 @@ snakemake.shell(
 		""".format(bin_dir,fa_dir,src_dir)
 	)
 
+def run_commands(commands):
+	for command in commands.split(os.linesep):
+		command = command.strip()
+		if command == "":
+			continue
+		snakemake.shell(command)
 
 def is_linux():
 	return sys.platform.startswith('linux')
@@ -43,5 +50,4 @@ def is_mac():
 	return sys.platform.startswith('darwin')
 
 def is_os_64bit():
-    return platform.machine().endswith('64')
-
+	return platform.machine().endswith('64')
