@@ -186,33 +186,33 @@ rule prog_dwgsim:
 		"""
 		)
 
-rule prog_wgsim:
-	message:
-		"Compiling WgSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
-	output:
-		smbl.prog.WGSIM,
-		smbl.prog.WGSIM_EVAL
-	params:
-		src=os.path.join(smbl.src_dir,"wgsim")
-	run:
-		shell(
-			"""
-				(
-					rm -fR "{params.src}"
-					mkdir -p "{params.src}"
-					cd "{params.src}"
-
-					git clone --depth=1 http://github.com/lh3/wgsim
-					cd wgsim
-					gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
-					cp "{params.src}/wgsim/wgsim" "{output[0]}"
-					cp "{params.src}/wgsim/wgsim_eval.pl" "{output[1]}"
-
-					rm -fR "{params.src}"
-				) > /dev/null
-
-			"""
-		)
+#rule prog_wgsim:
+#	message:
+#		"Compiling WgSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
+#	output:
+#		smbl.prog.WGSIM,
+#		smbl.prog.WGSIM_EVAL
+#	params:
+#		src=os.path.join(smbl.src_dir,"wgsim")
+#	run:
+#		shell(
+#			"""
+#				(
+#					rm -fR "{params.src}"
+#					mkdir -p "{params.src}"
+#					cd "{params.src}"
+#
+#					git clone --depth=1 http://github.com/lh3/wgsim
+#					cd wgsim
+#					gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
+#					cp "{params.src}/wgsim/wgsim" "{output[0]}"
+#					cp "{params.src}/wgsim/wgsim_eval.pl" "{output[1]}"
+#
+#					rm -fR "{params.src}"
+#				) > /dev/null
+#
+#			"""
+#		)
 
 rule prog_xs:
 	message:

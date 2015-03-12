@@ -4,7 +4,7 @@ import os
 
 import __program
 
-BWA = "\~/.smbl/bin/bwa"
+BWA = os.path.join(smbl.bin_dir,"bwa")
 
 
 ##########################################
@@ -12,6 +12,7 @@ BWA = "\~/.smbl/bin/bwa"
 
 
 class Bwa(__program.Program):
+	@staticmethod
 	def __init__(
 				self,
 				fasta,
@@ -47,10 +48,9 @@ class Bwa(__program.Program):
 
 	@staticmethod
 	def install():
-		src_dir="~/.smbl/src/bwa"
-		build_dir="~/.smbl/src/bwa/bwa"
-		makefile="~/.smbl/src/bwa/bwa/Makefile"
-		executable="~/.smbl/src/bwa/bwa/bwa"
+		src_dir=os.path.join(smbl.src_dir,"bwa")
+		build_dir=os.path.join(src_dir,"bwa")
+		executable=os.path.join(build_dir,"bwa")
 
 		smbl.run_commands(
 			'''
@@ -63,7 +63,6 @@ class Bwa(__program.Program):
 			'''.format(
 					src_dir=src_dir,
 					build_dir=build_dir,
-					makefile=makefile,
 					executable=executable,
 					BWA=BWA,
 				)
