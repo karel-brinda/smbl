@@ -1,7 +1,7 @@
 import snakemake
 import smbl
 import collections
-
+import random
 
 __PLUGINS = set()
 __RULES= set()
@@ -27,7 +27,7 @@ def get_registered_rules():
 
 class ProgramWatcher(type):
 	def __init__(cls, name, bases, clsdict):
-		if len(cls.mro()) > 2:
+		if len(cls.mro()) == 3:
 			register_plugin(cls)
 		super(ProgramWatcher, cls).__init__(name, bases, clsdict)
 
@@ -35,8 +35,6 @@ class ProgramWatcher(type):
 class Program(metaclass = ProgramWatcher):
 	def __init__(self):
 		pass
-	#	self.rules=[]
-	#	smbl.prog.add_program_instance(self)
 
 	@staticmethod
 	def install(directory):
@@ -50,12 +48,11 @@ class Program(metaclass = ProgramWatcher):
 	def get_files():
 		pass
 
-	def run_commands(commands):
-		for command in commands.split(os.linesep):
-			command = command.strip()
-			if command == "":
-				continue
-			snakemake.shell(command)
+	@staticmethod
+	def get_priority():
+		__installation_priority=random.randint(1,10000000)
+		print ("install. priority",__installation_priority)
+		return __installation_priority
 
 
 ##########################################
@@ -69,6 +66,7 @@ class Rule:
 		self.__input=input
 		self.__output=output
 		self.__run=run
+		self.__priority=random.randint(1,10000000)
 
 	def get_input(self):
 		return self.__input
@@ -78,5 +76,10 @@ class Rule:
 
 	def run(self):
 		self.__run()
+
+	def get_priority(self):
+		print ("priority",self.__priority)
+		return self.__priority
+
 
 

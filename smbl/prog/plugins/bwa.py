@@ -52,7 +52,7 @@ class Bwa(__program.Program):
 		makefile="~/.smbl/src/bwa/bwa/Makefile"
 		executable="~/.smbl/src/bwa/bwa/bwa"
 
-		self.run_commands(
+		smbl.run_commands(
 			'''
 				rm -fR "{src_dir}"
 				mkdir -p "{build_dir}"
