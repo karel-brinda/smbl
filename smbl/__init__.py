@@ -24,6 +24,12 @@ def include():
 			"include_all.snake"
 		)
 
+def all_programs():
+	return [plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()]
+
+def all_installable_programs():
+	return
+
 snakemake.shell(
 		"""
 			mkdir -p "{}" "{}" "{}"

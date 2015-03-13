@@ -22,29 +22,11 @@ class WgSim(__program.Program):
 
 	@classmethod
 	def install(cls):
-		src_dir=os.path.join(smbl.src_dir,"wgsim")
-		build_dir=os.path.join(src_dir,"wgsim")
+		gitdir=cls.git_clone("http://github.com/lh3/wgsim","wgsim")
+		snakemake.shell('cd "{dir}" && gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm'.format(dir=gitdir))
+		cls.install_file("wgsim/wgsim",WGSIM)
+		cls.install_file("wgsim/wgsim_eval.pl",WGSIM_EVAL)
 
-		FROM=[
-				os.path.join(build_dir,"wgsim"),
-				os.path.join(build_dir,"wgsim_eval.pl"),
-			]
-		TO = WgSim.get_files()
-
-
-		smbl.run_commands(
-			'''
-				rm -fR "{src_dir}"
-				mkdir -p "{build_dir}"
-				git clone --depth=1 http://github.com/lh3/wgsim "{build_dir}"
-				cd "{build_dir}" && gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm
-				cp "{FROM[0]}" "{TO[0]}"
-				cp "{FROM[1]}" "{TO[1]}"
-				rm -fR "{src_dir}"
-			'''.format(
-					src_dir=src_dir,
-					build_dir=build_dir,
-					FROM=FROM,
-					TO=TO,
-				),
-			)
+	@classmethod
+	def supported_platforms(cls):
+		return ["cygwin","macos","linux"]

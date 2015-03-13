@@ -3,6 +3,7 @@ import smbl
 import collections
 import random
 import os
+import abc
 
 __PLUGINS = set()
 __RULES= set()
@@ -29,6 +30,7 @@ def get_bin_file_path(program):
 ##########################################
 
 
+#class ProgramWatcher(abc.ABCMeta):
 class ProgramWatcher(type):
 	def __init__(cls, name, bases, clsdict):
 		if len(cls.mro()) == 3:
@@ -45,15 +47,15 @@ class Program(metaclass = ProgramWatcher):
 
 	@classmethod
 	def install_all_steps(cls):
+		print("ahooooooj",cls.mro())
 		cls.install_pre()
 		cls.install()
 		cls.install_post()
 
 	@classmethod
 	def install_pre(cls):
-		platform=smbl.get_platform()
-		if platform not in cls.supported_platforms():
-			raise NotImplementedError("This platform is not supported ({})".format(platform))
+		if not cls.is_platform_supported():
+			raise NotImplementedError("This platform is not supported ({})".format(smbl.get_platform()))
 		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 		snakemake.shell('mkdir -p "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 
@@ -67,9 +69,18 @@ class Program(metaclass = ProgramWatcher):
 		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 
 	@classmethod
+	#@abc.abstractmethod
 	# fixme: abstract
 	def supported_platforms(cls):
-		pass
+		return
+
+	@classmethod
+	def is_platform_supported(cls):
+		platform=smbl.get_platform()
+		if platform in cls.supported_platforms():
+			return True
+		else:
+			return False
 
 	@classmethod
 	# fixme: abstract
@@ -81,6 +92,7 @@ class Program(metaclass = ProgramWatcher):
 		directory_full=os.path.join(cls.src_dir,dirname)
 		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=directory_full))
 		snakemake.shell('git clone --recursive --depth 1 "{rep}" "{dir}" > /dev/null'.format(rep=repository,dir=directory_full))
+		return directory_full
 
 	@classmethod
 	def install_file(cls,source,dest):

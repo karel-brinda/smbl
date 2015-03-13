@@ -52,9 +52,6 @@ class Bwa(__program.Program):
 
 	@classmethod
 	def install(cls):
-		build_dir=os.path.join(cls.src_dir,"bwa")
-		executable=os.path.join(build_dir,"bwa")
-
 		cls.git_clone("http://github.com/lh3/bwa","bwa")
 		cls.run_make("bwa")
 		cls.install_file("bwa/bwa",BWA)
