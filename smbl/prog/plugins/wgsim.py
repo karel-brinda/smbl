@@ -4,8 +4,8 @@ import os
 
 import __program
 
-WGSIM              = os.path.join(smbl.bin_dir,"wgsim")
-WGSIM_EVAL         = os.path.join(smbl.bin_dir,"wgsim_eval.pl")
+WGSIM              = __program.get_bin_file_path("wgsim")
+WGSIM_EVAL         = __program.get_bin_file_path("wgsim_eval.pl")
 
 
 ##########################################
@@ -13,15 +13,15 @@ WGSIM_EVAL         = os.path.join(smbl.bin_dir,"wgsim_eval.pl")
 
 
 class WgSim(__program.Program):
-	@staticmethod
-	def get_files():
+	@classmethod
+	def get_installation_files(cls):
 		return [
 				WGSIM,
 				WGSIM_EVAL,
 			]
 
-	@staticmethod
-	def install():
+	@classmethod
+	def install(cls):
 		src_dir=os.path.join(smbl.src_dir,"wgsim")
 		build_dir=os.path.join(src_dir,"wgsim")
 

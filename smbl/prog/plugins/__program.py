@@ -2,6 +2,7 @@ import snakemake
 import smbl
 import collections
 import random
+import os
 
 __PLUGINS = set()
 __RULES= set()
@@ -20,6 +21,9 @@ def register_rule(rule):
 def get_registered_rules():
 	return list(__RULES)
 
+def get_bin_file_path(program):
+	return os.path.join(smbl.bin_dir,program)
+
 
 ##########################################
 ##########################################
@@ -29,30 +33,63 @@ class ProgramWatcher(type):
 	def __init__(cls, name, bases, clsdict):
 		if len(cls.mro()) == 3:
 			register_plugin(cls)
+			cls.src_dir=os.path.join(smbl.src_dir,cls.__name__)
 		super(ProgramWatcher, cls).__init__(name, bases, clsdict)
 
 
 class Program(metaclass = ProgramWatcher):
+	src_dir=""
+
 	def __init__(self):
 		pass
 
-	@staticmethod
-	def install(directory):
+	@classmethod
+	def install_all_steps(cls):
+		cls.install_pre()
+		cls.install()
+		cls.install_post()
+
+	@classmethod
+	def install_pre(cls):
+		smbl.snakemake('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		smbl.snakemake('mkdir -p "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+
+	@classmethod
+	# fixme: abstract
+	def install(cls):
+		pass		
+
+	@classmethod
+	def install_post(cls):
+		smbl.snakemake('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+
+	@classmethod
+	# fixme: abstract
+	def supported_platforms(cls):
 		pass
 
-	@staticmethod
-	def supported_platforms():
+	@classmethod
+	# fixme: abstract
+	def get_installation_files(cls):
 		pass
 
-	@staticmethod
-	def get_files():
-		pass
+	@classmethod
+	def git_clone(cls,repository,dirname):
+		directory_full=os.path.join(cls.src_dir,dirname)
+		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=directory_full))
+		snakemake.shell('git clone --recursive --depth 1 "{rep}" "{dir}" > /dev/null'.format(rep=repository,dir=directory_full))
 
-	@staticmethod
-	def get_priority():
+	@classmethod
+	def install_file(cls,source,dest):
+		filename_full=os.path.join(cls.src_dir,source)
+		snakemake.shell('cp "{source}" "{dest}" > /dev/null'.format(source=filename_full,dest=dest))
+
+	@classmethod
+	def get_priority(cls):
 		__installation_priority=random.randint(1,10000000)
 		print ("install. priority",__installation_priority)
 		return __installation_priority
+
 
 
 ##########################################
