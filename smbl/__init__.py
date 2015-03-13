@@ -53,3 +53,13 @@ def is_mac():
 
 def is_os_64bit():
 	return platform.machine().endswith('64')
+
+def get_platform():
+	if is_linux():
+		return "linux"
+	if is_windows():
+		return "windows"
+	if is_mac():
+		return "macos"
+	if is_cygwin():
+		return "cygwin"

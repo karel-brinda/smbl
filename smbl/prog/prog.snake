@@ -7,13 +7,13 @@ for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
 	print("plugin",plugin)
 	rule:
 		output:
-			plugin.get_files()
+			plugin.get_installation_files()
 		params:
 			i=str(i),
 		priority:
 			plugin.get_priority()
 		run:
-			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install)()
+			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install_all_steps)()
 
 for i, rule in enumerate(smbl.prog.plugins.get_registered_rules()):
 	rule:

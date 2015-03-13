@@ -47,18 +47,16 @@ class Bwa(__program.Program):
 		return [BWA]
 
 	@classmethod
+	def supported_platforms(cls):
+		return ["cygwin","macos","linux"]
+
+	@classmethod
 	def install(cls):
 		build_dir=os.path.join(cls.src_dir,"bwa")
 		executable=os.path.join(build_dir,"bwa")
 
 		cls.git_clone("http://github.com/lh3/bwa","bwa")
-		smbl.run_commands(
-			'''
-				cd "{build_dir}" && make --jobs
-			'''.format(
-					build_dir=build_dir,
-				)
-			)
+		cls.run_make("bwa")
 		cls.install_file("bwa/bwa",BWA)
 
 	##########################################

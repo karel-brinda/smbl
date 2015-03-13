@@ -51,8 +51,11 @@ class Program(metaclass = ProgramWatcher):
 
 	@classmethod
 	def install_pre(cls):
-		smbl.snakemake('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
-		smbl.snakemake('mkdir -p "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		platform=smbl.get_platform()
+		if platform not in cls.supported_platforms():
+			raise NotImplementedError("This platform is not supported ({})".format(platform))
+		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		snakemake.shell('mkdir -p "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 
 	@classmethod
 	# fixme: abstract
@@ -61,7 +64,7 @@ class Program(metaclass = ProgramWatcher):
 
 	@classmethod
 	def install_post(cls):
-		smbl.snakemake('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 
 	@classmethod
 	# fixme: abstract
@@ -83,6 +86,11 @@ class Program(metaclass = ProgramWatcher):
 	def install_file(cls,source,dest):
 		filename_full=os.path.join(cls.src_dir,source)
 		snakemake.shell('cp "{source}" "{dest}" > /dev/null'.format(source=filename_full,dest=dest))
+
+	@classmethod
+	def run_make(cls,dir):
+		dir_full=os.path.join(cls.src_dir,dir)
+		snakemake.shell('cd "{build_dir}" && make --jobs'.format(build_dir=dir_full))
 
 	@classmethod
 	def get_priority(cls):
