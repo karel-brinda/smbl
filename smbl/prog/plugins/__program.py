@@ -105,6 +105,11 @@ class Program(metaclass = ProgramWatcher):
 		snakemake.shell('cd "{build_dir}" && make --jobs'.format(build_dir=dir_full))
 
 	@classmethod
+	def run_cmake(cls,dir):
+		dir_full=os.path.join(cls.src_dir,dir)
+		snakemake.shell('cd "{build_dir}" && cmake .'.format(build_dir=dir_full))
+
+	@classmethod
 	def get_priority(cls):
 		__installation_priority=random.randint(1,10000000)
 		print ("install. priority",__installation_priority)

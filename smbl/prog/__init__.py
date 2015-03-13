@@ -25,8 +25,8 @@ BOWTIE2_INSPECT_S  = os.path.join(smbl.bin_dir,"bowtie2-inspect-s")
 CURESIM            = os.path.join(smbl.bin_dir,"curesim.jar")
 CURESIM_EVAL       = os.path.join(smbl.bin_dir,"curesim_eval.jar")
 DRFAST             = os.path.join(smbl.bin_dir,"drfast")
-DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
-DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
+#DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
+#DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
 FREEC              = os.path.join(smbl.bin_dir,"freec")
 GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
@@ -77,8 +77,8 @@ ALL = [
 #		BWA,
 		CURESIM,
 		CURESIM_EVAL,
-		DWGSIM,
-		DWGSIM_EVAL,
+#		DWGSIM,
+#		DWGSIM_EVAL,
 		FREEC,
 		GEM_INDEXER,
 		GEM_MAPPER,
@@ -114,3 +114,15 @@ ALL = [
 
 		XS,
 	]
+
+def correct_samtools_make(makefile_fn):
+	makefile_backup_fn = makefile_fn+".backup"
+	if not os.path.isfile(makefile_backup_fn):
+		with open(makefile_fn, 'r') as makefile:
+			content = makefile.read()
+			if smbl.is_linux():
+				content = content.replace("-lcurses","-lncurses")
+			elif smbl.is_cygwin():
+				content = content.replace("-D_FILE_OFFSET_BITS=64","-D_FILE_OFFSET_BITS=64 -Dexpl=exp -Dlogl=log")
+		with open(makefile_fn, 'w') as makefile:
+			makefile.write(content)

@@ -4,8 +4,8 @@ import os
 
 import __program
 
-WGSIM              = __program.get_bin_file_path("wgsim")
-WGSIM_EVAL         = __program.get_bin_file_path("wgsim_eval.pl")
+WGSIM      = __program.get_bin_file_path("wgsim")
+WGSIM_EVAL = __program.get_bin_file_path("wgsim_eval.pl")
 
 
 ##########################################

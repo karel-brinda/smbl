@@ -152,40 +152,40 @@ rule prog_bcftools:
 			) > /dev/null
 		"""
 
-rule prog_dwgsim:
-	message:
-		"Installing DwgSim (a read simulator). "+_SUFFIX_INSTALLATION
-	output:
-		smbl.prog.DWGSIM,
-		smbl.prog.DWGSIM_EVAL
-	params:
-		src=os.path.join(smbl.src_dir,"dwgsim")
-	run:
-		shell(
-			"""
-				(
-					rm -fR "{params.src}"
-					mkdir -p "{params.src}"
-					cd "{params.src}"
-
-					git clone --depth=1 --recursive http://github.com/nh13/dwgsim
-				) > /dev/null
-			"""
-		)
-		correct_samtools_make(os.path.join(params.src,"dwgsim","samtools","Makefile"))
-		shell(
-			"""
-				(
-					cd "{params.src}/dwgsim"
-					make -j
-					cp "{params.src}/dwgsim/dwgsim" "{output[0]}"
-					cp "{params.src}/dwgsim/dwgsim_eval" "{output[1]}"
-	
-					rm -fR "{params.src}"
-				) > /dev/null
-		"""
-		)
-
+#rule prog_dwgsim:
+#	message:
+#		"Installing DwgSim (a read simulator). "+_SUFFIX_INSTALLATION
+#	output:
+#		smbl.prog.DWGSIM,
+#		smbl.prog.DWGSIM_EVAL
+#	params:
+#		src=os.path.join(smbl.src_dir,"dwgsim")
+#	run:
+#		shell(
+#			"""
+#				(
+#					rm -fR "{params.src}"
+#					mkdir -p "{params.src}"
+#					cd "{params.src}"
+#
+#					git clone --depth=1 --recursive http://github.com/nh13/dwgsim
+#				) > /dev/null
+#			"""
+#		)
+#		correct_samtools_make(os.path.join(params.src,"dwgsim","samtools","Makefile"))
+#		shell(
+#			"""
+#				(
+#					cd "{params.src}/dwgsim"
+#					make -j
+#					cp "{params.src}/dwgsim/dwgsim" "{output[0]}"
+#					cp "{params.src}/dwgsim/dwgsim_eval" "{output[1]}"
+	#
+#					rm -fR "{params.src}"
+#				) > /dev/null
+#		"""
+#		)
+#
 #rule prog_wgsim:
 #	message:
 #		"Compiling WgSim (an NGS read simulator). "+_SUFFIX_INSTALLATION
