@@ -51,6 +51,8 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def install_pre(cls):
+		assert len(set(cls.supported_platforms()))>0, ""
+		assert set(cls.supported_platforms()).issubset(smbl.prog.all_platforms)
 		if not cls.is_platform_supported():
 			raise NotImplementedError("This platform is not supported ({})".format(smbl.get_platform()))
 		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
@@ -59,17 +61,16 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	# fixme: abstract
 	def install(cls):
-		pass		
+		raise NotImplementedError()
 
 	@classmethod
 	def install_post(cls):
 		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
 
 	@classmethod
-	#@abc.abstractmethod
 	# fixme: abstract
 	def supported_platforms(cls):
-		return
+		raise NotImplementedError()
 
 	@classmethod
 	def is_platform_supported(cls):
@@ -82,7 +83,7 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	# fixme: abstract
 	def get_installation_files(cls):
-		pass
+		raise NotImplementedError()
 
 	@classmethod
 	def git_clone(cls,repository,dirname_short):
