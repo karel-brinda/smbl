@@ -95,6 +95,13 @@ class Program(metaclass = ProgramWatcher):
 		return dirname_full
 
 	@classmethod
+	def svn_checkout(cls,repository,dirname_short):
+		dirname_full=os.path.join(cls.src_dir,dirname_short)
+		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=dirname_full))
+		snakemake.shell('git svn clone "{rep}" "{dir}" > /dev/null'.format(rep=repository,dir=dirname_full))
+		return dirname_full
+
+	@classmethod
 	def download_file(cls,address,filename_short):
 		filename_full=os.path.join(cls.src_dir,filename_short)
 		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=os.path.dirname(filename_full)))
@@ -102,36 +109,38 @@ class Program(metaclass = ProgramWatcher):
 		return filename_full
 
 	@classmethod
-	def install_file(cls,filename_short,dest):
+	def install_file(cls,filename_short,dest,executable=True):
 		filename_full=os.path.join(cls.src_dir,filename_short)
 		snakemake.shell('cp "{source}" "{dest}" > /dev/null'.format(source=filename_full,dest=dest))
+		if executable:
+			snakemake.shell('chmod +x "{}" > /dev/null'.format(dest))
 
 	@classmethod
 	def extract_tar(cls,filename_short,strip=0):
 		filename_full=os.path.join(cls.src_dir,filename_short)
 		dirname_full=os.path.dirname(filename_full)
-		snakemake.shell('(cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}" > /dev/null)'.format(dir=dirname_full,strip=strip,fn=filename_full))
+		snakemake.shell('(cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}") > /dev/null'.format(dir=dirname_full,strip=strip,fn=filename_full))
 		return dirname_full
 
 	@classmethod
 	def run_make(cls,dirname_short,clean=False,parallel=True):
 		dirname_full=os.path.join(cls.src_dir,dirname_short)
 		if clean:
-			snakemake.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
+			snakemake.shell('(cd "{build_dir}" && make clean) > /dev/null'.format(build_dir=dirname_full))
 		other_args=""
 		if parallel:
 			other_args+=" --jobs"
-		snakemake.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))
+		snakemake.shell('(cd "{build_dir}" && make {other_args}) > /dev/null'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod
 	def run_cmake(cls,dirname_short):
 		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('cd "{build_dir}" && cmake .'.format(build_dir=dirname_full))
+		snakemake.shell('(cd "{build_dir}" && cmake .) > /dev/null'.format(build_dir=dirname_full))
 
 	@classmethod
 	def run_configure(cls,dirname_short):
 		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('cd "{build_dir}" && ./configure'.format(build_dir=dirname_full))
+		snakemake.shell('(cd "{build_dir}" && ./configure) > /dev/null'.format(build_dir=dirname_full))
 
 	@classmethod
 	def get_priority(cls):

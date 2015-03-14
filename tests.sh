@@ -47,6 +47,7 @@ echo
 echo
 
 (
+	exit 0
 	set -ex -o pipefail; 
 
 	rm -fR ~/.smbl
@@ -77,8 +78,5 @@ echo
 (
 	set -ex -o pipefail; 
 
-	rm -fR ~/.smbl
-	snakemake -p -s ./smbl/prog/prog.snake --cores 12
-	rm -fR ~/.smbl
-	snakemake -p -s ./smbl/fasta/fasta.snake --cores 12
+	snakemake -s tests/Snakefile.all_programs -p --cores 16
 )
