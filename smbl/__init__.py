@@ -25,10 +25,15 @@ def include():
 		)
 
 def all_programs():
-	return [plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()]
+	return [
+			plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()
+		]
 
-def all_installable_programs():
-	return
+def all_compatible_programs():
+	return [
+			plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()
+				if plugin.is_platform_supported()
+		]
 
 snakemake.shell(
 		"""

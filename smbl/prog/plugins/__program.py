@@ -9,14 +9,12 @@ __PLUGINS = set()
 __RULES= set()
 
 def register_plugin(plugin):
-	print("registering plugin",plugin)
 	__PLUGINS.add(plugin)
 
 def get_registered_plugins():
 	return list(__PLUGINS)
 
 def register_rule(rule):
-	print("registering rule",rule)
 	__RULES.add(rule)
 
 def get_registered_rules():
@@ -32,14 +30,14 @@ def get_bin_file_path(program):
 
 #class ProgramWatcher(abc.ABCMeta):
 class ProgramWatcher(type):
-	def __init__(cls, name, bases, clsdict):
+	def __init__(cls,name,bases,clsdict):
 		if len(cls.mro()) == 3:
 			register_plugin(cls)
 			cls.src_dir=os.path.join(smbl.src_dir,cls.__name__)
 		super(ProgramWatcher, cls).__init__(name, bases, clsdict)
 
 
-class Program(metaclass = ProgramWatcher):
+class Program(metaclass=ProgramWatcher):
 	src_dir=""
 
 	def __init__(self):
@@ -47,7 +45,6 @@ class Program(metaclass = ProgramWatcher):
 
 	@classmethod
 	def install_all_steps(cls):
-		print("ahooooooj",cls.mro())
 		cls.install_pre()
 		cls.install()
 		cls.install_post()
@@ -145,7 +142,6 @@ class Program(metaclass = ProgramWatcher):
 	@classmethod
 	def get_priority(cls):
 		__installation_priority=random.randint(1,10000000)
-		print ("install. priority",__installation_priority)
 		return __installation_priority
 
 
@@ -173,7 +169,6 @@ class Rule:
 		self.__run()
 
 	def get_priority(self):
-		print ("priority",self.__priority)
 		return self.__priority
 
 
