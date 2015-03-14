@@ -10,5 +10,6 @@ python:
 install:
   - "pip install ."
   - "pip install -r requirements.txt"
+  - "sudo apt-get install git-svn"
 # command to run tests
 script: "./tests.sh"

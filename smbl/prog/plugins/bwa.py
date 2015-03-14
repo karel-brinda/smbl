@@ -4,7 +4,7 @@ import os
 
 import __program
 
-BWA = "\~/.smbl/bin/bwa"
+BWA = os.path.join(smbl.bin_dir,"bwa")
 
 
 ##########################################
@@ -42,32 +42,19 @@ class Bwa(__program.Program):
 		)
 
 
-	def get_files():
-		return BWA
+	@classmethod
+	def get_installation_files(cls):
+		return [BWA]
 
-	@staticmethod
-	def install():
-		src_dir="~/.smbl/src/bwa"
-		build_dir="~/.smbl/src/bwa/bwa"
-		makefile="~/.smbl/src/bwa/bwa/Makefile"
-		executable="~/.smbl/src/bwa/bwa/bwa"
+	@classmethod
+	def supported_platforms(cls):
+		return ["cygwin","macos","linux"]
 
-		smbl.run_commands(
-			'''
-				rm -fR "{src_dir}"
-				mkdir -p "{build_dir}"
-				git clone --depth=1 http://github.com/lh3/bwa "{build_dir}"
-				cd "{build_dir}" && make --jobs
-				cp "{executable}" "{BWA}"
-				rm -fR "{src_dir}"
-			'''.format(
-					src_dir=src_dir,
-					build_dir=build_dir,
-					makefile=makefile,
-					executable=executable,
-					BWA=BWA,
-				)
-			)
+	@classmethod
+	def install(cls):
+		cls.git_clone("http://github.com/lh3/bwa","bwa")
+		cls.run_make("bwa")
+		cls.install_file("bwa/bwa",BWA)
 
 	##########################################
 
@@ -96,13 +83,13 @@ class Bwa(__program.Program):
 
 	def make_index(self):
 		snakemake.shell("{bwa} index {fa}".format(
-				bwa=smbl.prog.BWA,
+				bwa=BWA,
 				fa=self._fa_fn,
 			))
 
 	def make_index_input(self):
 		return [
-				smbl.prog.BWA,
+				BWA,
 				self._fa_fn,
 			]
 
@@ -118,7 +105,7 @@ class Bwa(__program.Program):
 
 	def map_reads_input(self):
 		return [
-				smbl.prog.BWA,
+				BWA,
 				smbl.prog.SAMTOOLS,
 				self.index_fns(),
 				self._fa_fn,
@@ -158,7 +145,7 @@ class BwaMem(Bwa):
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
 		snakemake.shell("""\"{bwa}" mem -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
-				bwa=smbl.prog.BWA,
+				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,
 				reads_string=reads_string,
@@ -195,7 +182,7 @@ class BwaSw(Bwa):
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
 		snakemake.shell("""\"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
-				bwa=smbl.prog.BWA,
+				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,
 				reads_string=reads_string,

@@ -24,17 +24,30 @@ def include():
 			"include_all.snake"
 		)
 
+def all_programs():
+	return [
+			plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()
+		]
+
+def all_compatible_programs():
+	return [
+			plugin.get_installation_files() for plugin in smbl.prog.plugins.get_registered_plugins()
+				if plugin.is_platform_supported()
+		]
+
 snakemake.shell(
 		"""
 			mkdir -p "{}" "{}" "{}"
 		""".format(bin_dir,fa_dir,src_dir)
 	)
 
-def run_commands(commands):
+def run_commands(commands, verbose=False):
 	for command in commands.split(os.linesep):
 		command = command.strip()
 		if command == "":
 			continue
+		if verbose==False:
+			command = "({})>/dev/null".format(command)
 		snakemake.shell(command)
 
 def is_linux():
@@ -51,3 +64,13 @@ def is_mac():
 
 def is_os_64bit():
 	return platform.machine().endswith('64')
+
+def get_platform():
+	if is_linux():
+		return "linux"
+	if is_windows():
+		return "windows"
+	if is_mac():
+		return "macos"
+	if is_cygwin():
+		return "cygwin"
