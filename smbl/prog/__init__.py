@@ -27,7 +27,7 @@ CURESIM_EVAL       = os.path.join(smbl.bin_dir,"curesim_eval.jar")
 DRFAST             = os.path.join(smbl.bin_dir,"drfast")
 #DWGSIM             = os.path.join(smbl.bin_dir,"dwgsim")
 #DWGSIM_EVAL        = os.path.join(smbl.bin_dir,"dwgsim_eval")
-FREEC              = os.path.join(smbl.bin_dir,"freec")
+#FREEC              = os.path.join(smbl.bin_dir,"freec")
 GEM_INDEXER        = os.path.join(smbl.bin_dir,"gem-indexer")
 GEM_MAPPER         = os.path.join(smbl.bin_dir,"gem-mapper")
 GEM_2_SAM          = os.path.join(smbl.bin_dir,"gem-2-sam")
@@ -79,7 +79,7 @@ ALL = [
 		CURESIM_EVAL,
 #		DWGSIM,
 #		DWGSIM_EVAL,
-		FREEC,
+#		FREEC,
 		GEM_INDEXER,
 		GEM_MAPPER,
 		GEM_2_SAM,
