@@ -1,3 +1,10 @@
+#
+# TODO:
+#  - fix CygWin error
+#
+
+
+
 import smbl
 import snakemake
 import os
@@ -29,7 +36,7 @@ class GnuPlot4(__program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["macos","linux"]
 
 
 class GnuPlot5(__program.Program):
@@ -49,4 +56,4 @@ class GnuPlot5(__program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["macos","linux"]

@@ -1,3 +1,8 @@
+#
+# TODO:
+#  - fix linking error in CygWin
+#
+
 import smbl
 import snakemake
 import os
@@ -27,4 +32,4 @@ class BcfTools(__program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["macos","linux"]
