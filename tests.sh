@@ -78,5 +78,5 @@ echo
 (
 	set -ex -o pipefail; 
 
-	snakemake -s tests/Snakefile.all_programs -p --cores 16
+	snakemake -s tests/Snakefile.all_programs -p
 )
