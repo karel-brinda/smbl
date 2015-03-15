@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-TWOBITTOFA = __program.get_bin_file_path("twoBitToFa")
+TWOBITTOFA = _program.get_bin_file_path("twoBitToFa")
 
 
 ##########################################
 ##########################################
 
 
-class TwoBitToFa(__program.Program):
+class TwoBitToFa(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

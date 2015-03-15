@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-STORM_NUCLEOTIDE = __program.get_bin_file_path("storm-nucleotide")
-STORM_COLOR      = __program.get_bin_file_path("storm-color")
+STORM_NUCLEOTIDE = _program.get_bin_file_path("storm-nucleotide")
+STORM_COLOR      = _program.get_bin_file_path("storm-color")
 
 
 ##########################################
 ##########################################
 
 
-class Storm(__program.Program):
+class Storm(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

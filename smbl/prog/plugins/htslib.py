@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-TABIX = __program.get_bin_file_path("tabix")
-BGZIP = __program.get_bin_file_path("bgzip")
+TABIX = _program.get_bin_file_path("tabix")
+BGZIP = _program.get_bin_file_path("bgzip")
 
 
 ##########################################
 ##########################################
 
 
-class HtsLib(__program.Program):
+class HtsLib(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

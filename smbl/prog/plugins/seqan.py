@@ -2,27 +2,27 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-MASON_FRAG_SEQUENCING   = __program.get_bin_file_path("mason_frag_sequencing")
-MASON_GENOME            = __program.get_bin_file_path("mason_genome")
-MASON_MATERIALIZER      = __program.get_bin_file_path("mason_materializer")
-MASON_METHYLATION       = __program.get_bin_file_path("mason_methylation")
-MASON_SIMULATOR         = __program.get_bin_file_path("mason_simulator")
-MASON_SPLICING          = __program.get_bin_file_path("mason_splicing")
-MASON_VARIATOR          = __program.get_bin_file_path("mason_variator")
-YARA_INDEXER            = __program.get_bin_file_path("yara_indexer")
-YARA_MAPPER             = __program.get_bin_file_path("yara_mapper")
-RAZERS1                 = __program.get_bin_file_path("razers")
-RAZERS2                 = __program.get_bin_file_path("razers2")
-RAZERS3                 = __program.get_bin_file_path("razers3")
+MASON_FRAG_SEQUENCING   = _program.get_bin_file_path("mason_frag_sequencing")
+MASON_GENOME            = _program.get_bin_file_path("mason_genome")
+MASON_MATERIALIZER      = _program.get_bin_file_path("mason_materializer")
+MASON_METHYLATION       = _program.get_bin_file_path("mason_methylation")
+MASON_SIMULATOR         = _program.get_bin_file_path("mason_simulator")
+MASON_SPLICING          = _program.get_bin_file_path("mason_splicing")
+MASON_VARIATOR          = _program.get_bin_file_path("mason_variator")
+YARA_INDEXER            = _program.get_bin_file_path("yara_indexer")
+YARA_MAPPER             = _program.get_bin_file_path("yara_mapper")
+RAZERS1                 = _program.get_bin_file_path("razers")
+RAZERS2                 = _program.get_bin_file_path("razers2")
+RAZERS3                 = _program.get_bin_file_path("razers3")
 
 
 ##########################################
 ##########################################
 
 
-class Seqan(__program.Program):
+class Seqan(_program.Program):
 
 	@classmethod
 	def get_installation_files(cls):
@@ -49,6 +49,7 @@ class Seqan(__program.Program):
 		cls.run_cmake("")
 
 		cls.run_make("apps/yara")
+		cls.shell("find ~")
 		cls.install_file("bin/yara_indexer",YARA_INDEXER)
 		cls.install_file("bin/yara_mapper",YARA_MAPPER)
 
@@ -73,7 +74,8 @@ class Seqan(__program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux","cygwin"]
+		# cywgin has too old cmake
+		return ["macos","linux"]
 
 
 ##########################################

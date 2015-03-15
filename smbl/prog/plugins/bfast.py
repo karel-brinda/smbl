@@ -2,9 +2,9 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-BFAST = __program.get_bin_file_path("bfast")
+BFAST = _program.get_bin_file_path("bfast")
 
 #todo: mapping commands from http://genome.jouy.inra.fr/ngs/mapping/
 
@@ -13,7 +13,7 @@ BFAST = __program.get_bin_file_path("bfast")
 ##########################################
 
 
-class BFast(__program.Program):
+class BFast(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

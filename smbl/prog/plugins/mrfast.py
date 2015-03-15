@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-MRFAST = __program.get_bin_file_path("mrfast")
+MRFAST = _program.get_bin_file_path("mrfast")
 
 
 ##########################################
 ##########################################
 
 
-class MrFast(__program.Program):
+class MrFast(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

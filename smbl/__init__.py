@@ -10,13 +10,15 @@ import platform
 
 smbl_dir = os.path.join(os.path.expanduser("~"),".smbl")
 
+print("loading smbl")
+
+
 bin_dir  = os.path.join(smbl_dir,"bin")
 fa_dir   = os.path.join(smbl_dir,"fa")
 src_dir  = os.path.join(smbl_dir,"src")
 
 import smbl.fasta
 import smbl.prog
-#import smbl.prog.plugins
 
 def include():
 	return os.path.join(
@@ -40,15 +42,6 @@ snakemake.shell(
 			mkdir -p "{}" "{}" "{}"
 		""".format(bin_dir,fa_dir,src_dir)
 	)
-
-def run_commands(commands, verbose=False):
-	for command in commands.split(os.linesep):
-		command = command.strip()
-		if command == "":
-			continue
-		if verbose==False:
-			command = "({})>/dev/null".format(command)
-		snakemake.shell(command)
 
 def is_linux():
 	return sys.platform.startswith('linux')

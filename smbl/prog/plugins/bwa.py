@@ -2,7 +2,7 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
 BWA = os.path.join(smbl.bin_dir,"bwa")
 
@@ -11,7 +11,7 @@ BWA = os.path.join(smbl.bin_dir,"bwa")
 ##########################################
 
 
-class Bwa(__program.Program):
+class Bwa(_program.Program):
 
 	@classmethod
 	def get_installation_files(cls):

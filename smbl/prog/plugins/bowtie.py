@@ -2,24 +2,24 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-BOWTIE2            = __program.get_bin_file_path("bowtie2")
-BOWTIE2_ALIGN_L    = __program.get_bin_file_path("bowtie2-align-l")
-BOWTIE2_ALIGN_S    = __program.get_bin_file_path("bowtie2-align-s")
-BOWTIE2_BUILD      = __program.get_bin_file_path("bowtie2-build")
-BOWTIE2_BUILD_L    = __program.get_bin_file_path("bowtie2-build-l")
-BOWTIE2_BUILD_S    = __program.get_bin_file_path("bowtie2-build-s")
-BOWTIE2_INSPECT    = __program.get_bin_file_path("bowtie2-inspect")
-BOWTIE2_INSPECT_L  = __program.get_bin_file_path("bowtie2-inspect-l")
-BOWTIE2_INSPECT_S  = __program.get_bin_file_path("bowtie2-inspect-s")
+BOWTIE2            = _program.get_bin_file_path("bowtie2")
+BOWTIE2_ALIGN_L    = _program.get_bin_file_path("bowtie2-align-l")
+BOWTIE2_ALIGN_S    = _program.get_bin_file_path("bowtie2-align-s")
+BOWTIE2_BUILD      = _program.get_bin_file_path("bowtie2-build")
+BOWTIE2_BUILD_L    = _program.get_bin_file_path("bowtie2-build-l")
+BOWTIE2_BUILD_S    = _program.get_bin_file_path("bowtie2-build-s")
+BOWTIE2_INSPECT    = _program.get_bin_file_path("bowtie2-inspect")
+BOWTIE2_INSPECT_L  = _program.get_bin_file_path("bowtie2-inspect-l")
+BOWTIE2_INSPECT_S  = _program.get_bin_file_path("bowtie2-inspect-s")
 
 
 ##########################################
 ##########################################
 
 
-class Bowtie2(__program.Program):
+class Bowtie2(_program.Program):
 
 	@classmethod
 	def get_installation_files(cls):
