@@ -61,6 +61,7 @@ class Program(metaclass=ProgramWatcher):
 			snakemake.shell(command)
 		else:
 			snakemake.shell("({}) > /dev/null".format(command))
+		
 	@classmethod
 	def set_verbosity(cls,verbosity):
 		cls.verbosity=verbosity		
