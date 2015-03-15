@@ -68,7 +68,6 @@ class Seqan(_program.Program):
 		cls.install_file("bin/razers3",RAZERS3)
 
 		cls.run_make("apps/yara")
-		cls.shell("find ~/.smbl/src/Seqan")
 		cls.install_file("bin/yara_indexer",YARA_INDEXER)
 		cls.install_file("bin/yara_mapper",YARA_MAPPER)
 
