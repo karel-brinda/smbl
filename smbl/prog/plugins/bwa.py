@@ -82,7 +82,7 @@ class Bwa(__program.Program):
 	##########################################
 
 	def make_index(self):
-		snakemake.shell("{bwa} index {fa}".format(
+		snakemake.shell('"{bwa}" index {fa}'.format(
 				bwa=BWA,
 				fa=self._fa_fn,
 			))
@@ -144,7 +144,7 @@ class BwaMem(Bwa):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell("""\"{bwa}" mem -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
+		snakemake.shell('"{bwa}" mem -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,
@@ -181,7 +181,7 @@ class BwaSw(Bwa):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell("""\"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
+		snakemake.shell('"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,
