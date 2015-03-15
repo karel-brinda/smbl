@@ -48,10 +48,6 @@ class Seqan(_program.Program):
 
 		cls.run_cmake("")
 
-		cls.run_make("apps/yara")
-		cls.shell("find ~")
-		cls.install_file("bin/yara_indexer",YARA_INDEXER)
-		cls.install_file("bin/yara_mapper",YARA_MAPPER)
 
 		cls.run_make("apps/mason2")
 		cls.install_file("bin/mason_frag_sequencing",MASON_FRAG_SEQUENCING)
@@ -71,6 +67,10 @@ class Seqan(_program.Program):
 		cls.run_make("apps/razers3")
 		cls.install_file("bin/razers3",RAZERS3)
 
+		cls.run_make("apps/yara")
+		cls.shell("find ~/.smbl/src/Seqan")
+		cls.install_file("bin/yara_indexer",YARA_INDEXER)
+		cls.install_file("bin/yara_mapper",YARA_MAPPER)
 
 	@classmethod
 	def supported_platforms(cls):
