@@ -6,6 +6,8 @@ import __program
 
 BFAST = __program.get_bin_file_path("bfast")
 
+#todo: mapping commands from http://genome.jouy.inra.fr/ngs/mapping/
+
 
 ##########################################
 ##########################################

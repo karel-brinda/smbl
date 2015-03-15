@@ -20,35 +20,6 @@ BOWTIE2_INSPECT_S  = __program.get_bin_file_path("bowtie2-inspect-s")
 
 
 class Bowtie2(__program.Program):
-	def __init__(
-				self,
-				fasta,
-				bam,
-				fastq_1,
-				fastq_2=None,
-			):
-
-		super().__init__()
-
-
-		self._fa_fn=fasta
-		self._fq1_fn=fastq_1
-		self._fq2_fn=fastq_2
-		self._bam_fn=bam
-		self._prefix=bam[:-4]
-
-		smbl.prog.plugins.Rule(
-			input=self.make_index_input(),
-			output=self.make_index_output(),
-			run=self.make_index,
-		)
-
-		smbl.prog.plugins.Rule(
-			input=self.map_reads_input(),
-			output=self.map_reads_output(),
-			run=self.map_reads,
-		)
-
 
 	@classmethod
 	def get_installation_files(cls):
@@ -83,6 +54,34 @@ class Bowtie2(__program.Program):
 		return ["cygwin","macos","linux"]
 
 	##########################################
+
+	def __init__(
+				self,
+				fasta,
+				bam,
+				fastq_1,
+				fastq_2=None,
+			):
+
+		super().__init__()
+
+
+		self._fa_fn=fasta
+		self._fq1_fn=fastq_1
+		self._fq2_fn=fastq_2
+		self._bam_fn=bam
+
+		smbl.prog.plugins.Rule(
+			input=self.make_index_input(),
+			output=self.make_index_output(),
+			run=self.make_index,
+		)
+
+		smbl.prog.plugins.Rule(
+			input=self.map_reads_input(),
+			output=self.map_reads_output(),
+			run=self.map_reads,
+		)
 
 	def fq_fn(self):
 		if self._fq2_fn==None:
@@ -133,7 +132,7 @@ class Bowtie2(__program.Program):
 		else:
 			reads_string='-1 "{}" -2 "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell('"{bt2}" -x "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
+		snakemake.shell('"{bt2}" -p {threads} -x "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bt2=BOWTIE2,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,

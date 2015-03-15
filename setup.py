@@ -36,6 +36,7 @@ Copyright (c) 2015 Karel Břinda <karel.brinda@gmail.com> (see LICENSE)
 """,
 	install_requires=[
 		'snakemake',
+		'termcolor',
 	],
 	zip_safe=False,
 	author = 'Karel Břinda',

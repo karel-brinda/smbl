@@ -20,7 +20,7 @@ class MrFast(__program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir_bcftools=cls.git_clone("http://github.com/BilkentCompGen/mrfast","")
+		cls.git_clone("http://github.com/BilkentCompGen/mrfast","")
 		cls.run_make("")
 		cls.install_file("mrfast",MRFAST)
 
