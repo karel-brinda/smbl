@@ -2,18 +2,18 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-GEM_INDEXER = __program.get_bin_file_path("gem-indexer")
-GEM_MAPPER  = __program.get_bin_file_path("gem-mapper")
-GEM_2_SAM   = __program.get_bin_file_path("gem-2-sam")
+GEM_INDEXER = _program.get_bin_file_path("gem-indexer")
+GEM_MAPPER  = _program.get_bin_file_path("gem-mapper")
+GEM_2_SAM   = _program.get_bin_file_path("gem-2-sam")
 
 
 ##########################################
 ##########################################
 
 
-class Gem(__program.Program):
+class Gem(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

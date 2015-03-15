@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-PBSIM = __program.get_bin_file_path("pbsim")
+PBSIM = _program.get_bin_file_path("pbsim")
 
 
 ##########################################
 ##########################################
 
 
-class PbSim(__program.Program):
+class PbSim(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

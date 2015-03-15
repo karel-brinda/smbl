@@ -5,6 +5,8 @@ import random
 import os
 import abc
 
+from termcolor import colored, cprint
+
 __PLUGINS = set()
 __RULES= set()
 
@@ -39,15 +41,38 @@ class ProgramWatcher(type):
 
 class Program(metaclass=ProgramWatcher):
 	src_dir=""
+	verbosity=False
 
 	def __init__(self):
 		pass
 
 	@classmethod
+	def status_message(cls,message):
+		cprint(
+			"[SMBL] '{}': {}".format(cls.__name__,message),
+			"blue",
+			#"on_black",
+			attrs=['bold'],
+		)
+
+	@classmethod
+	def shell(cls,command):
+		if cls.verbosity:
+			snakemake.shell(command)
+		else:
+			snakemake.shell("({}) > /dev/null".format(command))
+		
+	@classmethod
+	def set_verbosity(cls,verbosity):
+		cls.verbosity=verbosity		
+
+	@classmethod
 	def install_all_steps(cls):
+		cls.status_message("Installation started")
 		cls.install_pre()
 		cls.install()
 		cls.install_post()
+		cls.status_message("Installation completed")
 
 	@classmethod
 	def install_pre(cls):
@@ -55,8 +80,8 @@ class Program(metaclass=ProgramWatcher):
 		assert set(cls.supported_platforms()).issubset(smbl.prog.all_platforms)
 		if not cls.is_platform_supported():
 			raise NotImplementedError("This platform is not supported ({})".format(smbl.get_platform()))
-		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
-		snakemake.shell('mkdir -p "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
+		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
 	# fixme: abstract
@@ -65,7 +90,7 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def install_post(cls):
-		snakemake.shell('rm -fR "{src_dir}" > /dev/null'.format(src_dir=cls.src_dir))
+		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
 	# fixme: abstract
@@ -87,63 +112,75 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def git_clone(cls,repository,dirname_short):
-		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=dirname_full))
-		snakemake.shell('git clone --recursive --depth 1 "{rep}" "{dir}" > /dev/null'.format(rep=repository,dir=dirname_full))
+		cls.status_message("Cloning a GIT repository: "+repository)
+		dirname_full=cls.abs_from_short(dirname_short)
+		cls.shell('mkdir -p "{dir}"'.format(dir=dirname_full))
+		cls.shell('git clone --recursive --depth 1 "{rep}" "{dir}"'.format(rep=repository,dir=dirname_full))
 		return dirname_full
 
 	@classmethod
 	def svn_checkout(cls,repository,dirname_short):
-		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=dirname_full))
-		snakemake.shell('git svn clone "{rep}" "{dir}" > /dev/null'.format(rep=repository,dir=dirname_full))
+		cls.status_message("Cloning a SVN repository: "+repository)
+		dirname_full=cls.abs_from_short(dirname_short)
+		cls.shell('mkdir -p "{dir}"'.format(dir=dirname_full))
+		cls.shell('git svn clone "{rep}" "{dir}"'.format(rep=repository,dir=dirname_full))
 		return dirname_full
 
 	@classmethod
 	def download_file(cls,address,filename_short):
-		filename_full=os.path.join(cls.src_dir,filename_short)
-		snakemake.shell('mkdir -p "{dir}" > /dev/null'.format(dir=os.path.dirname(filename_full)))
-		snakemake.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+		cls.status_message("Downloading a file: "+address)
+		filename_full=cls.abs_from_short(filename_short)
+		cls.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
+		cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		return filename_full
 
 	@classmethod
 	def install_file(cls,filename_short,dest,executable=True):
-		filename_full=os.path.join(cls.src_dir,filename_short)
-		snakemake.shell('cp "{source}" "{dest}" > /dev/null'.format(source=filename_full,dest=dest))
+		cls.status_message("Copying: "+cls.abs_from_short(filename_short))
+		filename_full=cls.abs_from_short(filename_short)
+		cls.shell('cp "{source}" "{dest}"'.format(source=filename_full,dest=dest))
 		if executable:
-			snakemake.shell('chmod +x "{}" > /dev/null'.format(dest))
+			cls.shell('chmod +x "{}"'.format(dest))
 
 	@classmethod
 	def extract_tar(cls,filename_short,strip=0):
-		filename_full=os.path.join(cls.src_dir,filename_short)
+		cls.status_message("Extracting an archive: "+cls.abs_from_short(filename_short))
+		filename_full=cls.abs_from_short(filename_short)
 		dirname_full=os.path.dirname(filename_full)
-		snakemake.shell('(cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}") > /dev/null'.format(dir=dirname_full,strip=strip,fn=filename_full))
+		cls.shell('cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}"'.format(dir=dirname_full,strip=strip,fn=filename_full))
 		return dirname_full
 
 	@classmethod
 	def run_make(cls,dirname_short,clean=False,parallel=True):
-		dirname_full=os.path.join(cls.src_dir,dirname_short)
+		cls.status_message("Running make: "+cls.abs_from_short(dirname_short))
+		dirname_full=cls.abs_from_short(dirname_short)
 		if clean:
-			snakemake.shell('(cd "{build_dir}" && make clean) > /dev/null'.format(build_dir=dirname_full))
+			cls.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
 		other_args=""
 		if parallel:
 			other_args+=" --jobs"
-		snakemake.shell('(cd "{build_dir}" && make {other_args}) > /dev/null'.format(build_dir=dirname_full,other_args=other_args))
+		cls.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod
 	def run_cmake(cls,dirname_short):
-		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('(cd "{build_dir}" && cmake .) > /dev/null'.format(build_dir=dirname_full))
+		cls.status_message("Running cmake: "+cls.abs_from_short(dirname_short))
+		dirname_full=cls.abs_from_short(dirname_short)
+		cls.shell('cd "{build_dir}" && cmake .'.format(build_dir=dirname_full))
 
 	@classmethod
 	def run_configure(cls,dirname_short):
-		dirname_full=os.path.join(cls.src_dir,dirname_short)
-		snakemake.shell('(cd "{build_dir}" && ./configure) > /dev/null'.format(build_dir=dirname_full))
+		cls.status_message("Running configure: "+cls.abs_from_short(dirname_short))
+		dirname_full=cls.abs_from_short(dirname_short)
+		cls.shell('cd "{build_dir}" && ./configure'.format(build_dir=dirname_full))
 
 	@classmethod
 	def get_priority(cls):
 		__installation_priority=random.randint(1,10000000)
 		return __installation_priority
+
+	@classmethod
+	def abs_from_short(cls,short):
+		return os.path.abspath(os.path.join(cls.src_dir,short))
 
 
 

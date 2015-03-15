@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-PERM = __program.get_bin_file_path("perm")
+PERM = _program.get_bin_file_path("perm")
 
 
 ##########################################
 ##########################################
 
 
-class PerM(__program.Program):
+class PerM(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

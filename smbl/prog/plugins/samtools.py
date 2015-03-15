@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-SAMTOOLS = __program.get_bin_file_path("samtools")
+SAMTOOLS = _program.get_bin_file_path("samtools")
 
 
 ##########################################
 ##########################################
 
 
-class SamTools(__program.Program):
+class SamTools(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

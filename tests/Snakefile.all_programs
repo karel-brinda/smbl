@@ -1,5 +1,7 @@
 import smbl
 include: smbl.include()
 
+smbl.prog._program.Program.set_verbosity(True)
+
 rule all:
 	input: smbl.all_programs()

@@ -2,18 +2,18 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-ART_454      = __program.get_bin_file_path("art_454")
-ART_ILLUMINA = __program.get_bin_file_path("art_illumina")
-ART_SOLID    = __program.get_bin_file_path("art_solid")
+ART_454      = _program.get_bin_file_path("art_454")
+ART_ILLUMINA = _program.get_bin_file_path("art_illumina")
+ART_SOLID    = _program.get_bin_file_path("art_solid")
 
 
 ##########################################
 ##########################################
 
 
-class Art(__program.Program):
+class Art(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

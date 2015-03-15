@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-SAMBAMBA = __program.get_bin_file_path("sambamba")
+SAMBAMBA = _program.get_bin_file_path("sambamba")
 
 
 ##########################################
 ##########################################
 
 
-class SamBamBa(__program.Program):
+class SamBamBa(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

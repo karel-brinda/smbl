@@ -2,7 +2,7 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
 BWA = os.path.join(smbl.bin_dir,"bwa")
 
@@ -11,36 +11,7 @@ BWA = os.path.join(smbl.bin_dir,"bwa")
 ##########################################
 
 
-class Bwa(__program.Program):
-	def __init__(
-				self,
-				fasta,
-				bam,
-				fastq_1,
-				fastq_2=None,
-			):
-
-		super().__init__()
-
-
-		self._fa_fn=fasta
-		self._fq1_fn=fastq_1
-		self._fq2_fn=fastq_2
-		self._bam_fn=bam
-		self._prefix=bam[:-4]
-
-		smbl.prog.plugins.Rule(
-			input=self.make_index_input(),
-			output=self.make_index_output(),
-			run=self.make_index,
-		)
-
-		smbl.prog.plugins.Rule(
-			input=self.map_reads_input(),
-			output=self.map_reads_output(),
-			run=self.map_reads,
-		)
-
+class Bwa(_program.Program):
 
 	@classmethod
 	def get_installation_files(cls):
@@ -57,6 +28,34 @@ class Bwa(__program.Program):
 		cls.install_file("bwa/bwa",BWA)
 
 	##########################################
+
+	def __init__(
+				self,
+				fasta,
+				bam,
+				fastq_1,
+				fastq_2=None,
+			):
+
+		super().__init__()
+
+
+		self._fa_fn=fasta
+		self._fq1_fn=fastq_1
+		self._fq2_fn=fastq_2
+		self._bam_fn=bam
+
+		smbl.prog.plugins.Rule(
+			input=self.make_index_input(),
+			output=self.make_index_output(),
+			run=self.make_index,
+		)
+
+		smbl.prog.plugins.Rule(
+			input=self.map_reads_input(),
+			output=self.map_reads_output(),
+			run=self.map_reads,
+		)
 
 	def fq_fn(self):
 		if self._fq2_fn==None:
@@ -82,7 +81,7 @@ class Bwa(__program.Program):
 	##########################################
 
 	def make_index(self):
-		snakemake.shell("{bwa} index {fa}".format(
+		snakemake.shell('"{bwa}" index {fa}'.format(
 				bwa=BWA,
 				fa=self._fa_fn,
 			))
@@ -144,7 +143,7 @@ class BwaMem(Bwa):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell("""\"{bwa}" mem -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
+		snakemake.shell('"{bwa}" mem -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,
@@ -181,7 +180,7 @@ class BwaSw(Bwa):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell("""\"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}\"""".format(
+		snakemake.shell('"{bwa}" bwasw -t {threads} "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bwa=BWA,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,

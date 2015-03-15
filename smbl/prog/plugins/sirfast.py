@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import __program
+import _program
 
-SIRFAST = __program.get_bin_file_path("sirfast")
+SIRFAST = _program.get_bin_file_path("sirfast")
 
 
 ##########################################
 ##########################################
 
 
-class SirFast(__program.Program):
+class SirFast(_program.Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -20,7 +20,7 @@ class SirFast(__program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir_bcftools=cls.git_clone("http://github.com/BilkentCompGen/sirfast","")
+		cls.git_clone("http://github.com/BilkentCompGen/sirfast","")
 		cls.run_make("")
 		cls.install_file("sirfast",SIRFAST)
 
