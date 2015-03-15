@@ -43,27 +43,16 @@ class Seqan(__program.Program):
 
 	@classmethod
 	def install(cls):
-		#if smbl.is_linux() and smbl.is_os_64bit():
-		#	fn=cls.download_file("http://packages.seqan.de/mason2/mason2-2.0.0-Linux-x86_64.tar.bz2","mason.tar.bz2")
-		#elif smbl.is_linux():
-		#	fn=cls.download_file("http://packages.seqan.de/mason2/mason2-2.0.0-Linux-i686.tar.bz2","mason.tar.bz2")
-		#elif smbl.is_mac() and smbl.is_os_64bit():
-		#	fn=cls.download_file("http://packages.seqan.de/mason2/mason2-2.0.0-Mac-x86_64.tar.bz2","mason.tar.bz2")
-		#elif smbl.is_mac():
-		#	fn=cls.download_file("http://packages.seqan.de/mason2/mason2-2.0.0-Mac-i686.tar.bz2","mason.tar.bz2")
-		#else:
-		#	raise NotImplementedError("Unsupported OS")
-		#
-		#dir=cls.extract_tar(fn,strip=2)
 
 		cls.git_clone("http://github.com/seqan/seqan","")
-		cls.run_cmake("")
-		cls.run_make("apps/yara")
-		cls.run_make("apps/mason2")
-		cls.run_make("apps/razers")
-		cls.run_make("apps/razers2")
-		cls.run_make("apps/razers3")
 
+		cls.run_cmake("")
+
+		cls.run_make("apps/yara")
+		cls.install_file("bin/yara_indexer",YARA_INDEXER)
+		cls.install_file("bin/yara_mapper",YARA_MAPPER)
+
+		cls.run_make("apps/mason2")
 		cls.install_file("bin/mason_frag_sequencing",MASON_FRAG_SEQUENCING)
 		cls.install_file("bin/mason_genome",MASON_GENOME)
 		cls.install_file("bin/mason_materializer",MASON_MATERIALIZER)
@@ -71,11 +60,16 @@ class Seqan(__program.Program):
 		cls.install_file("bin/mason_simulator",MASON_SIMULATOR)
 		cls.install_file("bin/mason_splicing",MASON_SPLICING)
 		cls.install_file("bin/mason_variator",MASON_VARIATOR)
-		cls.install_file("bin/yara_indexer",YARA_INDEXER)
-		cls.install_file("bin/yara_mapper",YARA_MAPPER)
+
+		cls.run_make("apps/razers")
 		cls.install_file("bin/razers",RAZERS1)
+
+		cls.run_make("apps/razers2")
 		cls.install_file("bin/razers2",RAZERS2)
+
+		cls.run_make("apps/razers3")
 		cls.install_file("bin/razers3",RAZERS3)
+
 
 	@classmethod
 	def supported_platforms(cls):
