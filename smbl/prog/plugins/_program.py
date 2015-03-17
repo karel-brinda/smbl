@@ -131,7 +131,10 @@ class Program(metaclass=ProgramWatcher):
 		cls.status_message("Downloading a file: "+address)
 		filename_full=cls.abs_from_short(filename_short)
 		cls.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
-		cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+		try:
+			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+		except:
+			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		return filename_full
 
 	@classmethod
@@ -153,10 +156,18 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	def run_make(cls,dirname_short,clean=False,parallel=True):
 		cls.status_message("Running make: "+cls.abs_from_short(dirname_short))
+		try:
+			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=parallel)
+		except:
+			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=False)
+
+
+	@classmethod
+	def _run_make(cls,dirname_short,clean=False,parallel=True):
 		dirname_full=cls.abs_from_short(dirname_short)
+		other_args=""
 		if clean:
 			cls.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
-		other_args=""
 		if parallel:
 			other_args+=" --jobs"
 		cls.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))

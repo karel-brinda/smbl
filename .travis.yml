@@ -19,4 +19,6 @@ install:
   - sudo apt-get install git-svn
   - pip install .
   - pip install -r requirements.txt
-script: "./tests.sh"
+script:
+  - tests/tests_examples.sh
+  - tests/tests_mt.sh
