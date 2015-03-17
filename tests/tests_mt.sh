@@ -24,5 +24,5 @@ echo
 
 	rm -fR ~/.smbl
 	cd "$(dirname "$0")"
-	snakemake -s Snakefile.all_programs -p --cores
+	snakemake -s Snakefile.all_programs -p --cores 8
 )

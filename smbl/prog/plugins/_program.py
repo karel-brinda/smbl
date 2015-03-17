@@ -159,7 +159,7 @@ class Program(metaclass=ProgramWatcher):
 		try:
 			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=parallel)
 		except:
-			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=False)
+			cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
 
 
 	@classmethod
