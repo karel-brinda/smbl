@@ -37,7 +37,7 @@ class Bowtie2(_program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir_bcftools=cls.git_clone("http://github.com/BenLangmead/bowtie2","")
+		gitdir_bcftools=cls.git_clone("git://github.com/BenLangmead/bowtie2","")
 		cls.run_make("")
 		cls.install_file("bowtie2",BOWTIE2)
 		cls.install_file("bowtie2-align-l",BOWTIE2_ALIGN_L)

@@ -27,7 +27,7 @@ class DwgSim(_program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir=cls.git_clone("http://github.com/nh13/dwgsim","dwgsim")
+		gitdir=cls.git_clone("git://github.com/nh13/dwgsim","dwgsim")
 		smbl.prog.correct_samtools_make(os.path.join(gitdir,"samtools","Makefile"))
 		cls.run_make("dwgsim")
 		cls.install_file("dwgsim/dwgsim",DWGSIM)

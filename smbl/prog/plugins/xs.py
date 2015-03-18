@@ -20,7 +20,7 @@ class Xs(_program.Program):
 
 	@classmethod
 	def install(cls):
-		fn=cls.download_file("http://exon.ieeta.pt/xs/xs.tar.gz","xs.tar.gz")
+		fn=cls.download_file("git://exon.ieeta.pt/xs/xs.tar.gz","xs.tar.gz")
 		dir=cls.extract_tar(fn,strip=1)
 		cls.run_make(dir)
 		cls.install_file("XS",XS)

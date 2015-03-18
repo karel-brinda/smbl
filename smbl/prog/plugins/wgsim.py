@@ -22,7 +22,7 @@ class WgSim(_program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir=cls.git_clone("http://github.com/lh3/wgsim","wgsim")
+		gitdir=cls.git_clone("git://github.com/lh3/wgsim","wgsim")
 		snakemake.shell('cd "{dir}" && gcc -g -O2 -Wall -o wgsim wgsim.c -lz -lm'.format(dir=gitdir))
 		cls.install_file("wgsim/wgsim",WGSIM)
 		cls.install_file("wgsim/wgsim_eval.pl",WGSIM_EVAL)

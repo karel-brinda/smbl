@@ -20,7 +20,7 @@ class DrFast(_program.Program):
 
 	@classmethod
 	def install(cls):
-		cls.git_clone("http://github.com/BilkentCompGen/drfast","")
+		cls.git_clone("git://github.com/BilkentCompGen/drfast","")
 		cls.run_make("")
 		cls.install_file("drfast",DRFAST)
 

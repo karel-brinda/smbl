@@ -20,7 +20,7 @@ class MrFast(_program.Program):
 
 	@classmethod
 	def install(cls):
-		cls.git_clone("http://github.com/BilkentCompGen/mrfast","")
+		cls.git_clone("git://github.com/BilkentCompGen/mrfast","")
 		cls.run_make("")
 		cls.install_file("mrfast",MRFAST)
 

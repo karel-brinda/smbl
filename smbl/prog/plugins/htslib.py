@@ -22,8 +22,8 @@ class HtsLib(_program.Program):
 
 	@classmethod
 	def install(cls):
-		gitdir_bcftools=cls.git_clone("http://github.com/samtools/bcftools","bcftools")
-		gitdir_htslib=cls.git_clone("http://github.com/samtools/htslib","htslib")
+		gitdir_bcftools=cls.git_clone("git://github.com/samtools/bcftools","bcftools")
+		gitdir_htslib=cls.git_clone("git://github.com/samtools/htslib","htslib")
 		cls.run_make("htslib")
 		cls.install_file("htslib/tabix",TABIX)
 		cls.install_file("htslib/bgzip",BGZIP)
