@@ -1,9 +1,6 @@
-*.fa
-*.fai
-*.fasta
-src_ext/
+AUTHORS
+ChangeLog
 .snakemake/
-bin/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
