@@ -1,7 +1,6 @@
-import sys
-import setuptools
+#!/usr/bin/env python
 
-from pbr import util
+from setuptools import setup
 
 setuptools.setup(
 	setup_requires=['pbr'],
