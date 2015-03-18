@@ -2,7 +2,7 @@ SMBL - SnakeMake Bioinformatics Library
 =======================================
 
 .. image:: https://travis-ci.org/karel-brinda/smbl.svg?branch=master
-    :target: https://travis-ci.org/karel-brinda/smbl
+	:target: https://travis-ci.org/karel-brinda/smbl
 
 
 In case of any problem, don't hesitate to contact me on karel.brinda@gmail.com.
@@ -24,7 +24,7 @@ Installation / upgrade can be performed using the following command.
 
 .. code-block:: bash
 
-        pip install --upgrade smbl
+	pip install --upgrade smbl
 
 
 If SnakeMake has not been installed, yet, it will
@@ -34,9 +34,9 @@ The current GIT version of SMBL can be installed by
 
 .. code-block:: bash
 
-        git clone --depth 1 http://github.com/karel-brinda/smbl
-        cd smbl
-        ./install.sh
+	git clone --depth 1 http://github.com/karel-brinda/smbl
+	cd smbl
+	./install.sh
 
 
 Usage
@@ -46,8 +46,8 @@ To use SMBL, you have to import the *smbl*  Python package and include a file wi
 
 .. code-block:: python
 
-        import smbl
-        include: smbl.include()
+	import smbl
+	include: smbl.include()
 
 
 Then you can use all supported programs or data. When they appear as input of a rule, they will be downloaded or compiled.
@@ -151,14 +151,14 @@ Programs
 +------------------------+-----------------------------------------+-------------------------------------------------------------------------+
 | xs                     | ``smbl.prog.XS``                        | http://bioinformatics.ua.pt/software/xs/                                |
 +------------------------+-----------------------------------------+-------------------------------------------------------------------------+
-    
+	
 
 FASTA files
 ^^^^^^^^^^^
 
 +------------------------------+------------------------------------------------------------+
 | FASTA file                   | Variable with its filename                                 |
-+------------------------------+------------------------------------------------------------+
++==============================+============================================================+
 | An example small FASTA file  | ``smbl.fasta.EXAMPLE_1``                                   |
 +------------------------------+------------------------------------------------------------+
 | An example small FASTA file  | ``smbl.fasta.EXAMPLE_2``                                   |
@@ -171,36 +171,46 @@ FASTA files
 Example
 ~~~~~~~
 
-Try to create this simple *Snakefile*:
+The following example demonstrates how SMBL can be used for automatic installation of software.
+
+Create an empty file named ``Snakefile`` with the following content:
 
 .. code-block:: python
 
-        import smbl
-        include: smbl.include()
+	import smbl
+	include: smbl.include()
 
-        rule all:
-                input:
-                        smbl.prog.DWGSIM,
-                        smbl.prog.BWA,
-                        smbl.fasta.EXAMPLE
-                params:
-                        PREF="simulated_reads",
-                        INDEX="bwa_index"
-                output:
-                        "alignment.sam"
-                run:
-                        shell("{input[0]} -C 1 {input[2]} {params.PREF}")
-                        shell("{input[1]} index {input[2]}")
-                        shell("{input[1]} mem {input[2]} {params.PREF}.bfast.fastq > alignment.sam")
+	rule all:
+		input:
+			smbl.prog.DWGSIM,
+			smbl.prog.BWA,
+			smbl.fasta.EXAMPLE
+		params:
+			PREF="simulated_reads",
+			INDEX="bwa_index"
+		output:
+			"alignment.sam"
+		run:
+			# read simulation
+			shell("{input[0]} -C 1 {input[2]} {params.PREF}")
+
+			# creating BWA index of the reference sequence
+			shell("{input[1]} index {input[2]}")
+
+			# mapping by BWA
+			shell("{input[1]} mem {input[2]} {params.PREF}.bfast.fastq > alignment.sam")
+
 
 Run the script.
 
 .. code-block:: bash
-        snakemake
+
+	snakemake
+
 
 What happens:
 
- 1. An example FASTA file is downloaded
- 2. DwgSim and BWA are downloaded, compiled and installed
- 3. DwgSim simulates reads from the example Fasta file
- 4. These reads are mapped back to the reference by BWA (*alignment.sam* is created)
+1. An example FASTA file is downloaded
+2. DwgSim and BWA are downloaded, compiled and installed
+3. DwgSim simulates reads from the example Fasta file
+4. These reads are mapped back to the reference by BWA (*alignment.sam* is created)
