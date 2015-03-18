@@ -1,24 +1,32 @@
 language: python
 os:
-  - linux
-  - osx
+- linux
+- osx
 python:
-  - "3.2"
-  - "3.3"
-  - "3.4"
+- '3.2'
+- '3.3'
+- '3.4'
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq 
+- sudo apt-get update -qq
+- sudo apt-get install -qq
 install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update
-  - sudo apt-get install g++-4.8
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
-  - sudo apt-get install zlib1g-dev libbz2-dev libboost-dev
-  - sudo apt-get install git-svn
-  - pip install .
-  - pip install -r requirements.txt
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo apt-get update
+- sudo apt-get install g++-4.8
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
+- sudo apt-get install zlib1g-dev libbz2-dev libboost-dev
+- sudo apt-get install git-svn
+- pip install .
+- pip install -r requirements.txt
 script:
-  - tests/tests_examples.sh
-  - tests/tests_mt.sh
+- tests/tests_examples.sh
+- tests/tests_mt.sh
+deploy:
+  provider: pypi
+  user: karel.brinda
+  password:
+    secure: L89DrUR62SjTH2k3M22fQ/JvyOm8hEuZ4jRZrF5gC3+m79IV6f1vrldJ7dPB030PGbRq18FPmlqTOE59Ix3XzsN0va2fvSTV4iwyiGZWD9E2p1AMBhQgnPhKkBg9TlsBdGsmwmR1RyN6v6KNrfzmIEnbDb4TkXi6m0EyAHIVHt8=
+  on:
+    repo: karel-brinda/smbl
+    branch: production
