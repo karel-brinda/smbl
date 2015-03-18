@@ -25,8 +25,10 @@ script:
 deploy:
   provider: pypi
   user: karel.brinda
+  distributions: "sdist"
   password:
     secure: L89DrUR62SjTH2k3M22fQ/JvyOm8hEuZ4jRZrF5gC3+m79IV6f1vrldJ7dPB030PGbRq18FPmlqTOE59Ix3XzsN0va2fvSTV4iwyiGZWD9E2p1AMBhQgnPhKkBg9TlsBdGsmwmR1RyN6v6KNrfzmIEnbDb4TkXi6m0EyAHIVHt8=
   on:
     repo: karel-brinda/smbl
     branch: production
+
