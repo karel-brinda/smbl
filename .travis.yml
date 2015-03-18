@@ -27,7 +27,7 @@ deploy:
   user: karel.brinda
   distributions: "sdist"
   password:
-    secure: L89DrUR62SjTH2k3M22fQ/JvyOm8hEuZ4jRZrF5gC3+m79IV6f1vrldJ7dPB030PGbRq18FPmlqTOE59Ix3XzsN0va2fvSTV4iwyiGZWD9E2p1AMBhQgnPhKkBg9TlsBdGsmwmR1RyN6v6KNrfzmIEnbDb4TkXi6m0EyAHIVHt8=
+    secure: dG6t/kcAyEK+LZR2mzj5SywUOtpvaoFde3dUdNr5J/lEvp1crv8fTQS0iTVaVmO71H/SRtakXWqTzABDYIyB+RnDYVzfQOog8gb+hr2JLr2XPFEhRbbQ2VDoLH21TJTAbTXAoA/jCVcv0FjeL5pA7TCIZerUF0ZBYyGMSWc6hL8=
   on:
     repo: karel-brinda/smbl
     branch: production
