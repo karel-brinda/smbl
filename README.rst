@@ -1,48 +1,62 @@
-# SMBL - SnakeMake Bioinformatics Library
+SMBL - SnakeMake Bioinformatics Library
+=======================================
 
-[![Build Status](https://travis-ci.org/karel-brinda/smbl.svg?branch=master)](https://travis-ci.org/karel-brinda/smbl) 
+.. image:: https://travis-ci.org/karel-brinda/smbl.svg?branch=master
+    :target: https://travis-ci.org/karel-brinda/smbl
+
 
 In case of any problem, don't hesitate to contact me on karel.brinda@gmail.com.
 
-## Short description
+
+Short description
+-----------------
 
 **SMBL** is a library of some useful rules and Python functions which can be used in Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. It makes possible to automatically
 download various bioinformatics programs like read mappers, read simulators, conversion tools, etc.
 It supports also downloading and conversion of some important references in FASTA format (e.g., human genome).
 
-## Installation / upgrade
+
+Installation / upgrade
+----------------------
 
 To install SMBL, you need to have Unix-like operating system (e.g., Linux, MacOS) and Python at least 3.2.
 Installation / upgrade can be performed using the following command.
 
-```bash
-pip install --upgrade smbl
-```
+.. code-block:: bash
+
+        pip install --upgrade smbl
+
 
 If SnakeMake has not been installed, yet, it will
 be installed automatically with SMBL.
 
 The current GIT version of SMBL can be installed by 
-```bash
-git clone --depth 1 http://github.com/karel-brinda/smbl
-cd smbl
-./install.sh
-```
 
-## Usage
+.. code-block:: bash
+
+        git clone --depth 1 http://github.com/karel-brinda/smbl
+        cd smbl
+        ./install.sh
+
+
+Usage
+-----
 
 To use SMBL, you have to import the *smbl*  Python package and include a file with all rules using:
-```python
-import smbl
-include: smbl.include()
-```
+
+.. code-block:: python
+
+        import smbl
+        include: smbl.include()
+
 
 Then you can use all supported programs or data. When they appear as input of a rule, they will be downloaded or compiled.
 
-All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into ```~/.smbl/fa/```.
+All the programs are installed into ~/.smbl/bin/ and all FASTA files into ~/.smbl/fa/.
 
 
-### Programs
+Programs
+~~~~~~~~
 
 | Program                | Variable with its filename              | Link |
 |------------------------|-----------------------------------------|------|
@@ -93,7 +107,8 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 | xs                     | ```smbl.prog.XS```                      | http://bioinformatics.ua.pt/software/xs/ |
     
 
-### FASTA files
+FASTA files
+~~~~~~~~~~~
 
 | FASTA file                   | Variable with its filename   |
 |------------------------------|------------------------------|
@@ -105,30 +120,31 @@ All the programs are installed into ```~/.smbl/bin/``` and all FASTA files into 
 ## Example
 
 Try to create this simple *Snakefile*:
-```python
-import smbl
-include: smbl.include()
 
-rule all:
-        input:
-                smbl.prog.DWGSIM,
-                smbl.prog.BWA,
-                smbl.fasta.EXAMPLE
-        params:
-                PREF="simulated_reads",
-                INDEX="bwa_index"
-        output:
-                "alignment.sam"
-        run:
-                shell("{input[0]} -C 1 {input[2]} {params.PREF}")
-                shell("{input[1]} index {input[2]}")
-                shell("{input[1]} mem {input[2]} {params.PREF}.bfast.fastq > alignment.sam")
-```
+.. code-block:: python
+
+        import smbl
+        include: smbl.include()
+
+        rule all:
+                input:
+                        smbl.prog.DWGSIM,
+                        smbl.prog.BWA,
+                        smbl.fasta.EXAMPLE
+                params:
+                        PREF="simulated_reads",
+                        INDEX="bwa_index"
+                output:
+                        "alignment.sam"
+                run:
+                        shell("{input[0]} -C 1 {input[2]} {params.PREF}")
+                        shell("{input[1]} index {input[2]}")
+                        shell("{input[1]} mem {input[2]} {params.PREF}.bfast.fastq > alignment.sam")
 
 Run the script.
-```bash
-snakemake
-```
+
+.. code-block:: bash
+        snakemake
 
 What happens:
 
