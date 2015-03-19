@@ -10,9 +10,6 @@ import platform
 
 smbl_dir = os.path.join(os.path.expanduser("~"),".smbl")
 
-print("loading smbl")
-
-
 bin_dir  = os.path.join(smbl_dir,"bin")
 fa_dir   = os.path.join(smbl_dir,"fa")
 src_dir  = os.path.join(smbl_dir,"src")
@@ -25,6 +22,11 @@ def include():
 			os.path.dirname(__file__),
 			"include_all.snake"
 		)
+
+def all_fastas():
+	return [
+			fastafile.get() for fastafile in smbl.fasta.get_registered_fastas()
+		]
 
 def all_programs():
 	return [

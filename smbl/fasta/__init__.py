@@ -1,21 +1,15 @@
 import os
 import smbl
 
-EXAMPLE_1 = EXAMPLE                 = os.path.join(smbl.fa_dir,"example_fasta_1.fa")
-EXAMPLE_2                           = os.path.join(smbl.fa_dir,"example_fasta_2.fa")
-EXAMPLE_3                           = os.path.join(smbl.fa_dir,"example_fasta_3.fa")
+from .fastafile import *
 
+EXAMPLE_1  = fasta_file("Mycobacterium_tuberculosis","ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna")
+EXAMPLE_2  = fasta_file("Chlamydia_trachomatis","ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Chlamydia_trachomatis_RC_L2_s_3_uid213390/NC_021897.fna")
+EXAMPLE_3  = fasta_file("Borrelia_garinii","ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna")
 
+EXAMPLE_42 = fasta_file("Human_chr_21","http://hgdownload.cse.ucsc.edu/goldenpath/hg19/chromosomes/chr21.fa.gz")
 
-HUMAN_HG38 = HUMAN_GRCH38           = os.path.join(smbl.fa_dir,"hg38.fa")
+EXAMPLE = EXAMPLE_1
 
-FAS = [
-		EXAMPLE_1,
-		EXAMPLE_2,
-		EXAMPLE_3,
-		HUMAN_HG38
-	]
-
-FAIS = ["{}.fai".format(fa) for fa in FAS]
-
-ALL = FAS + FAIS
+HUMAN_HG38 = fasta_file("hg38","http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit")
+MOUSE_MM10 = fasta_file("mm10","http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit")

@@ -3,6 +3,7 @@ from snakemake.utils import min_version
 
 shell.prefix("set -e -o pipefail; ")
 
+include: "prog/prog.snake"
 include: "fasta/fasta.snake"
 
 rule smbl_clean:

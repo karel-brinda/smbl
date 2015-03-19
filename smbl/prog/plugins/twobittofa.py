@@ -21,16 +21,16 @@ class TwoBitToFa(_program.Program):
 	@classmethod
 	def install(cls):
 		if smbl.is_linux() and smbl.is_os_64bit:
-			cls.download_file("http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa",TWOBITTOFA)
-			url=""
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa"
 		elif smbl.is_mac() and smbl.is_os_64bit:
-			cls.download_file("http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa",TWOBITTOFA)
-			url=""
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa"
 		elif smbl.is_mac():
-			cls.download_file("http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.i386/twoBitToFa",TWOBITTOFA)
+			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.i386/twoBitToFa"
 		else:
 			raise NotImplementedError("For your OS, twoBitToFa is not precompiled")
 
+		cls.download_file(url,"twoBitToFa")
+		cls.install_file("twoBitToFa",TWOBITTOFA)
 
 	@classmethod
 	def supported_platforms(cls):
