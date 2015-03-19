@@ -24,6 +24,7 @@ install:
 script:
 - tests/tests_examples.sh
 - tests/tests_mt.sh
+- tests/tests_fa.sh
 deploy:
   provider: pypi
   user: karel.brinda
