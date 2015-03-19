@@ -6,6 +6,7 @@ python:
 - '3.2'
 - '3.3'
 - '3.4'
+- 'nightly'
 cache:
   apt: true
 before_install:
@@ -25,12 +26,13 @@ script:
 - tests/tests_examples.sh
 - tests/tests_mt.sh
 deploy:
-  provider: pypi
-  user: karel.brinda
-  distributions: "sdist"
-  password:
-    secure: dG6t/kcAyEK+LZR2mzj5SywUOtpvaoFde3dUdNr5J/lEvp1crv8fTQS0iTVaVmO71H/SRtakXWqTzABDYIyB+RnDYVzfQOog8gb+hr2JLr2XPFEhRbbQ2VDoLH21TJTAbTXAoA/jCVcv0FjeL5pA7TCIZerUF0ZBYyGMSWc6hL8=
-  on:
-    repo: karel-brinda/smbl
-    branch: master
+	provider: pypi
+	user: karel.brinda
+	distributions: "sdist"
+	password:
+		secure: dG6t/kcAyEK+LZR2mzj5SywUOtpvaoFde3dUdNr5J/lEvp1crv8fTQS0iTVaVmO71H/SRtakXWqTzABDYIyB+RnDYVzfQOog8gb+hr2JLr2XPFEhRbbQ2VDoLH21TJTAbTXAoA/jCVcv0FjeL5pA7TCIZerUF0ZBYyGMSWc6hL8=
+	on:
+		repo: karel-brinda/smbl
+		branch: master
+		tags: true
 
