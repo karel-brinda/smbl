@@ -1,0 +1,7 @@
+import smbl
+
+fa = smbl.fasta.fasta_file("bcereus","ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Bacillus_cereus_ATCC_14579_uid57975/NC_004722.fna")
+
+include: smbl.include()
+rule all:
+	input: fa

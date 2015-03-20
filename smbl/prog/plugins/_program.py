@@ -5,8 +5,6 @@ import random
 import os
 import abc
 
-from termcolor import colored, cprint
-
 __PLUGINS = set()
 __RULES= set()
 
@@ -14,7 +12,7 @@ def register_plugin(plugin):
 	__PLUGINS.add(plugin)
 
 def get_registered_plugins():
-	return list(__PLUGINS)
+	return sorted(list(__PLUGINS),key=lambda x:x.get_plugin_name())
 
 def register_rule(rule):
 	__RULES.add(rule)
@@ -42,17 +40,25 @@ class ProgramWatcher(type):
 class Program(metaclass=ProgramWatcher):
 	src_dir=""
 	verbosity=False
+	#list of classes of dependencies
 
 	def __init__(self):
 		pass
 
 	@classmethod
+	def get_plugin_name(cls):
+		return cls.__name__
+
+	@classmethod
+	def depends_on(cls):
+		return []
+
+	@classmethod
 	def status_message(cls,message):
-		cprint(
-			"[SMBL] '{}': {}".format(cls.__name__,message),
-			"blue",
-			#"on_black",
-			attrs=['bold'],
+		smbl.messages.message(
+			message=message,
+			program="SMBL",
+			subprogram=cls.get_plugin_name(),
 		)
 
 	@classmethod
@@ -141,6 +147,7 @@ class Program(metaclass=ProgramWatcher):
 	def install_file(cls,filename_short,dest,executable=True):
 		cls.status_message("Copying: "+cls.abs_from_short(filename_short))
 		filename_full=cls.abs_from_short(filename_short)
+		assert os.path.isfile(filename_full) 
 		cls.shell('cp "{source}" "{dest}"'.format(source=filename_full,dest=dest))
 		if executable:
 			cls.shell('chmod +x "{}"'.format(dest))
@@ -154,40 +161,43 @@ class Program(metaclass=ProgramWatcher):
 		return dirname_full
 
 	@classmethod
-	def run_make(cls,dirname_short,clean=False,parallel=True):
+	def run_make(cls,dirname_short,clean=False):
 		cls.status_message("Running make: "+cls.abs_from_short(dirname_short))
 		try:
-			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=parallel)
+			cls._run_make(dirname_short=dirname_short,clean=clean,threads=16)
 		except:
-			cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
-
+			try:
+				cls._run_make(dirname_short=dirname_short,clean=False,threads=4)
+			except:
+				try:
+					cls._run_make(dirname_short=dirname_short,clean=False,threads=2)
+				except:
+					cls._run_make(dirname_short=dirname_short,clean=False,threads=1)
 
 	@classmethod
-	def _run_make(cls,dirname_short,clean=False,parallel=True):
+	def _run_make(cls,dirname_short,threads,clean=False):
 		dirname_full=cls.abs_from_short(dirname_short)
 		other_args=""
 		if clean:
 			cls.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
-		if parallel:
-			other_args+=" --jobs"
+		other_args+=" --jobs {}".format(threads)
 		cls.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod
 	def run_cmake(cls,dirname_short):
+		assert smbl.prog.CMake in cls.depends_on()
 		cls.status_message("Running cmake: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
-		cls.shell('cd "{build_dir}" && cmake .'.format(build_dir=dirname_full))
+		cls.shell('cd "{build_dir}" && "{cmake}" .'.format(
+				cmake=smbl.prog.CMAKE,
+				build_dir=dirname_full,
+			))
 
 	@classmethod
 	def run_configure(cls,dirname_short):
 		cls.status_message("Running configure: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
 		cls.shell('cd "{build_dir}" && ./configure'.format(build_dir=dirname_full))
-
-	@classmethod
-	def get_priority(cls):
-		__installation_priority=random.randint(1,10000000)
-		return __installation_priority
 
 	@classmethod
 	def abs_from_short(cls,short):
@@ -206,7 +216,6 @@ class Rule:
 		self.__input=input
 		self.__output=output
 		self.__run=run
-		self.__priority=random.randint(1,10000000)
 
 	def get_input(self):
 		return self.__input
@@ -217,8 +226,6 @@ class Rule:
 	def run(self):
 		self.__run()
 
-	def get_priority(self):
-		return self.__priority
-
-
+	def __hash__(self):
+		return "{} {}".format(str(input),str(input))
 

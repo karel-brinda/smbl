@@ -1,0 +1,5 @@
+import smbl
+include: smbl.include()
+
+rule all:
+	input: smbl.all_fastas()

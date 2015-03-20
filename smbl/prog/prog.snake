@@ -4,10 +4,12 @@ for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
 	rule:
 		output:
 			plugin.get_installation_files()
+		input:
+			[
+				p.get_installation_files() for p in plugin.depends_on()
+			]
 		params:
 			i=str(i),
-		priority:
-			plugin.get_priority()
 		run:
 			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install_all_steps)()
 
@@ -19,8 +21,5 @@ for i, rule in enumerate(smbl.prog.plugins.get_registered_rules()):
 			rule.get_output()
 		params:
 			i=str(i),
-		priority:
-			rule.get_priority()
 		run:
 			smbl.prog.plugins.get_registered_rules()[int(params.i)].run()
-

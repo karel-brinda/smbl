@@ -1,3 +1,4 @@
 pbr
 snakemake
+pytest
 termcolor

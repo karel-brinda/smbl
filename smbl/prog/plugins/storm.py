@@ -13,6 +13,7 @@ STORM_COLOR      = _program.get_bin_file_path("storm-color")
 
 
 class Storm(_program.Program):
+
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -21,8 +22,16 @@ class Storm(_program.Program):
 			]
 
 	@classmethod
+	def depends_on(cls):
+		return [
+			smbl.prog.CMake
+		]
+
+	@classmethod
 	def install(cls):
 		cls.svn_checkout("svn://scm.gforge.inria.fr/svnroot/storm/trunk","")
+		if smbl.is_mac():
+			cls.run_cmake("")
 		cls.run_make("")
 		cls.install_file("storm-color",STORM_COLOR)
 		cls.install_file("storm-nucleotide",STORM_NUCLEOTIDE)
