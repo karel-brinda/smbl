@@ -3,7 +3,16 @@ import sys
 import snakemake
 import platform
 
-# todo: mapping wrappers
+import smbl.messages
+
+smbl.messages.message("Platform: {}".format(sys.platform),program="SMBL")
+smbl.messages.message("System: {}".format(platform.system()),program="SMBL")
+smbl.messages.message("Machine: {}".format(platform.machine()),program="SMBL")
+smbl.messages.message("Processor: {}".format(platform.processor()),program="SMBL")
+smbl.messages.message("Python version: {}".format(platform.python_version()),program="SMBL")
+smbl.messages.message("Python build: {}".format(", ".join(platform.python_build())),program="SMBL")
+
+# mapping wrappers
 #  - commands in practise:
 #       - https://github.com/lh3/mem-paper/blob/master/eval/time.txt
 #       - http://lh3lh3.users.sourceforge.net/alnROC.shtml

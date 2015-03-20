@@ -2,9 +2,6 @@ import smbl
 import snakemake
 import os
 
-from termcolor import colored, cprint
-
-
 __FASTAFILES = set()
 
 def register_fasta(fastafile):
@@ -130,11 +127,10 @@ class FastaFile:
 			snakemake.shell("({}) > /dev/null".format(command))
 
 	def status_message(self,message):
-		cprint(
-			"[SMBL] '{}': {}".format(self.name,message),
-			"blue",
-			#"on_black",
-			attrs=['bold'],
+		smbl.messages.message(
+			message=message,
+			program="SMBL",
+			subprogram=self.name,
 		)
 
 	def abs_from_short(self,short):

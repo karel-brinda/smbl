@@ -5,8 +5,6 @@ import random
 import os
 import abc
 
-from termcolor import colored, cprint
-
 __PLUGINS = set()
 __RULES= set()
 
@@ -57,11 +55,10 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def status_message(cls,message):
-		cprint(
-			"[SMBL] '{}': {}".format(cls.get_plugin_name(),message),
-			"blue",
-			#"on_black",
-			attrs=['bold'],
+		smbl.messages.message(
+			message=message,
+			program="SMBL",
+			subprogram=cls.get_plugin_name(),
 		)
 
 	@classmethod
@@ -201,11 +198,6 @@ class Program(metaclass=ProgramWatcher):
 		cls.status_message("Running configure: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
 		cls.shell('cd "{build_dir}" && ./configure'.format(build_dir=dirname_full))
-
-	@classmethod
-	def get_priority(cls):
-		__installation_priority=random.randint(1,10000000)
-		return __installation_priority
 
 	@classmethod
 	def abs_from_short(cls,short):

@@ -22,10 +22,10 @@ class CMake(_program.Program):
 	def install(cls):
 		fn=cls.download_file("http://www.cmake.org/files/v3.2/cmake-3.2.1.tar.gz","cmake.tar.gz")
 		dir=cls.extract_tar(fn,strip=1)
-		snakemake.shell('(cd "{dir}" && ./bootstrap --prefix="{install_dir}") > /dev/null'.format(dir=dir,install_dir=smbl.smbl_dir))
+		cls.shell('cd "{dir}" && ./bootstrap --prefix="{install_dir}"'.format(dir=dir,install_dir=smbl.smbl_dir))
 		cls.run_make("")
 		print("install")
-		snakemake.shell('(cd "{dir}" && make install) > /dev/null'.format(dir=dir))
+		cls.shell('cd "{dir}" && make install'.format(dir=dir))
 		#cls.install_file("bin/cmake",CMAKE)
 
 
