@@ -164,24 +164,27 @@ class Program(metaclass=ProgramWatcher):
 		return dirname_full
 
 	@classmethod
-	def run_make(cls,dirname_short,clean=False,parallel=True):
+	def run_make(cls,dirname_short,clean=False):
 		cls.status_message("Running make: "+cls.abs_from_short(dirname_short))
 		try:
-			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=parallel)
+			cls._run_make(dirname_short=dirname_short,clean=clean,threads=16)
 		except:
 			try:
-				cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
+				cls._run_make(dirname_short=dirname_short,clean=False,threads=4)
 			except:
-				cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
+				try:
+					cls._run_make(dirname_short=dirname_short,clean=False,threads=2)
+				except:
+					cls._run_make(dirname_short=dirname_short,clean=False,threads=1)
 
 	@classmethod
-	def _run_make(cls,dirname_short,clean=False,parallel=True):
+	def _run_make(cls,dirname_short,clean=False,threads):
 		dirname_full=cls.abs_from_short(dirname_short)
 		other_args=""
 		if clean:
 			cls.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
 		if parallel:
-			other_args+=" --jobs"
+			other_args+=" --jobs {}".format(threads)
 		cls.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod

@@ -30,7 +30,8 @@ class Storm(_program.Program):
 	@classmethod
 	def install(cls):
 		cls.svn_checkout("svn://scm.gforge.inria.fr/svnroot/storm/trunk","")
-		cls.run_cmake("")
+		if smbl.is_mac():
+			cls.run_cmake("")
 		cls.run_make("")
 		cls.install_file("storm-color",STORM_COLOR)
 		cls.install_file("storm-nucleotide",STORM_NUCLEOTIDE)
