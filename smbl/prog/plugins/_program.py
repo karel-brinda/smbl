@@ -183,8 +183,7 @@ class Program(metaclass=ProgramWatcher):
 		other_args=""
 		if clean:
 			cls.shell('cd "{build_dir}" && make clean'.format(build_dir=dirname_full))
-		if parallel:
-			other_args+=" --jobs {}".format(threads)
+		other_args+=" --jobs {}".format(threads)
 		cls.shell('cd "{build_dir}" && make {other_args}'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod
