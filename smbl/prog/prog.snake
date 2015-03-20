@@ -4,6 +4,10 @@ for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
 	rule:
 		output:
 			plugin.get_installation_files()
+		input:
+			[
+				p.get_installation_files() for p in plugin.depends_on()
+			]
 		params:
 			i=str(i),
 		priority:

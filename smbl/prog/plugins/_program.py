@@ -42,6 +42,7 @@ class ProgramWatcher(type):
 class Program(metaclass=ProgramWatcher):
 	src_dir=""
 	verbosity=False
+	#list of classes of dependencies
 
 	def __init__(self):
 		pass
@@ -49,6 +50,10 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	def get_plugin_name(cls):
 		return cls.__name__
+
+	@classmethod
+	def depends_on(cls):
+		return []
 
 	@classmethod
 	def status_message(cls,message):
@@ -145,6 +150,7 @@ class Program(metaclass=ProgramWatcher):
 	def install_file(cls,filename_short,dest,executable=True):
 		cls.status_message("Copying: "+cls.abs_from_short(filename_short))
 		filename_full=cls.abs_from_short(filename_short)
+		assert os.path.isfile(filename_full) 
 		cls.shell('cp "{source}" "{dest}"'.format(source=filename_full,dest=dest))
 		if executable:
 			cls.shell('chmod +x "{}"'.format(dest))
@@ -180,9 +186,13 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def run_cmake(cls,dirname_short):
+		assert smbl.prog.CMake in cls.depends_on()
 		cls.status_message("Running cmake: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
-		cls.shell('cd "{build_dir}" && cmake .'.format(build_dir=dirname_full))
+		cls.shell('cd "{build_dir}" && "{cmake}" .'.format(
+				cmake=smbl.prog.CMAKE,
+				build_dir=dirname_full,
+			))
 
 	@classmethod
 	def run_configure(cls,dirname_short):

@@ -42,6 +42,12 @@ class Seqan(_program.Program):
 			]
 
 	@classmethod
+	def depends_on(cls):
+		return [
+			smbl.prog.CMake
+		]
+		
+	@classmethod
 	def install(cls):
 
 		cls.git_clone("git://github.com/seqan/seqan","")

@@ -13,12 +13,19 @@ STORM_COLOR      = _program.get_bin_file_path("storm-color")
 
 
 class Storm(_program.Program):
+
 	@classmethod
 	def get_installation_files(cls):
 		return [
 				STORM_NUCLEOTIDE,
 				STORM_COLOR,
 			]
+
+	@classmethod
+	def depends_on(cls):
+		return [
+			smbl.prog.CMake
+		]
 
 	@classmethod
 	def install(cls):
