@@ -178,7 +178,7 @@ class Program(metaclass=ProgramWatcher):
 					cls._run_make(dirname_short=dirname_short,clean=False,threads=1)
 
 	@classmethod
-	def _run_make(cls,dirname_short,clean=False,threads):
+	def _run_make(cls,dirname_short,threads,clean=False):
 		dirname_full=cls.abs_from_short(dirname_short)
 		other_args=""
 		if clean:
