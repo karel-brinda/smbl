@@ -14,7 +14,7 @@ def register_plugin(plugin):
 	__PLUGINS.add(plugin)
 
 def get_registered_plugins():
-	return list(__PLUGINS)
+	return sorted(list(__PLUGINS),key=lambda x:x.get_plugin_name())
 
 def register_rule(rule):
 	__RULES.add(rule)
@@ -47,9 +47,13 @@ class Program(metaclass=ProgramWatcher):
 		pass
 
 	@classmethod
+	def get_plugin_name(cls):
+		return cls.__name__
+
+	@classmethod
 	def status_message(cls,message):
 		cprint(
-			"[SMBL] '{}': {}".format(cls.__name__,message),
+			"[SMBL] '{}': {}".format(cls.get_plugin_name(),message),
 			"blue",
 			#"on_black",
 			attrs=['bold'],
@@ -159,8 +163,10 @@ class Program(metaclass=ProgramWatcher):
 		try:
 			cls._run_make(dirname_short=dirname_short,clean=clean,parallel=parallel)
 		except:
-			cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
-
+			try:
+				cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
+			except:
+				cls._run_make(dirname_short=dirname_short,clean=False,parallel=False)
 
 	@classmethod
 	def _run_make(cls,dirname_short,clean=False,parallel=True):
@@ -206,7 +212,6 @@ class Rule:
 		self.__input=input
 		self.__output=output
 		self.__run=run
-		self.__priority=random.randint(1,10000000)
 
 	def get_input(self):
 		return self.__input
@@ -217,8 +222,6 @@ class Rule:
 	def run(self):
 		self.__run()
 
-	def get_priority(self):
-		return self.__priority
-
-
+	def __hash__(self):
+		return "{} {}".format(str(input),str(input))
 
