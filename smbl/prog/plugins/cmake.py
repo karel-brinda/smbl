@@ -26,9 +26,6 @@ class CMake(_program.Program):
 		cls.run_make("")
 		print("install")
 		cls.shell('cd "{dir}" && make install'.format(dir=dir))
-		#cls.install_file("bin/cmake",CMAKE)
-
-
 
 	@classmethod
 	def supported_platforms(cls):

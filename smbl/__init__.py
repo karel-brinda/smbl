@@ -5,12 +5,18 @@ import platform
 
 import smbl.messages
 
+smbl.messages.message("",program="SMBL")
+smbl.messages.message("SnakeMake Bioinformatics Library",program="SMBL")
+smbl.messages.message("Web:    http://github.com/karel-brinda/smbl",program="SMBL")
+smbl.messages.message("Author: Karel Brinda, karel.brinda@gmail.com",program="SMBL")
+smbl.messages.message("",program="SMBL")
 smbl.messages.message("Platform: {}".format(sys.platform),program="SMBL")
 smbl.messages.message("System: {}".format(platform.system()),program="SMBL")
 smbl.messages.message("Machine: {}".format(platform.machine()),program="SMBL")
 smbl.messages.message("Processor: {}".format(platform.processor()),program="SMBL")
 smbl.messages.message("Python version: {}".format(platform.python_version()),program="SMBL")
 smbl.messages.message("Python build: {}".format(", ".join(platform.python_build())),program="SMBL")
+smbl.messages.message("",program="SMBL")
 
 # mapping wrappers
 #  - commands in practise:
