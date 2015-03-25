@@ -160,7 +160,7 @@ class Program(metaclass=ProgramWatcher):
 		filename_full=cls.abs_from_short(filename_short)
 		dirname_full=os.path.dirname(filename_full)
 		cls.shell('cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}"'.format(dir=dirname_full,strip=strip,fn=filename_full))
-		return d
+		return dirname_full
 
 	@classmethod
 	def extract_gz(cls,filename_short):

@@ -24,11 +24,11 @@ class PerM(_program.Program):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Linux64.gz","perm.gz")
 			cls.extract_gz(fn)
 			cls.install_file("perm",PERM)
-		if (smbl.is_mac()):
+		elif (smbl.is_mac()):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Mac64.tar.gz","perm.tar.gz")
 			cls.extract_tar(fn,strip=2)
 			cls.install_file("perm",PERM)
-		if (smbl.is_cygwin()):
+		elif (smbl.is_cygwin()):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Win32.zip","perm.zip")
 			cls.extract_zip(fn)
 			cls.install_file("perm.exe",PERM)
