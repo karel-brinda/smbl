@@ -20,10 +20,18 @@ class PerM(_program.Program):
 
 	@classmethod
 	def install(cls):
-		fn=cls.download_file("https://perm.googlecode.com/files/PerM4Source.tar.gz","perm.tar.gz")
-		dir=cls.extract_tar(fn,strip=2)
-		cls.run_make(dir)
-		cls.install_file("perm",PERM)
+		if (smbl.is_linux()):
+			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Linux64.gz","perm.gz")
+			cls.extract_gz(fn)
+			cls.install_file("perm",PERM)
+		if (smbl.is_mac()):
+			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Mac64.tar.gz","perm.tar.gz")
+			cls.extract_tar(fn,strip=2)
+			cls.install_file("perm",PERM)
+		if (smbl.is_cygwin()):
+			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Win32.zip","perm.zip")
+			cls.extract_zip(fn)
+			cls.install_file("perm.exe",PERM)
 
 	@classmethod
 	def supported_platforms(cls):

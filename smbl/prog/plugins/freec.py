@@ -27,4 +27,4 @@ class Freec(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["linux"]

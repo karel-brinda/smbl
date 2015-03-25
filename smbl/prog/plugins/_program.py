@@ -156,10 +156,26 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def extract_tar(cls,filename_short,strip=0):
-		cls.status_message("Extracting an archive: "+cls.abs_from_short(filename_short))
+		cls.status_message("Extracting a TAR archive: "+cls.abs_from_short(filename_short))
 		filename_full=cls.abs_from_short(filename_short)
 		dirname_full=os.path.dirname(filename_full)
 		cls.shell('cd "{dir}" && tar --strip-component="{strip}" -xf "{fn}"'.format(dir=dirname_full,strip=strip,fn=filename_full))
+		return d
+
+	@classmethod
+	def extract_gz(cls,filename_short):
+		cls.status_message("Extracting a GZ archive: "+cls.abs_from_short(filename_short))
+		filename_full=cls.abs_from_short(filename_short)
+		dirname_full=os.path.dirname(filename_full)
+		cls.shell('cd "{dir}" && gzip -d "{fn}"'.format(dir=dirname_full,fn=filename_full))
+		return dirname_full
+
+	@classmethod
+	def extract_zip(cls,filename_short):
+		cls.status_message("Extracting a ZIP archive: "+cls.abs_from_short(filename_short))
+		filename_full=cls.abs_from_short(filename_short)
+		dirname_full=os.path.dirname(filename_full)
+		cls.shell('cd "{dir}" && unzip "{fn}"'.format(dir=dirname_full,fn=filename_full))
 		return dirname_full
 
 	@classmethod
