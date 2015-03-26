@@ -24,7 +24,7 @@ class PerM(_program.Program):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Linux64.gz","perm.gz")
 			cls.extract_gz(fn)
 			cls.install_file("perm",PERM)
-		elif (smbl.is_mac()):
+		elif (smbl.is_osx()):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Mac64.tar.gz","perm.tar.gz")
 			cls.extract_tar(fn,strip=2)
 			cls.install_file("perm",PERM)
@@ -35,4 +35,4 @@ class PerM(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["cygwin","osx","linux"]

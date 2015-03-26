@@ -34,7 +34,7 @@ class GnuPlot4(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["osx","linux"]
 
 
 class GnuPlot5(_program.Program):
@@ -54,4 +54,4 @@ class GnuPlot5(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["osx","linux"]

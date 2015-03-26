@@ -80,7 +80,7 @@ class Seqan(_program.Program):
 	@classmethod
 	def supported_platforms(cls):
 		# cywgin has too old cmake
-		return ["macos","linux"]
+		return ["osx","linux"]
 
 
 ##########################################

@@ -24,7 +24,7 @@ class SamBamBa(_program.Program):
 
 		if (smbl.is_linux()):
 			fn=cls.download_file("http://github.com/lomereiter/sambamba/releases/download/{ver}/sambamba_{ver}_linux.tar.bz2".format(ver=version),"sambamba.tar.bz2")
-		elif smbl.is_mac():
+		elif smbl.is_osx():
 			fn=cls.download_file("http://github.com/lomereiter/sambamba/releases/download/{ver}/sambamba_{ver}_osx.tar.bz2".format(ver=version),"sambamba.tar.bz2")
 		else:
 			raise NotImplementedError("Unsupported OS")
@@ -34,4 +34,4 @@ class SamBamBa(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["osx","linux"]
