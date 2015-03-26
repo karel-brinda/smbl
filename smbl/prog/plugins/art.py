@@ -33,6 +33,7 @@ class Art(_program.Program):
 		elif smbl.is_osx():
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz","art.tgz")
 		else:
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
 
 		dir=cls.extract_tar(fn,strip=2)

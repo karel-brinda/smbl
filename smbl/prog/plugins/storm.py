@@ -53,6 +53,7 @@ class Storm(_program.Program):
 		super().__init__()
 
 		if fastq_2!=None:
+			smbl.messages.error("Pair-end reads are not supported by SToRM",program="SMBL",subprogram="SToRM")
 			raise NotImplementedError("SToRM supports only single-end reads.")
 
 		self._fa_fn=fasta

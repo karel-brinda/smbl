@@ -27,6 +27,7 @@ class SamBamBa(_program.Program):
 		elif smbl.is_osx():
 			fn=cls.download_file("http://github.com/lomereiter/sambamba/releases/download/{ver}/sambamba_{ver}_osx.tar.bz2".format(ver=version),"sambamba.tar.bz2")
 		else:
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
 		dir=cls.extract_tar(fn)
 
