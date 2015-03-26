@@ -78,7 +78,9 @@ class FastaFile:
 				filename_full=self.filename_full
 			)
 		else:
-			raise NotImplementedError("")
+			em="Unknown format '{}'".format(self.format)
+			smbl.messages.error(em,program="SMBL")
+			raise NotImplementedError(em)
 
 	def install_post(self):
 		self.shell('rm -fR "{src_dir}"'.format(src_dir=self.src_dir))

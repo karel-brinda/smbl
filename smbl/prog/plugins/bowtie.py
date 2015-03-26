@@ -51,7 +51,7 @@ class Bowtie2(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["cygwin","osx","linux"]
 
 	##########################################
 

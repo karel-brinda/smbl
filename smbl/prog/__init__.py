@@ -2,7 +2,7 @@ import os
 import smbl
 import smbl.prog.plugins
 
-all_platforms = ["linux","windows","macos","cygwin"]
+all_platforms = ["linux","windows","osx","cygwin"]
 
 from smbl.prog.plugins import *
 

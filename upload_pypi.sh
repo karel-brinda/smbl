@@ -1,2 +1,6 @@
 #! /usr/bin/env bash
-python setup.py register sdist upload
+
+set -e
+
+cd "$(dirname "$0")"
+/usr/bin/env python3 setup.py register sdist upload

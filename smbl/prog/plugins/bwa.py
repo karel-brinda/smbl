@@ -19,7 +19,7 @@ class Bwa(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["cygwin","osx","linux"]
 
 	@classmethod
 	def install(cls):
@@ -100,7 +100,8 @@ class Bwa(_program.Program):
 	##########################################
 
 	def map_reads(self):
-		raise NotImplementedError()
+		smbl.messages.error("Subclass of class Bwa should be used",program="SMBL",subprogram="BWA")
+		raise NotImplementedError("Subclass of class Bwa should be used")
 
 	def map_reads_input(self):
 		return [

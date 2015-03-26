@@ -87,14 +87,15 @@ class Program(metaclass=ProgramWatcher):
 		assert len(set(cls.supported_platforms()))>0, ""
 		assert set(cls.supported_platforms()).issubset(smbl.prog.all_platforms)
 		if not cls.is_platform_supported():
-			raise NotImplementedError("This platform is not supported ({})".format(smbl.get_platform()))
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
+			raise NotImplementedError("Unsupported OS")
 		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
 		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
 	# fixme: abstract
 	def install(cls):
-		raise NotImplementedError()
+		raise NotImplementedError("Plugin error: install method must be defined")
 
 	@classmethod
 	def install_post(cls):
@@ -103,7 +104,7 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	# fixme: abstract
 	def supported_platforms(cls):
-		raise NotImplementedError()
+		raise NotImplementedError("Plugin error: Supported platforms must be specified")
 
 	@classmethod
 	def is_platform_supported(cls):
@@ -116,7 +117,7 @@ class Program(metaclass=ProgramWatcher):
 	@classmethod
 	# fixme: abstract
 	def get_installation_files(cls):
-		raise NotImplementedError()
+		raise NotImplementedError("Plugin error: Installation files must be specified")
 
 	@classmethod
 	def git_clone(cls,repository,dirname_short):

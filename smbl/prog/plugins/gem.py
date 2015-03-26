@@ -27,7 +27,9 @@ class Gem(_program.Program):
 		if smbl.is_linux() and smbl.is_os_64bit():
 			fn=cls.download_file("http://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2/download","gem.tbz2")
 		else:
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
+
 
 		dir=cls.extract_tar(fn,strip=2)
 

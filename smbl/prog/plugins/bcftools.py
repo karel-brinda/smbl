@@ -32,4 +32,4 @@ class BcfTools(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["osx","linux"]

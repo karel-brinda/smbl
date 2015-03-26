@@ -69,7 +69,7 @@ def is_cygwin():
 def is_windows():
 	return sys.platform.startswith('win')
 
-def is_mac():
+def is_osx():
 	return sys.platform.startswith('darwin')
 
 def is_os_64bit():
@@ -80,7 +80,7 @@ def get_platform():
 		return "linux"
 	if is_windows():
 		return "windows"
-	if is_mac():
-		return "macos"
+	if is_osx():
+		return "osx"
 	if is_cygwin():
 		return "cygwin"

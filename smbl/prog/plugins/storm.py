@@ -30,7 +30,7 @@ class Storm(_program.Program):
 	@classmethod
 	def install(cls):
 		cls.svn_checkout("svn://scm.gforge.inria.fr/svnroot/storm/trunk","")
-		if smbl.is_mac():
+		if smbl.is_osx():
 			cls.run_cmake("")
 		cls.run_make("")
 		cls.install_file("storm-color",STORM_COLOR)
@@ -38,7 +38,7 @@ class Storm(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["cygwin","macos","linux"]
+		return ["cygwin","osx","linux"]
 
 	##########################################
 
@@ -53,6 +53,7 @@ class Storm(_program.Program):
 		super().__init__()
 
 		if fastq_2!=None:
+			smbl.messages.error("Pair-end reads are not supported by SToRM",program="SMBL",subprogram="SToRM")
 			raise NotImplementedError("SToRM supports only single-end reads.")
 
 		self._fa_fn=fasta

@@ -28,11 +28,12 @@ class Art(_program.Program):
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux64tgz.tgz","art.tgz")
 		elif (smbl.is_linux() or smbl.is_cygwin()):
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux32tgz.tgz","art.tgz")
-		elif smbl.is_mac() and smbl.is_os_64bit():
+		elif smbl.is_osx() and smbl.is_os_64bit():
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos64tgz.tgz","art.tgz")
-		elif smbl.is_mac():
+		elif smbl.is_osx():
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz","art.tgz")
 		else:
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
 
 		dir=cls.extract_tar(fn,strip=2)
@@ -43,4 +44,4 @@ class Art(_program.Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["macos","linux"]
+		return ["osx","linux"]
