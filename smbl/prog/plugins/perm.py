@@ -26,7 +26,7 @@ class PerM(_program.Program):
 			cls.install_file("perm",PERM)
 		elif (smbl.is_osx()):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Mac64.tar.gz","perm.tar.gz")
-			cls.extract_tar(fn,strip=2)
+			cls.extract_tar(fn,strip=0)
 			cls.install_file("perm",PERM)
 		elif (smbl.is_cygwin()):
 			fn=cls.download_file("https://perm.googlecode.com/files/PerM4_Win32.zip","perm.zip")
