@@ -22,9 +22,9 @@ class TwoBitToFa(_program.Program):
 	def install(cls):
 		if smbl.is_linux() and smbl.is_os_64bit():
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/twoBitToFa"
-		elif smbl.osx() and smbl.is_os_64bit():
+		elif smbl.is_osx() and smbl.is_os_64bit():
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa"
-		elif smbl.osx():
+		elif smbl.is_osx():
 			url="http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.i386/twoBitToFa"
 		else:
 			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
