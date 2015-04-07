@@ -44,7 +44,8 @@ class Seqan(_program.Program):
 	@classmethod
 	def depends_on(cls):
 		return [
-			smbl.prog.CMake
+			smbl.prog.CMake,
+			smbl.prog.SamTools,
 		]
 		
 	@classmethod
@@ -165,6 +166,7 @@ class Yara(Seqan):
 				bam,
 				fastq_1,
 				fastq_2=None,
+				sort_by_name=False,
 			):
 
 		super().__init__()
@@ -174,6 +176,7 @@ class Yara(Seqan):
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 		self.index_prefix=self._fa_fn.rpartition(".")[0]
+		self._sort_by_name=sort_by_name
 
 		smbl.prog.plugins.Rule(
 			input=self.make_index_input(),
@@ -243,14 +246,25 @@ class Yara(Seqan):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell('("{yara_mapper}" -o "{bam}" -t {threads} "{genome_pref}" {reads_string}) > /dev/null'.format(
-				yara_mapper=YARA_MAPPER,
-				genome_pref=self.index_prefix,
-				reads_string=reads_string,
-				bam=self._bam_fn,
-				threads=number_of_threads,
-			)
-		)
+		if self._sort_by_name:
+			snakemake.shell('"{yara_mapper}" -t {threads} "{genome_pref}" {reads_string} | "{samtools}" sort -n - "{bamprefix}"'.format(
+						yara_mapper=YARA_MAPPER,
+						genome_pref=self.index_prefix,
+						reads_string=reads_string,
+						bamprefix=self._bam_fn[:-4],
+						threads=number_of_threads,
+						samtools=smbl.prog.SAMTOOLS,
+					)
+				)
+		else:
+			snakemake.shell('"{yara_mapper}" -o "{bam}" -t {threads} "{genome_pref}" {reads_string}'.format(
+						yara_mapper=YARA_MAPPER,
+						genome_pref=self.index_prefix,
+						reads_string=reads_string,
+						bam=self._bam_fn,
+						threads=number_of_threads,
+					)
+				)
 
 	def map_reads_input(self):
 		return [
