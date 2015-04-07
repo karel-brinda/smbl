@@ -18,7 +18,9 @@ def message(message,program=None,subprogram=None):
 		attrs=['bold'],
 	)
 
-def error(message,program=None,subprogram=None):
+def error(message,program=None,subprogram=None, exception=None):
+	if exception!=None:
+		assert issubclass(exception,Exception)
 
 	if program==None:
 		program_part=""
@@ -35,3 +37,6 @@ def error(message,program=None,subprogram=None):
 		"red",
 		attrs=['bold'],
 	)
+
+	if exception!=None:
+		raise exception(message)
