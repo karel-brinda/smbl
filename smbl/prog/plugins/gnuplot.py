@@ -48,7 +48,7 @@ class GnuPlot5(_program.Program):
 	def install(cls):
 		fn=cls.download_file("http://sourceforge.net/projects/gnuplot/files/gnuplot/5.0.0/gnuplot-5.0.0.tar.gz/download","gnuplot.tar.gz")
 		dir=cls.extract_tar(fn,strip=1)
-		cls.run_configure(dir)
+		cls.run_configure(dir,other_args="--with-pdf")
 		cls.run_make(dir)
 		cls.install_file("src/gnuplot",GNUPLOT5)
 
