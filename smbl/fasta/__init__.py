@@ -11,5 +11,6 @@ EXAMPLE_42 = fasta_file("Human_chr_21","http://hgdownload.cse.ucsc.edu/goldenpat
 
 EXAMPLE = EXAMPLE_1
 
-HUMAN_HG38 = fasta_file("hg38","http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit")
-MOUSE_MM10 = fasta_file("mm10","http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit")
+HUMAN_HG38    = fasta_file("hg38","http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit")
+MOUSE_MM10    = fasta_file("mm10","http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit")
+CHIMP_PANTRO4 = fasta_file("panTro4","http://hgdownload.cse.ucsc.edu/goldenPath/panTro4/bigZips/panTro4.2bit")
