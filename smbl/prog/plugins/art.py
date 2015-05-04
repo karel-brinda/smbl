@@ -24,7 +24,6 @@ class Art(_program.Program):
 
 	@classmethod
 	def install(cls):
-	def install(cls):
 		if smbl.is_linux()  and smbl.is_os_64bit():
 			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinchocolatecherrycake031915linux64tgz.tgz","art.tgz")
 		elif smbl.is_linux():
