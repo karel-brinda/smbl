@@ -24,14 +24,15 @@ class Art(_program.Program):
 
 	@classmethod
 	def install(cls):
-		if (smbl.is_linux() or smbl.is_cygwin()) and smbl.is_os_64bit():
-			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux64tgz.tgz","art.tgz")
-		elif (smbl.is_linux() or smbl.is_cygwin()):
-			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114linux32tgz.tgz","art.tgz")
+	def install(cls):
+		if smbl.is_linux()  and smbl.is_os_64bit():
+			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinchocolatecherrycake031915linux64tgz.tgz","art.tgz")
+		elif smbl.is_linux():
+			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinchocolatecherrycake031915linux32tgz.tgz","art.tgz")
 		elif smbl.is_osx() and smbl.is_os_64bit():
-			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos64tgz.tgz","art.tgz")
+			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinchocolatecherrycake031915macos64tgz.tgz","art.tgz")
 		elif smbl.is_osx():
-			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinvanillaicecream031114macos32tgz.tgz","art.tgz")
+			fn=cls.download_file("http://www.niehs.nih.gov/research/resources/assets/docs/artbinchocolatecherrycake031915macos32tgz.tgz","art.tgz")
 		else:
 			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
