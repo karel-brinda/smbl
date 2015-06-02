@@ -13,3 +13,10 @@ EXAMPLE = EXAMPLE_1
 
 HUMAN_HG38 = fasta_file("hg38","http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit")
 MOUSE_MM10 = fasta_file("mm10","http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.2bit")
+
+for fasta in get_registered_fastas():
+	smbl.utils.Rule(
+		input=fasta.get_required_programs(),
+		output=fasta.get(),
+		run=fasta.install_all_steps,
+	)

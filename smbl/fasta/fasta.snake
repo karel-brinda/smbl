@@ -1,41 +1,5 @@
 import smbl
 
-for i, fasta in enumerate(smbl.fasta.get_registered_fastas()):
-	rule:
-		output:
-			fasta.get()
-		input:
-			fasta.get_required_programs()
-		params:
-			i=str(i),
-		run:
-			smbl.fasta.get_registered_fastas()[int(params.i)].install_all_steps()
-
-
-#rule human_hg38:
-#	input:
-#		smbl.prog.TWOBITTOFA
-#	output:
-#		smbl.fasta.HUMAN_HG38
-#	message:
-#		"Installing the Human genome (HG38)."
-#	params:
-#		src=smbl.src_dir,
-#	shell:
-#		"""
-#			(
-#				rm -fR "{params.src}/hg38"
-#				mkdir -p "{params.src}/hg38"
-#			) > /dev/null
-#
-#			curl -L --insecure -o "{params.src}/hg38/hg38.2bit" "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit"
-#
-#			(
-#				"{input[0]}" "{params.src}/hg38/hg38.2bit" "{output[0]}"
-#				rm -fR "{params.src}/hg38"
-#			) > /dev/null
-#		"""
-
 rule index_fa:
 	output:
 		"{filename}.fa.fai"
@@ -66,7 +30,7 @@ rule index_fasta:
 			) > /dev/null
 		"""
 
-rule index_bam:
+rule index_bam_bai:
 	output:
 		"{filename}.bam.bai"
 	input:
@@ -77,6 +41,56 @@ rule index_bam:
 	shell:
 		"""
 			(
-				"{input[0]}" index "{input[1]}"
+				"{input[0]}" index -b "{input[1]}"
 			) > /dev/null
 		"""
+
+rule index_bam_csi:
+	output:
+		"{filename}.bam.csi"
+	input:
+		smbl.prog.SAMTOOLS,
+		"{filename}.bam"
+	message:
+		"Creating index for a BAM file ({input[1]})."
+	shell:
+		"""
+			(
+				"{input[0]}" index -c "{input[1]}"
+			) > /dev/null
+		"""
+
+#for i, fasta in enumerate(smbl.fasta.get_registered_fastas()):
+#	rule:
+#		output:
+#			fasta.get()
+#		input:
+#			fasta.get_required_programs()
+#		params:
+#			i=str(i),
+#		run:
+#			smbl.fasta.get_registered_fastas()[int(params.i)].install_all_steps()
+
+#rule human_hg38:
+#	input:
+#		smbl.prog.TWOBITTOFA
+#	output:
+#		smbl.fasta.HUMAN_HG38
+#	message:
+#		"Installing the Human genome (HG38)."
+#	params:
+#		src=smbl.src_dir,
+#	shell:
+#		"""
+#			(
+#				rm -fR "{params.src}/hg38"
+#				mkdir -p "{params.src}/hg38"
+#			) > /dev/null
+#
+#			curl -L --insecure -o "{params.src}/hg38/hg38.2bit" "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit"
+#
+#			(
+#				"{input[0]}" "{params.src}/hg38/hg38.2bit" "{output[0]}"
+#				rm -fR "{params.src}/hg38"
+#			) > /dev/null
+#		"""

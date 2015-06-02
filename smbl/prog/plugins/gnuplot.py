@@ -7,17 +7,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-GNUPLOT4 = _program.get_bin_file_path("gnuplot4")
-GNUPLOT5 = _program.get_bin_file_path("gnuplot5")
+GNUPLOT4 = get_bin_file_path("gnuplot4")
+GNUPLOT5 = get_bin_file_path("gnuplot5")
 
 
 ##########################################
 ##########################################
 
 
-class GnuPlot4(_program.Program):
+class GnuPlot4(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -37,7 +37,7 @@ class GnuPlot4(_program.Program):
 		return ["osx","linux"]
 
 
-class GnuPlot5(_program.Program):
+class GnuPlot5(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

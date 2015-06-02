@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-LASTAL = _program.get_bin_file_path("lastal")
-LASTDB = _program.get_bin_file_path("lastdb")
+LASTAL = get_bin_file_path("lastal")
+LASTDB = get_bin_file_path("lastdb")
 
 
 ##########################################
 ##########################################
 
 
-class Last(_program.Program):
+class Last(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

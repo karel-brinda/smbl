@@ -7,16 +7,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-BCFTOOLS = _program.get_bin_file_path("bcftools")
+BCFTOOLS = get_bin_file_path("bcftools")
 
 
 ##########################################
 ##########################################
 
 
-class BcfTools(_program.Program):
+class BcfTools(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

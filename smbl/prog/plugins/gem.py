@@ -2,18 +2,18 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-GEM_INDEXER = _program.get_bin_file_path("gem-indexer")
-GEM_MAPPER  = _program.get_bin_file_path("gem-mapper")
-GEM_2_SAM   = _program.get_bin_file_path("gem-2-sam")
+GEM_INDEXER = get_bin_file_path("gem-indexer")
+GEM_MAPPER  = get_bin_file_path("gem-mapper")
+GEM_2_SAM   = get_bin_file_path("gem-2-sam")
 
 
 ##########################################
 ##########################################
 
 
-class Gem(_program.Program):
+class Gem(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -24,7 +24,7 @@ class Gem(_program.Program):
 
 	@classmethod
 	def install(cls):
-		if smbl.is_linux() and smbl.is_os_64bit():
+		if smbl.utils.is_linux() and smbl.utils.is_os_64bit():
 			fn=cls.download_file("http://sourceforge.net/projects/gemlibrary/files/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2/download","gem.tbz2")
 		else:
 			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")

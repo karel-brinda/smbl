@@ -2,7 +2,7 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
 BWA = os.path.join(smbl.bin_dir,"bwa")
 
@@ -11,7 +11,7 @@ BWA = os.path.join(smbl.bin_dir,"bwa")
 ##########################################
 
 
-class Bwa(_program.Program):
+class Bwa(Program):
 
 	@classmethod
 	def get_installation_files(cls):
@@ -45,13 +45,13 @@ class Bwa(_program.Program):
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.make_index_input(),
 			output=self.make_index_output(),
 			run=self.make_index,
 		)
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,

@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-PICARD = _program.get_bin_file_path("picard.jar")
+PICARD = get_bin_file_path("picard.jar")
 
 
 ##########################################
 ##########################################
 
 
-class Picard(_program.Program):
+class Picard(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

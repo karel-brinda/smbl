@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-WGSIM      = _program.get_bin_file_path("wgsim")
-WGSIM_EVAL = _program.get_bin_file_path("wgsim_eval.pl")
+WGSIM      = get_bin_file_path("wgsim")
+WGSIM_EVAL = get_bin_file_path("wgsim_eval.pl")
 
 
 ##########################################
 ##########################################
 
 
-class WgSim(_program.Program):
+class WgSim(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

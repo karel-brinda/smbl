@@ -6,7 +6,7 @@ import os
 import abc
 
 __PLUGINS = set()
-__RULES= set()
+#__RULES= set()
 
 def register_plugin(plugin):
 	__PLUGINS.add(plugin)
@@ -14,21 +14,34 @@ def register_plugin(plugin):
 def get_registered_plugins():
 	return sorted(list(__PLUGINS),key=lambda x:x.get_plugin_name())
 
-def register_rule(rule):
-	encodings=[r.encode() for r in get_registered_rules()]
-	if rule.encode() not in encodings:
-		__RULES.add(rule)
-
-def get_registered_rules():
-	return list(__RULES)
+#def register_rule(rule):
+#	encodings=[r.encode() for r in get_registered_rules()]
+#	if rule.encode() not in encodings:
+#		__RULES.add(rule)
+#
+#def get_registered_rules():
+#	return list(__RULES)
 
 def get_bin_file_path(program):
 	return os.path.join(smbl.bin_dir,program)
 
-
 ##########################################
 ##########################################
 
+def correct_samtools_make(makefile_fn):
+	makefile_backup_fn = makefile_fn+".backup"
+	if not os.path.isfile(makefile_backup_fn):
+		with open(makefile_fn, 'r') as makefile:
+			content = makefile.read()
+			if smbl.utils.is_linux():
+				content = content.replace("-lcurses","-lncurses")
+			elif smbl.utils.is_cygwin():
+				content = content.replace("-D_FILE_OFFSET_BITS=64","-D_FILE_OFFSET_BITS=64 -Dexpl=exp -Dlogl=log")
+		with open(makefile_fn, 'w') as makefile:
+			makefile.write(content)
+
+##########################################
+##########################################
 
 #class ProgramWatcher(abc.ABCMeta):
 class ProgramWatcher(type):
@@ -87,7 +100,7 @@ class Program(metaclass=ProgramWatcher):
 		assert len(set(cls.supported_platforms()))>0, ""
 		assert set(cls.supported_platforms()).issubset(smbl.prog.all_platforms)
 		if not cls.is_platform_supported():
-			smbl.messages.error("Operating system '{}' is not supported".format(smbl.get_platform()),program="SMBL")
+			smbl.messages.error("Operating system '{}' is not supported".format(smbl.utils.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
 		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
 		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
@@ -108,7 +121,7 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def is_platform_supported(cls):
-		platform=smbl.get_platform()
+		platform=smbl.utils.get_platform()
 		if platform in cls.supported_platforms():
 			return True
 		else:
@@ -228,22 +241,22 @@ class Program(metaclass=ProgramWatcher):
 ##########################################
 
 
-class Rule:
-	def __init__(self,input,output,run):
-		self.__input=input
-		self.__output=output
-		self.__run=run
-
-		register_rule(self)
-
-	def get_input(self):
-		return self.__input
-
-	def get_output(self):
-		return self.__output
-
-	def run(self):
-		self.__run()
-
-	def encode(self):
-		return "{} {}".format(str(self.__input),str(self.__output))
+#class Rule:
+#	def __init__(self,input,output,run):
+#		self.__input=input
+#		self.__output=output
+#		self.__run=run
+#
+#		register_rule(self)
+#
+#	def get_input(self):
+#		return self.__input
+#
+#	def get_output(self):
+#		return self.__output
+#
+#	def run(self):
+#		self.__run()
+#
+#	def encode(self):
+#		return "{} {}".format(str(self.__input),str(self.__output))

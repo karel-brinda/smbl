@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-CMAKE = _program.get_bin_file_path("cmake")
+CMAKE = get_bin_file_path("cmake")
 
 
 ##########################################
 ##########################################
 
 
-class CMake(_program.Program):
+class CMake(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
