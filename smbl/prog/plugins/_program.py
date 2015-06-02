@@ -163,7 +163,7 @@ class Program(metaclass=ProgramWatcher):
 	def install_file(cls,filename_short,dest,executable=True):
 		cls.status_message("Copying: "+cls.abs_from_short(filename_short))
 		filename_full=cls.abs_from_short(filename_short)
-		assert os.path.isfile(filename_full) 
+		assert os.path.isfile(filename_full), "File which should be installed has not been created"
 		cls.shell('cp "{source}" "{dest}"'.format(source=filename_full,dest=dest))
 		if executable:
 			cls.shell('chmod +x "{}"'.format(dest))
@@ -217,7 +217,7 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def run_cmake(cls,dirname_short):
-		assert smbl.prog.CMake in cls.depends_on()
+		assert smbl.prog.CMake in cls.depends_on(), "CMake is called but missing in dependencies of the plugin"
 		cls.status_message("Running cmake: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
 		cls.shell('cd "{build_dir}" && "{cmake}" .'.format(

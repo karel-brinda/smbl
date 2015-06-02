@@ -16,6 +16,7 @@ from .freec import *
 from .gem import *
 from .gnuplot import *
 from .htslib import *
+from .kallisto import *
 from .last import *
 from .mrfast import *
 from .mrsfast import *

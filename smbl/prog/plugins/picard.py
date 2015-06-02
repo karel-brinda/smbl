@@ -20,7 +20,7 @@ class Picard(Program):
 
 	@classmethod
 	def install(cls):
-		ver="1.130"
+		ver="1.133"
 		fn=cls.download_file("https://github.com/broadinstitute/picard/releases/download/{ver}/picard-tools-{ver}.zip".format(ver=ver),"picard.zip")
 		dir=os.path.dirname(fn)
 		snakemake.shell('(cd "{dir}" && unzip -j picard.zip) > /dev/null'.format(dir=dir))

@@ -22,7 +22,7 @@ class Last(Program):
 
 	@classmethod
 	def install(cls):
-		last_version="last-548"
+		last_version="last-581"
 		fn=cls.download_file("http://last.cbrc.jp/{}.zip".format(last_version),"last.zip")
 		dir1=os.path.dirname(fn)
 		snakemake.shell('(cd "{dir1}" && unzip last.zip)')
