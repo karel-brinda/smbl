@@ -109,7 +109,7 @@ class RazerS3(Seqan):
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,
@@ -181,13 +181,13 @@ class Yara(Seqan):
 		self.index_prefix=self._fa_fn.rpartition(".")[0]
 		self._sort_by_name=sort_by_name
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.make_index_input(),
 			output=self.make_index_output(),
 			run=self.make_index,
 		)
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,
