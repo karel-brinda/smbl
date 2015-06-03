@@ -2,6 +2,7 @@ import os
 import sys
 import snakemake
 import platform
+import pkg_resources
 
 import smbl.messages
 
@@ -11,12 +12,14 @@ import smbl.messages
 #       - https://github.com/lh3/mem-paper/blob/master/eval/time.txt
 #       - http://lh3lh3.users.sourceforge.net/alnROC.shtml
 
+version=pkg_resources.require("smbl")[0].version
 
 smbl.messages.message("",program="SMBL")
 smbl.messages.message("SnakeMake Bioinformatics Library",program="SMBL")
 smbl.messages.message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",program="SMBL")
-smbl.messages.message("Web:    http://github.com/karel-brinda/smbl",program="SMBL")
-smbl.messages.message("Author: Karel Brinda, karel.brinda@univ-mlv.fr",program="SMBL")
+smbl.messages.message("Version: {}".format(version),program="SMBL")
+smbl.messages.message("Web:     http://github.com/karel-brinda/smbl",program="SMBL")
+smbl.messages.message("Author:  Karel Brinda, karel.brinda@univ-mlv.fr",program="SMBL")
 smbl.messages.message("",program="SMBL")
 smbl.messages.message("Platform: {}".format(sys.platform),program="SMBL")
 smbl.messages.message("System: {}".format(platform.system()),program="SMBL")
