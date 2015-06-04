@@ -10,6 +10,7 @@ from .bowtie import *
 from .bwa import *
 from .cmake import *
 from .curesim import *
+from .deez import *
 from .drfast import *
 from .dwgsim import *
 from .freec import *
