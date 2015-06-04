@@ -25,7 +25,8 @@ install:
 # git svn
 - sudo apt-get install git-svn
 # libraries for HDF5
-- sudo apt-get install -q libhdf5-serial-dev libhdf5-openmpi-dev libhdf5-mpich-dev libhdf5-lam-dev
+- sudo apt-get install libhdf5-serial-dev
+#libhdf5-openmpi-dev libhdf5-mpich-dev libhdf5-lam-dev
 - pip install -r requirements.txt
 - pip install .
 script:
