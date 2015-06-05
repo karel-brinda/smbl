@@ -85,7 +85,7 @@ class Storm(Program):
 
 	def map_reads(self,number_of_threads=1):
 		
-		snakemake.shell('"{storm}" -M 4 -A -g "{genome}" -r "{reads}" -N "{threads}" | "{samtools}" view -bS - > "{bam}"'.format(
+		smbl.utils.shell('"{storm}" -M 4 -A -g "{genome}" -r "{reads}" -N "{threads}" | "{samtools}" view -bS - > "{bam}"'.format(
 				storm=STORM_NUCLEOTIDE,
 				samtools=smbl.prog.SAMTOOLS,
 				genome=self._fa_fn,

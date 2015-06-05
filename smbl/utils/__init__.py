@@ -1,9 +1,21 @@
 import smbl
 import sys
 import platform
+import snakemake
+import re
 
 from .clean import *
 from .rule import *
+
+def shell(
+			cmd,
+			remove_spaces=True
+		):
+	if remove_spaces:
+		#print("removing spaces from command")
+		cmd=re.sub(r'[ \t\f\v]+',' ',cmd).strip()
+
+	return snakemake.shell(cmd)
 
 def is_linux():
 	return sys.platform.startswith('linux')

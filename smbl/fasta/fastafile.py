@@ -124,9 +124,9 @@ class FastaFile:
 
 	def shell(self,command):
 		if self.verbosity:
-			snakemake.shell(command)
+			smbl.utils.shell(command)
 		else:
-			snakemake.shell("({}) > /dev/null".format(command))
+			smbl.utils.shell("({}) > /dev/null".format(command))
 
 	def status_message(self,message):
 		smbl.messages.message(

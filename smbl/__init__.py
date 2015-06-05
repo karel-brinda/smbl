@@ -6,13 +6,16 @@ import pkg_resources
 
 import smbl.messages
 
-
 # mapping wrappers
 #  - commands in practise:
 #       - https://github.com/lh3/mem-paper/blob/master/eval/time.txt
 #       - http://lh3lh3.users.sourceforge.net/alnROC.shtml
 
-version=pkg_resources.require("smbl")[0].version
+try:
+	import pkg_resources
+	version=pkg_resources.require("smbl")[0].version
+except:
+	version="unknown"
 
 smbl.messages.message("",program="SMBL")
 smbl.messages.message("SnakeMake Bioinformatics Library",program="SMBL")
@@ -61,7 +64,7 @@ def all_compatible_programs():
 				if plugin.is_platform_supported()
 		]
 
-snakemake.shell(
+smbl.utils.shell(
 		"""
 			mkdir -p "{}" "{}" "{}"
 		""".format(bin_dir,fa_dir,src_dir)
