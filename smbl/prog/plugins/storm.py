@@ -2,17 +2,19 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-STORM_NUCLEOTIDE = _program.get_bin_file_path("storm-nucleotide")
-STORM_COLOR      = _program.get_bin_file_path("storm-color")
+from .cmake import *
+
+STORM_NUCLEOTIDE = get_bin_file_path("storm-nucleotide")
+STORM_COLOR      = get_bin_file_path("storm-color")
 
 
 ##########################################
 ##########################################
 
 
-class Storm(_program.Program):
+class Storm(Program):
 
 	@classmethod
 	def get_installation_files(cls):
@@ -24,13 +26,13 @@ class Storm(_program.Program):
 	@classmethod
 	def depends_on(cls):
 		return [
-			smbl.prog.CMake
+			CMake
 		]
 
 	@classmethod
 	def install(cls):
 		cls.svn_checkout("svn://scm.gforge.inria.fr/svnroot/storm/trunk","")
-		if smbl.is_osx():
+		if smbl.utils.is_osx():
 			cls.run_cmake("")
 		cls.run_make("")
 		cls.install_file("storm-color",STORM_COLOR)
@@ -61,7 +63,7 @@ class Storm(_program.Program):
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,

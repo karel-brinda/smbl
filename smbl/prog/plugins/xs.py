@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-XS = _program.get_bin_file_path("XS")
+XS = get_bin_file_path("XS")
 
 
 ##########################################
 ##########################################
 
 
-class Xs(_program.Program):
+class Xs(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

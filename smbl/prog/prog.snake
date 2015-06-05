@@ -1,25 +1,25 @@
 import smbl
 
-for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
-	rule:
-		output:
-			plugin.get_installation_files()
-		input:
-			[
-				p.get_installation_files() for p in plugin.depends_on()
-			]
-		params:
-			i=str(i),
-		run:
-			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install_all_steps)()
+#for i, plugin in enumerate(smbl.prog.plugins.get_registered_plugins()):
+#	rule:
+#		output:
+#			plugin.get_installation_files()
+#		input:
+#			[
+#				p.get_installation_files() for p in plugin.depends_on()
+#			]
+#		params:
+#			i=str(i),
+#		run:
+#			(smbl.prog.plugins.get_registered_plugins()[int(params.i)].install_all_steps)()
 
-for i, rule in enumerate(smbl.prog.plugins.get_registered_rules()):
-	rule:
-		input:
-			rule.get_input()
-		output:
-			rule.get_output()
-		params:
-			i=str(i),
-		run:
-			smbl.prog.plugins.get_registered_rules()[int(params.i)].run()
+#for i, rule in enumerate(smbl.prog.plugins.get_registered_rules()):
+#	rule:
+#		input:
+#			rule.get_input()
+#		output:
+#			rule.get_output()
+#		params:
+#			i=str(i),
+#		run:
+#			smbl.prog.plugins.get_registered_rules()[int(params.i)].run()

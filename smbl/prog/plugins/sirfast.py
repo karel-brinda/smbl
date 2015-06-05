@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-SIRFAST = _program.get_bin_file_path("sirfast")
+SIRFAST = get_bin_file_path("sirfast")
 
 
 ##########################################
 ##########################################
 
 
-class SirFast(_program.Program):
+class SirFast(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

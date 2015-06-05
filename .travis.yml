@@ -16,11 +16,17 @@ before_install:
 install:
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 - sudo apt-get update
+# last version of GCC
 - sudo apt-get install g++-4.8
 - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
 - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
+# libraries for compression
 - sudo apt-get install zlib1g-dev libbz2-dev libboost-dev
+# git svn
 - sudo apt-get install git-svn
+# libraries for HDF5
+- sudo apt-get install libhdf5-serial-dev
+#libhdf5-openmpi-dev libhdf5-mpich-dev libhdf5-lam-dev
 - pip install -r requirements.txt
 - pip install .
 script:

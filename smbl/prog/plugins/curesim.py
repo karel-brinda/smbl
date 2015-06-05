@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-CURESIM = _program.get_bin_file_path("CuReSim.jar")
-CURESIM_EVAL = _program.get_bin_file_path("CuReSimEval.jar")
+CURESIM = get_bin_file_path("CuReSim.jar")
+CURESIM_EVAL = get_bin_file_path("CuReSimEval.jar")
 
 
 ##########################################
 ##########################################
 
 
-class CuReSim(_program.Program):
+class CuReSim(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

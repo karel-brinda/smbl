@@ -2,17 +2,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-LASTAL = _program.get_bin_file_path("lastal")
-LASTDB = _program.get_bin_file_path("lastdb")
+LASTAL = get_bin_file_path("lastal")
+LASTDB = get_bin_file_path("lastdb")
 
 
 ##########################################
 ##########################################
 
 
-class Last(_program.Program):
+class Last(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -22,7 +22,7 @@ class Last(_program.Program):
 
 	@classmethod
 	def install(cls):
-		last_version="last-548"
+		last_version="last-581"
 		fn=cls.download_file("http://last.cbrc.jp/{}.zip".format(last_version),"last.zip")
 		dir1=os.path.dirname(fn)
 		snakemake.shell('(cd "{dir1}" && unzip last.zip)')

@@ -3,21 +3,34 @@ from snakemake.utils import min_version
 
 shell.prefix("set -e -o pipefail; ")
 
-include: "prog/prog.snake"
+#include: "utils/rules.snake"
+#include: "prog/prog.snake"
 include: "fasta/fasta.snake"
 
-rule smbl_clean:
-	shell:
-		'rm -fR "{}" "{}" "{}"'.format(smbl.bin_dir,smbl.fa_dir,smbl.src_dir)
+#rule smbl_clean:
+#	shell:
+#		'rm -fR "{}" "{}" "{}"'.format(smbl.bin_dir,smbl.fa_dir,smbl.src_dir)
+#
+#rule smbl_clean_fa:
+#	shell:
+#		'rm -fR "{}"'.format(smbl.fa_dir)
+#
+#rule smbl_clean_prog:
+#	shell:
+#		'rm -fR "{}"'.format(smbl.bin_dir)
+#
+#rule smbl_clean_src:
+#	shell:
+#		'rm -fR "{}"'.format(smbl.src_dir)
 
-rule smbl_clean_fa:
-	shell:
-		'rm -fR "{}"'.format(smbl.fa_dir)
 
-rule smbl_clean_prog:
-	shell:
-		'rm -fR "{}"'.format(smbl.bin_dir)
-
-rule smbl_clean_src:
-	shell:
-		'rm -fR "{}"'.format(smbl.src_dir)
+for i, rule in enumerate(smbl.utils.get_registered_rules()):
+	rule:
+		input:
+			rule.get_input()
+		output:
+			rule.get_output()
+		params:
+			i=str(i),
+		run:
+			smbl.utils.get_registered_rules()[int(params.i)].run()

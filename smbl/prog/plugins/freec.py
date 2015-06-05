@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-FREEC = _program.get_bin_file_path("freec")
+FREEC = get_bin_file_path("freec")
 
 
 ##########################################
 ##########################################
 
 
-class Freec(_program.Program):
+class Freec(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [

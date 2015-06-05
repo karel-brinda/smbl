@@ -2,27 +2,30 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-MASON_FRAG_SEQUENCING   = _program.get_bin_file_path("mason_frag_sequencing")
-MASON_GENOME            = _program.get_bin_file_path("mason_genome")
-MASON_MATERIALIZER      = _program.get_bin_file_path("mason_materializer")
-MASON_METHYLATION       = _program.get_bin_file_path("mason_methylation")
-MASON_SIMULATOR         = _program.get_bin_file_path("mason_simulator")
-MASON_SPLICING          = _program.get_bin_file_path("mason_splicing")
-MASON_VARIATOR          = _program.get_bin_file_path("mason_variator")
-YARA_INDEXER            = _program.get_bin_file_path("yara_indexer")
-YARA_MAPPER             = _program.get_bin_file_path("yara_mapper")
-RAZERS1                 = _program.get_bin_file_path("razers")
-RAZERS2                 = _program.get_bin_file_path("razers2")
-RAZERS3                 = _program.get_bin_file_path("razers3")
+from .cmake import *
+from .samtools import *
+
+MASON_FRAG_SEQUENCING   = get_bin_file_path("mason_frag_sequencing")
+MASON_GENOME            = get_bin_file_path("mason_genome")
+MASON_MATERIALIZER      = get_bin_file_path("mason_materializer")
+MASON_METHYLATION       = get_bin_file_path("mason_methylation")
+MASON_SIMULATOR         = get_bin_file_path("mason_simulator")
+MASON_SPLICING          = get_bin_file_path("mason_splicing")
+MASON_VARIATOR          = get_bin_file_path("mason_variator")
+YARA_INDEXER            = get_bin_file_path("yara_indexer")
+YARA_MAPPER             = get_bin_file_path("yara_mapper")
+#RAZERS1                 = get_bin_file_path("razers")
+#RAZERS2                 = get_bin_file_path("razers2")
+RAZERS3 = RAZER         = get_bin_file_path("razers3")
 
 
 ##########################################
 ##########################################
 
 
-class Seqan(_program.Program):
+class Seqan(Program):
 
 	@classmethod
 	def get_installation_files(cls):
@@ -36,16 +39,16 @@ class Seqan(_program.Program):
 				MASON_VARIATOR,
 				YARA_INDEXER,
 				YARA_MAPPER,
-				RAZERS1,
-				RAZERS2,
+#				RAZERS1,
+#				RAZERS2,
 				RAZERS3,
 			]
 
 	@classmethod
 	def depends_on(cls):
 		return [
-			smbl.prog.CMake,
-			smbl.prog.SamTools,
+			CMake,
+			SamTools,
 		]
 		
 	@classmethod
@@ -65,11 +68,11 @@ class Seqan(_program.Program):
 		cls.install_file("bin/mason_splicing",MASON_SPLICING)
 		cls.install_file("bin/mason_variator",MASON_VARIATOR)
 
-		cls.run_make("apps/razers")
-		cls.install_file("bin/razers",RAZERS1)
-
-		cls.run_make("apps/razers2")
-		cls.install_file("bin/razers2",RAZERS2)
+#		cls.run_make("apps/razers")
+#		cls.install_file("bin/razers",RAZERS1)
+#
+#		cls.run_make("apps/razers2")
+#		cls.install_file("bin/razers2",RAZERS2)
 
 		cls.run_make("apps/razers3")
 		cls.install_file("bin/razers3",RAZERS3)
@@ -106,7 +109,7 @@ class RazerS3(Seqan):
 		self._fq2_fn=fastq_2
 		self._bam_fn=bam
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,
@@ -178,13 +181,13 @@ class Yara(Seqan):
 		self.index_prefix=self._fa_fn.rpartition(".")[0]
 		self._sort_by_name=sort_by_name
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.make_index_input(),
 			output=self.make_index_output(),
 			run=self.make_index,
 		)
 
-		smbl.prog.plugins.Rule(
+		smbl.utils.Rule(
 			input=self.map_reads_input(),
 			output=self.map_reads_output(),
 			run=self.map_reads,

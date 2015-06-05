@@ -2,16 +2,16 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-PICARD = _program.get_bin_file_path("picard.jar")
+PICARD = get_bin_file_path("picard.jar")
 
 
 ##########################################
 ##########################################
 
 
-class Picard(_program.Program):
+class Picard(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
@@ -20,7 +20,7 @@ class Picard(_program.Program):
 
 	@classmethod
 	def install(cls):
-		ver="1.130"
+		ver="1.133"
 		fn=cls.download_file("https://github.com/broadinstitute/picard/releases/download/{ver}/picard-tools-{ver}.zip".format(ver=ver),"picard.zip")
 		dir=os.path.dirname(fn)
 		snakemake.shell('(cd "{dir}" && unzip -j picard.zip) > /dev/null'.format(dir=dir))

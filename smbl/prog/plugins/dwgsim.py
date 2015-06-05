@@ -7,17 +7,17 @@ import smbl
 import snakemake
 import os
 
-import _program
+from ._program import *
 
-DWGSIM      = _program.get_bin_file_path("dwgsim")
-DWGSIM_EVAL = _program.get_bin_file_path("dwgsim_eval")
+DWGSIM      = get_bin_file_path("dwgsim")
+DWGSIM_EVAL = get_bin_file_path("dwgsim_eval")
 
 
 ##########################################
 ##########################################
 
 
-class DwgSim(_program.Program):
+class DwgSim(Program):
 	@classmethod
 	def get_installation_files(cls):
 		return [
