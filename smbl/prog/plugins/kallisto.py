@@ -41,4 +41,5 @@ class Kallisto(Program):
 
 	@classmethod
 	def supported_platforms(cls):
-		return ["osx","linux","cygwin"]
+		return []
+		#["osx","linux","cygwin"]
