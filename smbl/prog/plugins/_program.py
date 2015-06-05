@@ -226,10 +226,10 @@ class Program(metaclass=ProgramWatcher):
 			))
 
 	@classmethod
-	def run_configure(cls,dirname_short):
+	def run_configure(cls,dirname_short,other_args=""):
 		cls.status_message("Running configure: "+cls.abs_from_short(dirname_short))
 		dirname_full=cls.abs_from_short(dirname_short)
-		cls.shell('cd "{build_dir}" && ./configure'.format(build_dir=dirname_full))
+		cls.shell('cd "{build_dir}" && ./configure {other_args}'.format(build_dir=dirname_full,other_args=other_args))
 
 	@classmethod
 	def abs_from_short(cls,short):
