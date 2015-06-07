@@ -1,6 +1,5 @@
 import os
-import sys
-import platform
+import builtins
 
 import smbl.messages
 
@@ -11,27 +10,46 @@ import smbl.messages
 
 try:
 	import pkg_resources
-	version=pkg_resources.get_distribution("smbl").version
+	__version__=pkg_resources.get_distribution("smbl").version
 except:
-	version="unknown"
+	__version__=""
 
-smbl.messages.message("",program="SMBL")
-smbl.messages.message("SnakeMake Bioinformatics Library",program="SMBL")
-smbl.messages.message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",program="SMBL")
-smbl.messages.message("Version: {}".format(version),program="SMBL")
-smbl.messages.message("Web:     http://github.com/karel-brinda/smbl",program="SMBL")
-smbl.messages.message("Contact: Karel Brinda, karel.brinda@univ-mlv.fr",program="SMBL")
-smbl.messages.message("",program="SMBL")
-smbl.messages.message("Platform: {}".format(sys.platform),program="SMBL")
-smbl.messages.message("System: {}".format(platform.system()),program="SMBL")
-smbl.messages.message("Machine: {}".format(platform.machine()),program="SMBL")
-smbl.messages.message("Processor: {}".format(platform.processor()),program="SMBL")
-smbl.messages.message("Python version: {}".format(platform.python_version()),program="SMBL")
-smbl.messages.message("Python build: {}".format(", ".join(platform.python_build())),program="SMBL")
-smbl.messages.message("",program="SMBL")
+DEFAULT_SMBL_CONF = {
+		'print_info': True,
+		'directory': os.path.join(os.path.expanduser("~"),".smbl"),
+		'ensure_directory': True,
+	}
 
-smbl_dir = os.path.join(os.path.expanduser("~"),".smbl")
+try:
+	SMBL_CONF = builtins.SMBL_CONF
+except:
+	SMBL_CONF = {}
 
+assert type(SMBL_CONF) is dict, "builtins.SMBL_CONF must be a dictionary"
+for key in DEFAULT_SMBL_CONF.keys():
+	if not key in SMBL_CONF:
+		SMBL_CONF[key]=DEFAULT_SMBL_CONF[key]
+
+if SMBL_CONF["print_info"]:
+	import platform
+	import sys
+
+	smbl.messages.message("",program="SMBL")
+	smbl.messages.message("SnakeMake Bioinformatics Library",program="SMBL")
+	smbl.messages.message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",program="SMBL")
+	smbl.messages.message("Version: {}".format(__version__),program="SMBL")
+	smbl.messages.message("Web:     http://github.com/karel-brinda/smbl",program="SMBL")
+	smbl.messages.message("Contact: Karel Brinda, karel.brinda@univ-mlv.fr",program="SMBL")
+	smbl.messages.message("",program="SMBL")
+	smbl.messages.message("Platform: {}".format(sys.platform),program="SMBL")
+	smbl.messages.message("System: {}".format(platform.system()),program="SMBL")
+	smbl.messages.message("Machine: {}".format(platform.machine()),program="SMBL")
+	smbl.messages.message("Processor: {}".format(platform.processor()),program="SMBL")
+	smbl.messages.message("Python version: {}".format(platform.python_version()),program="SMBL")
+	smbl.messages.message("Python build: {}".format(", ".join(platform.python_build())),program="SMBL")
+	smbl.messages.message("",program="SMBL")
+
+smbl_dir = SMBL_CONF["directory"]
 bin_dir  = os.path.join(smbl_dir,"bin")
 fa_dir   = os.path.join(smbl_dir,"fa")
 src_dir  = os.path.join(smbl_dir,"src")
@@ -62,8 +80,9 @@ def all_compatible_programs():
 				if plugin.is_platform_supported()
 		]
 
-smbl.utils.shell(
-		"""
-			mkdir -p "{}" "{}" "{}"
-		""".format(bin_dir,fa_dir,src_dir)
-	)
+if SMBL_CONF["ensure_directory"]:
+	smbl.utils.shell(
+			"""
+				mkdir -p "{}" "{}" "{}"
+			""".format(bin_dir,fa_dir,src_dir)
+		)
