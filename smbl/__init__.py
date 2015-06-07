@@ -1,8 +1,6 @@
 import os
 import sys
-import snakemake
 import platform
-import pkg_resources
 
 import smbl.messages
 
@@ -13,7 +11,7 @@ import smbl.messages
 
 try:
 	import pkg_resources
-	version=pkg_resources.require("smbl")[0].version
+	version=pkg_resources.get_distribution("smbl").version
 except:
 	version="unknown"
 
