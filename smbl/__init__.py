@@ -8,6 +8,9 @@ import smbl.messages
 #       - https://github.com/lh3/mem-paper/blob/master/eval/time.txt
 #       - http://lh3lh3.users.sourceforge.net/alnROC.shtml
 
+
+import sys
+
 try:
 	import pkg_resources
 	__version__=pkg_resources.get_distribution("smbl").version
@@ -15,8 +18,11 @@ except:
 	__version__=""
 
 DEFAULT_SMBL_CONF = {
-		'print_info': True,
+		# print information about SMBL during import
+		'print_info': sys.argv[0]=="snakemake",
+		# directory where SMBL installs all data and programs
 		'directory': os.path.join(os.path.expanduser("~"),".smbl"),
+		# create the directory when SMBL is imported
 		'ensure_directory': True,
 	}
 
@@ -29,6 +35,8 @@ assert type(SMBL_CONF) is dict, "builtins.SMBL_CONF must be a dictionary"
 for key in DEFAULT_SMBL_CONF.keys():
 	if not key in SMBL_CONF:
 		SMBL_CONF[key]=DEFAULT_SMBL_CONF[key]
+
+#print("SMBL configuration:",SMBL_CONF)
 
 if SMBL_CONF["print_info"]:
 	import platform
