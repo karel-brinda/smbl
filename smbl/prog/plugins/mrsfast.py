@@ -26,7 +26,7 @@ class MrsFast(Program):
 
 	@classmethod
 	def install(cls):
-		cls.git_clone("git://git.code.sf.net/p/mrsfast/code","")
+		cls.git_clone("git://github.com/sfu-compbio/mrsfast/","")
 		cls.run_make("")
 		cls.install_file("mrsfast",MRSFAST)
 
