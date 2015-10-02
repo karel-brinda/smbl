@@ -1,4 +1,4 @@
-pbr>=1.0.1
-snakemake>=3.3
+pbr>=1.8.0
+snakemake>=3.4.0
 pytest
 termcolor>=1.1.0
