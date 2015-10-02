@@ -108,7 +108,7 @@ class Bowtie2(Program):
 	##########################################
 
 	def make_index(self):
-		snakemake.shell('"{bt2b}" "{fa}" "{fa}"'.format(
+		smbl.utils.shell('"{bt2b}" "{fa}" "{fa}"'.format(
 				bt2b=BOWTIE2_BUILD,
 				fa=self._fa_fn,
 			))
@@ -132,7 +132,7 @@ class Bowtie2(Program):
 		else:
 			reads_string='-1 "{}" -2 "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell('"{bt2}" -p {threads} -x "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
+		smbl.utils.shell('"{bt2}" -p {threads} -x "{idx}" {reads_string} | "{samtools}" view -bS - > "{bam}"'.format(
 				bt2=BOWTIE2,
 				samtools=smbl.prog.SAMTOOLS,
 				idx=self._fa_fn,

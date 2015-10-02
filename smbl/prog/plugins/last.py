@@ -25,7 +25,7 @@ class Last(Program):
 		last_version="last-581"
 		fn=cls.download_file("http://last.cbrc.jp/{}.zip".format(last_version),"last.zip")
 		dir1=os.path.dirname(fn)
-		snakemake.shell('(cd "{dir1}" && unzip last.zip)')
+		smbl.utils.shell('(cd "{dir1}" && unzip last.zip)'.format(dir1=dir1))
 		dir2=os.path.join(dir1,last_version)
 		cls.run_make(dir2)
 		cls.install_file("{}/src/lastal".format(dir2),LASTAL)

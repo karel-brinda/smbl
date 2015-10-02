@@ -23,7 +23,7 @@ class BFast(Program):
 	@classmethod
 	def install(cls):
 		gitdir_bcftools=cls.git_clone("git://github.com/nh13/bfast","")
-		snakemake.shell('(cd "{}" && sh autogen.sh) > /dev/null'.format(cls.src_dir))
+		smbl.utils.shell('(cd "{}" && sh autogen.sh) > /dev/null'.format(cls.src_dir))
 		cls.run_configure("")
 		cls.run_make("")
 		cls.install_file("bfast/bfast",BFAST)

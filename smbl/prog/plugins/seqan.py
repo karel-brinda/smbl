@@ -135,7 +135,7 @@ class RazerS3(Seqan):
 		else:
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
-		snakemake.shell('("{razer}" -o "{bam}" -tc {threads} "{genome}" {reads_string}) > /dev/null'.format(
+		smbl.utils.shell('("{razer}" -o "{bam}" -tc {threads} "{genome}" {reads_string}) > /dev/null'.format(
 				razer=RAZERS3,
 				genome=self._fa_fn,
 				reads_string=reads_string,
@@ -224,7 +224,7 @@ class Yara(Seqan):
 	##########################################
 
 	def make_index(self):
-		snakemake.shell('("{yara_indexer}" -o "{prefix}" "{fa}") > /dev/null'.format(
+		smbl.utils.shell('("{yara_indexer}" -o "{prefix}" "{fa}") > /dev/null'.format(
 				yara_indexer=YARA_INDEXER,
 				prefix=self.index_prefix,
 				fa=self._fa_fn,
@@ -250,7 +250,7 @@ class Yara(Seqan):
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
 		if self._sort_by_name:
-			snakemake.shell('"{yara_mapper}" -t {threads} "{genome_pref}" {reads_string} | "{samtools}" sort -n - "{bamprefix}"'.format(
+			smbl.utils.shell('"{yara_mapper}" -t {threads} "{genome_pref}" {reads_string} | "{samtools}" sort -n - "{bamprefix}"'.format(
 						yara_mapper=YARA_MAPPER,
 						genome_pref=self.index_prefix,
 						reads_string=reads_string,
@@ -260,7 +260,7 @@ class Yara(Seqan):
 					)
 				)
 		else:
-			snakemake.shell('"{yara_mapper}" -o "{bam}" -t {threads} "{genome_pref}" {reads_string}'.format(
+			smbl.utils.shell('"{yara_mapper}" -o "{bam}" -t {threads} "{genome_pref}" {reads_string}'.format(
 						yara_mapper=YARA_MAPPER,
 						genome_pref=self.index_prefix,
 						reads_string=reads_string,
