@@ -20,7 +20,7 @@ class Picard(Program):
 
 	@classmethod
 	def install(cls):
-		ver="1.133"
+		ver="1.140"
 		fn=cls.download_file("https://github.com/broadinstitute/picard/releases/download/{ver}/picard-tools-{ver}.zip".format(ver=ver),"picard.zip")
 		dir=os.path.dirname(fn)
 		smbl.utils.shell('(cd "{dir}" && unzip -j picard.zip) > /dev/null'.format(dir=dir))

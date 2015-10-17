@@ -22,7 +22,7 @@ class Last(Program):
 
 	@classmethod
 	def install(cls):
-		last_version="last-581"
+		last_version="last-638"
 		fn=cls.download_file("http://last.cbrc.jp/{}.zip".format(last_version),"last.zip")
 		dir1=os.path.dirname(fn)
 		smbl.utils.shell('(cd "{dir1}" && unzip last.zip)'.format(dir1=dir1))
