@@ -30,8 +30,8 @@ class CuReSim(Program):
 			cls.install_file("CuReSim.jar",CURESIM)
 			cls.install_file("CuReSimEval.jar",CURESIM_EVAL)
 		except:
-			fn1=cls.download_file("https://github.com/karel-brinda/ext-smbl/raw/master/CuReSim.jar","CuReSim.jar")
-			fn2=cls.download_file("https://github.com/karel-brinda/ext-smbl/raw/master/CuReSimEval.jar","CuReSimEval.jar")
+			fn1=cls.download_file("http://github.com/karel-brinda/ext-smbl/raw/master/CuReSim.jar","CuReSim.jar")
+			fn2=cls.download_file("http://github.com/karel-brinda/ext-smbl/raw/master/CuReSimEval.jar","CuReSimEval.jar")
 
 		cls.install_file("CuReSim.jar",CURESIM)
 		cls.install_file("CuReSimEval.jar",CURESIM_EVAL)

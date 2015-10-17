@@ -20,7 +20,7 @@ class SirFast(Program):
 
 	@classmethod
 	def install(cls):
-		cls.git_clone("git://github.com/BilkentCompGen/sirfast","")
+		cls.git_clone("http://github.com/BilkentCompGen/sirfast","")
 		cls.run_make("")
 		cls.install_file("sirfast",SIRFAST)
 
