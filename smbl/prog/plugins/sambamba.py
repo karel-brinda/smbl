@@ -20,7 +20,7 @@ class SamBamBa(Program):
 
 	@classmethod
 	def install(cls):
-		version="v0.5.4"
+		version="v0.5.8"
 
 		if smbl.utils.is_linux():
 			fn=cls.download_file("http://github.com/lomereiter/sambamba/releases/download/{ver}/sambamba_{ver}_linux.tar.bz2".format(ver=version),"sambamba.tar.bz2")

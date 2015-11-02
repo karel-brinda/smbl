@@ -1,26 +1,11 @@
 import smbl
 
-rule index_fa:
-	output:
-		"{filename}.fa.fai"
-	input:
-		smbl.prog.SAMTOOLS,
-		"{filename}.fa"
-	message:
-		"Creating index for a FASTA file ({input[1]})."
-	shell:
-		"""
-			(
-				"{input[0]}" faidx "{input[1]}"
-			) > /dev/null
-		"""
-
 rule index_fasta:
 	output:
-		"{filename}.fasta.fai"
+		"{filename}.{suffix}.fai"
 	input:
 		smbl.prog.SAMTOOLS,
-		"{filename}.fasta"
+		"{filename}.{suffix}"
 	message:
 		"Creating index for a FASTA file ({input[1]})."
 	shell:
@@ -32,10 +17,10 @@ rule index_fasta:
 
 rule index_bam_bai:
 	output:
-		"{filename}.bam.bai"
+		"{filename}.{suffix}.bai"
 	input:
 		smbl.prog.SAMTOOLS,
-		"{filename}.bam"
+		"{filename}.{suffix}"
 	message:
 		"Creating index for a BAM file ({input[1]})."
 	shell:
@@ -47,10 +32,10 @@ rule index_bam_bai:
 
 rule index_bam_csi:
 	output:
-		"{filename}.bam.csi"
+		"{filename}.{suffix}.csi"
 	input:
 		smbl.prog.SAMTOOLS,
-		"{filename}.bam"
+		"{filename}.{suffix}"
 	message:
 		"Creating index for a BAM file ({input[1]})."
 	shell:
@@ -59,38 +44,3 @@ rule index_bam_csi:
 				"{input[0]}" index -c "{input[1]}"
 			) > /dev/null
 		"""
-
-#for i, fasta in enumerate(smbl.fasta.get_registered_fastas()):
-#	rule:
-#		output:
-#			fasta.get()
-#		input:
-#			fasta.get_required_programs()
-#		params:
-#			i=str(i),
-#		run:
-#			smbl.fasta.get_registered_fastas()[int(params.i)].install_all_steps()
-
-#rule human_hg38:
-#	input:
-#		smbl.prog.TWOBITTOFA
-#	output:
-#		smbl.fasta.HUMAN_HG38
-#	message:
-#		"Installing the Human genome (HG38)."
-#	params:
-#		src=smbl.src_dir,
-#	shell:
-#		"""
-#			(
-#				rm -fR "{params.src}/hg38"
-#				mkdir -p "{params.src}/hg38"
-#			) > /dev/null
-#
-#			curl -L --insecure -o "{params.src}/hg38/hg38.2bit" "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.2bit"
-#
-#			(
-#				"{input[0]}" "{params.src}/hg38/hg38.2bit" "{output[0]}"
-#				rm -fR "{params.src}/hg38"
-#			) > /dev/null
-#		"""

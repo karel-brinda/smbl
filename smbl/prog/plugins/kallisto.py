@@ -34,7 +34,7 @@ class Kallisto(Program):
 
 	@classmethod
 	def install(cls):
-		gitdir=cls.git_clone("git://github.com/pachterlab/kallisto","kallisto")
+		gitdir=cls.git_clone("http://github.com/pachterlab/kallisto","kallisto")
 		cls.run_cmake("kallisto")
 		cls.run_make("kallisto")
 		cls.install_file("kallisto/src/kallisto",KALLISTO)

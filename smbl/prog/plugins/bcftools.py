@@ -27,8 +27,8 @@ class BcfTools(Program):
 
 	@classmethod
 	def install(cls):
-		gitdir_bcftools=cls.git_clone("git://github.com/samtools/bcftools","bcftools")
-		gitdir_htslib=cls.git_clone("git://github.com/samtools/htslib","htslib")
+		gitdir_bcftools=cls.git_clone("http://github.com/samtools/bcftools","bcftools")
+		gitdir_htslib=cls.git_clone("http://github.com/samtools/htslib","htslib")
 		cls.run_make("bcftools")
 		cls.install_file("bcftools/bcftools",BCFTOOLS)
 		cls.install_file("bcftools/vcfutils.pl",VCFUTILS)

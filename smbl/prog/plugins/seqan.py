@@ -54,7 +54,7 @@ class Seqan(Program):
 	@classmethod
 	def install(cls):
 
-		cls.git_clone("git://github.com/seqan/seqan","")
+		cls.git_clone("http://github.com/seqan/seqan","")
 
 		cls.run_cmake("")
 

@@ -20,7 +20,7 @@ class CMake(Program):
 
 	@classmethod
 	def install(cls):
-		fn=cls.download_file("http://www.cmake.org/files/v3.2/cmake-3.2.3.tar.gz","cmake.tar.gz")
+		fn=cls.download_file("http://cmake.org/files/v3.3/cmake-3.3.2.tar.gz","cmake.tar.gz")
 		dir=cls.extract_tar(fn,strip=1)
 		cls.shell('cd "{dir}" && ./bootstrap --prefix="{install_dir}"'.format(dir=dir,install_dir=smbl.smbl_dir))
 		cls.run_make("")
