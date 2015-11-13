@@ -1,6 +1,7 @@
 import smbl
 import snakemake
 import os
+import shutil
 
 __FASTAFILES = set()
 
@@ -53,7 +54,10 @@ class FastaFile:
 		self.status_message("Installation completed")
 
 	def install_pre(self):
-		self.shell('rm -fR "{src_dir}"'.format(src_dir=self.src_dir))
+		try:
+			shutil.rmtree(self.src_dir)
+		except FileNotFoundError:
+			pass
 		self.shell('mkdir -p "{src_dir}"'.format(src_dir=self.src_dir))
 
 	def install(self):

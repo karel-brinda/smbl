@@ -4,6 +4,7 @@ import collections
 import random
 import os
 import abc
+import shutil
 
 __PLUGINS = set()
 #__RULES= set()
@@ -13,14 +14,6 @@ def register_plugin(plugin):
 
 def get_registered_plugins():
 	return sorted(list(__PLUGINS),key=lambda x:x.get_plugin_name())
-
-#def register_rule(rule):
-#	encodings=[r.encode() for r in get_registered_rules()]
-#	if rule.encode() not in encodings:
-#		__RULES.add(rule)
-#
-#def get_registered_rules():
-#	return list(__RULES)
 
 def get_bin_file_path(program):
 	return os.path.join(smbl.bin_dir,program)
@@ -43,7 +36,6 @@ def correct_samtools_make(makefile_fn):
 ##########################################
 ##########################################
 
-#class ProgramWatcher(abc.ABCMeta):
 class ProgramWatcher(type):
 	def __init__(cls,name,bases,clsdict):
 		if len(cls.mro()) == 3:
@@ -102,7 +94,11 @@ class Program(metaclass=ProgramWatcher):
 		if not cls.is_platform_supported():
 			smbl.messages.error("Operating system '{}' is not supported".format(smbl.utils.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
-		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
+
+		try:
+			shutil.rmtree(cls.src_dir)
+		except FileNotFoundError:
+			pass
 		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
@@ -111,7 +107,10 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def install_post(cls):
-		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
+		try:
+			shutil.rmtree(cls.src_dir)
+		except FileNotFoundError:
+			pass
 
 	@classmethod
 	def supported_platforms(cls):
