@@ -93,15 +93,15 @@ class FastaFile:
 		self.status_message("Downloading a file: "+self.address)
 		self.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
 		try:
-			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		except:
 			try:
-				cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+				self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 			except:
 				try:
-					cls.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
+					self.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
 				except:
-					cls.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
+					self.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
 		return filename_full
 
 	def extract_gz(self,filename_full_archive,filename_full_file):
