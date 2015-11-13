@@ -1,6 +1,7 @@
 import smbl
 import snakemake
 import os
+import shutil
 
 __FASTAFILES = set()
 
@@ -53,7 +54,10 @@ class FastaFile:
 		self.status_message("Installation completed")
 
 	def install_pre(self):
-		self.shell('rm -fR "{src_dir}"'.format(src_dir=self.src_dir))
+		try:
+			shutil.rmtree(self.src_dir)
+		except FileNotFoundError:
+			pass
 		self.shell('mkdir -p "{src_dir}"'.format(src_dir=self.src_dir))
 
 	def install(self):
@@ -89,15 +93,15 @@ class FastaFile:
 		self.status_message("Downloading a file: "+self.address)
 		self.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
 		try:
-			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(
-					fn=filename_full,
-					address=self.address,
-				))
+			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=self.address))
 		except:
-			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(
-					fn=filename_full,
-					address=self.address
-				))
+			try:
+				self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=self.address))
+			except:
+				try:
+					self.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=self.address))
+				except:
+					self.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=self.address))
 		return filename_full
 
 	def extract_gz(self,filename_full_archive,filename_full_file):
