@@ -106,7 +106,6 @@ class Program(metaclass=ProgramWatcher):
 		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
-	# fixme: abstract
 	def install(cls):
 		raise NotImplementedError("Plugin error: install method must be defined")
 
@@ -115,7 +114,6 @@ class Program(metaclass=ProgramWatcher):
 		cls.shell('rm -fR "{src_dir}"'.format(src_dir=cls.src_dir))
 
 	@classmethod
-	# fixme: abstract
 	def supported_platforms(cls):
 		raise NotImplementedError("Plugin error: Supported platforms must be specified")
 
@@ -128,7 +126,6 @@ class Program(metaclass=ProgramWatcher):
 			return False
 
 	@classmethod
-	# fixme: abstract
 	def get_installation_files(cls):
 		raise NotImplementedError("Plugin error: Installation files must be specified")
 
@@ -156,7 +153,14 @@ class Program(metaclass=ProgramWatcher):
 		try:
 			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		except:
-			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+			try:
+				cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
+			except:
+				try:
+					cls.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
+				except:
+					cls.shell('wget --no-check-certificate --output-document="{fn}" "{address}"'.format(fn=filename_full,address=address))
+
 		return filename_full
 
 	@classmethod
