@@ -11,5 +11,5 @@ def mkdir(directory_fn):
 	os.makedirs(directory_fn,exist_ok=True)
 
 def rmdir(directory_fn):
-	shutil.rmtree(cls.src_dir,ignore_errors=True)
+	shutil.rmtree(directory_fn,ignore_errors=True)
 
