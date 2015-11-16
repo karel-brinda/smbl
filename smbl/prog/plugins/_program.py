@@ -1,10 +1,6 @@
-import snakemake
 import smbl
-import collections
 import random
 import os
-import abc
-import shutil
 
 __PLUGINS = set()
 #__RULES= set()

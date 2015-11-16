@@ -1,7 +1,5 @@
 import smbl
-import snakemake
 import os
-import shutil
 
 __FASTAFILES = set()
 
