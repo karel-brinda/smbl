@@ -86,7 +86,7 @@ class FastaFile:
 
 	def download(self,filename_full):
 		self.status_message("Downloading a file: "+self.address)
-		smbl.utils.mkdir(filename_full)
+		smbl.utils.mkdir(os.path.dirname(filename_full))
 		try:
 			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=self.address))
 		except:

@@ -138,7 +138,7 @@ class Program(metaclass=ProgramWatcher):
 	def download_file(cls,address,filename_short):
 		cls.status_message("Downloading a file: "+address)
 		filename_full=cls.abs_from_short(filename_short)
-		smbl.utils.mkdir(filename_full)
+		smbl.utils.mkdir(os.path.dirname(filename_full))
 		try:
 			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		except:
