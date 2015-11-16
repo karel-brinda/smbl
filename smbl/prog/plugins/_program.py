@@ -95,11 +95,8 @@ class Program(metaclass=ProgramWatcher):
 			smbl.messages.error("Operating system '{}' is not supported".format(smbl.utils.get_platform()),program="SMBL")
 			raise NotImplementedError("Unsupported OS")
 
-		try:
-			shutil.rmtree(cls.src_dir)
-		except FileNotFoundError:
-			pass
-		cls.shell('mkdir -p "{src_dir}"'.format(src_dir=cls.src_dir))
+		smbl.utils.rmdir(cls.src_dir)
+		smbl.utils.mkdir(cls.src_dir)
 
 	@classmethod
 	def install(cls):
@@ -107,10 +104,7 @@ class Program(metaclass=ProgramWatcher):
 
 	@classmethod
 	def install_post(cls):
-		try:
-			shutil.rmtree(cls.src_dir)
-		except FileNotFoundError:
-			pass
+		smbl.utils.rmdir(cls.src_dir)
 
 	@classmethod
 	def supported_platforms(cls):
@@ -132,7 +126,7 @@ class Program(metaclass=ProgramWatcher):
 	def git_clone(cls,repository,dirname_short):
 		cls.status_message("Cloning a GIT repository: "+repository)
 		dirname_full=cls.abs_from_short(dirname_short)
-		cls.shell('mkdir -p "{dir}"'.format(dir=dirname_full))
+		smbl.utils.mkdir(dirname_full)
 		cls.shell('git clone --recursive --depth 1 "{rep}" "{dir}"'.format(rep=repository,dir=dirname_full))
 		return dirname_full
 
@@ -140,7 +134,7 @@ class Program(metaclass=ProgramWatcher):
 	def svn_checkout(cls,repository,dirname_short):
 		cls.status_message("Cloning a SVN repository: "+repository)
 		dirname_full=cls.abs_from_short(dirname_short)
-		cls.shell('mkdir -p "{dir}"'.format(dir=dirname_full))
+		smbl.utils.mkdir(dirname_full)
 		cls.shell('git svn clone "{rep}" "{dir}"'.format(rep=repository,dir=dirname_full))
 		return dirname_full
 
@@ -148,7 +142,7 @@ class Program(metaclass=ProgramWatcher):
 	def download_file(cls,address,filename_short):
 		cls.status_message("Downloading a file: "+address)
 		filename_full=cls.abs_from_short(filename_short)
-		cls.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
+		smbl.utils.mkdir(filename_full)
 		try:
 			cls.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=address))
 		except:

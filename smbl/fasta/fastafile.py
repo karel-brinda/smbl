@@ -54,11 +54,8 @@ class FastaFile:
 		self.status_message("Installation completed")
 
 	def install_pre(self):
-		try:
-			shutil.rmtree(self.src_dir)
-		except FileNotFoundError:
-			pass
-		self.shell('mkdir -p "{src_dir}"'.format(src_dir=self.src_dir))
+		smbl.utils.rmdir(self.src_dir)
+		smbl.utils.mkdir(self.src_dir)
 
 	def install(self):
 		if self.format=="gz":
@@ -91,7 +88,7 @@ class FastaFile:
 
 	def download(self,filename_full):
 		self.status_message("Downloading a file: "+self.address)
-		self.shell('mkdir -p "{dir}"'.format(dir=os.path.dirname(filename_full)))
+		smbl.utils.mkdir(filename_full)
 		try:
 			self.shell('curl -L --insecure -o "{fn}" "{address}"'.format(fn=filename_full,address=self.address))
 		except:
