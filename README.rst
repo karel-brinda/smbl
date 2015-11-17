@@ -1,11 +1,10 @@
 SMBL - SnakeMake Bioinformatics Library
 =======================================
 
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/karel-brinda/smbl
-   :target: https://gitter.im/karel-brinda/smbl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
 .. image:: https://travis-ci.org/karel-brinda/smbl.svg?branch=master
+	:target: https://travis-ci.org/karel-brinda/smbl
+
+.. image:: https://travis-ci.org/karel-brinda/smbl.svg?branch=devel
 	:target: https://travis-ci.org/karel-brinda/smbl
 
 
@@ -16,31 +15,40 @@ Short description
 -----------------
 
 **SMBL** is a library of some useful rules and Python functions which can be used in Snakemake (https://bitbucket.org/johanneskoester/snakemake/) pipelines. It makes possible to automatically
-download various bioinformatics programs like read mappers, read simulators, conversion tools, etc.
+install various bioinformatics programs like read mappers, read simulators, conversion tools, etc.
 It supports also downloading and conversion of some important references in FASTA format (e.g., human genome).
 
 
 Installation / upgrade
 ----------------------
 
-To install SMBL, you need to have Unix-like operating system (e.g., Linux, MacOS) and Python at least 3.2.
+To install SMBL, you need to have Unix-like operating system (e.g., Linux, MacOS) and Python at least 3.3.
 Installation / upgrade can be performed using the following command.
 
 .. code-block:: bash
 
-	pip install --upgrade smbl
+	pip3 install --upgrade smbl
 
 
 If SnakeMake has not been installed, yet, it will
 be installed automatically with SMBL.
 
-The current GIT version of SMBL can be installed by 
+The current version of SMBL from git can be installed by 
 
 .. code-block:: bash
 
-	git clone --depth 1 http://github.com/karel-brinda/smbl
-	cd smbl
-	./install.sh
+	pip3 install --upgrade git+git://github.com/karel-brinda/smbl
+
+
+Requirements
+------------
+
+To be able to download and install software automatically, SMBL requires the following programs to be present in you Unix system:
+
+* wget or curl
+* gcc 4.7+
+* git
+* make
 
 
 Usage
@@ -182,8 +190,9 @@ FASTA files
 | Chimpanzee genome PANTR04    | ``smbl.fasta.CHIMP_PANTRO4``                               |
 +------------------------------+------------------------------------------------------------+
 
+
 Example
-~~~~~~~
+-------
 
 The following example demonstrates how SMBL can be used for automatic installation of software.
 
