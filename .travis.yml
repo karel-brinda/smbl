@@ -26,21 +26,9 @@ install:
 - sudo apt-get install git-svn
 # libraries for HDF5
 - sudo apt-get install libhdf5-serial-dev
-#libhdf5-openmpi-dev libhdf5-mpich-dev libhdf5-lam-dev
 - pip install -r requirements.txt
 - pip install .
 script:
 - tests/tests_examples.sh
-- tests/tests_st.sh
+- tests/tests_mt.sh
 #- tests/tests_fa.sh
-deploy:
-  provider: pypi
-  user: karel.brinda
-  distributions: "sdist"
-  password:
-    secure: dG6t/kcAyEK+LZR2mzj5SywUOtpvaoFde3dUdNr5J/lEvp1crv8fTQS0iTVaVmO71H/SRtakXWqTzABDYIyB+RnDYVzfQOog8gb+hr2JLr2XPFEhRbbQ2VDoLH21TJTAbTXAoA/jCVcv0FjeL5pA7TCIZerUF0ZBYyGMSWc6hL8=
-  on:
-    repo: karel-brinda/smbl
-    branch: master
-    tags: true
-
