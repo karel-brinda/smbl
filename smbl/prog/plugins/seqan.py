@@ -250,7 +250,7 @@ class Yara(Seqan):
 			reads_string='"{}" "{}"'.format(self._fq1_fn,self._fq2_fn)
 
 		if self._sort_by_name:
-			smbl.utils.shell('"{yara_mapper}" -t {threads} "{genome_pref}" {reads_string} | "{samtools}" sort -n - "{bamprefix}"'.format(
+			smbl.utils.shell('"{yara_mapper}" -t {threads} "{genome_pref}" {reads_string} | "{samtools}" sort -n - > "{bamprefix}.bam"'.format(
 						yara_mapper=YARA_MAPPER,
 						genome_pref=self.index_prefix,
 						reads_string=reads_string,
