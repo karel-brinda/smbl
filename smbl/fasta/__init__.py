@@ -5,7 +5,7 @@ from .fastafile import *
 
 EXAMPLE_1  = fasta_file("Mycobacterium_tuberculosis","http://genome2d.molgenrug.nl/Bacteria/Mycobacterium_tuberculosis_H37Rv_uid170532/NC_018143.fna")
 EXAMPLE_2  = fasta_file("Chlamydia_trachomatis","http://genome2d.molgenrug.nl/Bacteria/Chlamydia_trachomatis_RC_L2_s_3_uid213390/NC_021897.fna")
-EXAMPLE_3  = fasta_file("Borrelia_garinii","http://genome2d.molgenrug.nl/Bacteria/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna")
+EXAMPLE_3  = fasta_file("Borrelia_garinii","http://genome2d.molgenrug.nl/Bacteria/Borrelia_garinii_BgVir_uid162165/NC_017717.fna")
 
 EXAMPLE_42 = fasta_file("Human_chr_21","http://hgdownload.cse.ucsc.edu/goldenpath/hg19/chromosomes/chr21.fa.gz")
 
