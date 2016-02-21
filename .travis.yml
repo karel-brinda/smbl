@@ -22,11 +22,11 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-5', 'gcc-5', 'zlib1g-dev', 'libbz2-dev', 'libboost-dev', 'git-svn']
+          packages: ['g++-5', 'gcc-5', 'zlib1g-dev', 'libbz2-dev', 'libboost-dev', 'git-svn', 'python-pip']
       install:
-      - export CXX="g++-5" CC="gcc-5"
-      - pip install -r requirements.txt
-      - pip install .
+        - export CXX="g++-5" CC="gcc-5"
+        - pip install -r requirements.txt
+        - pip install .
       
 script:
 - tests/tests_examples.sh
