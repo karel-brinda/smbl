@@ -8,7 +8,7 @@ SMBL - SnakeMake Bioinformatics Library
 	:target: https://travis-ci.org/karel-brinda/smbl
 
 
-In case of any problem, don't hesitate to contact me on karel.brinda@gmail.com.
+**SMBL is deprecated and is not maintained any more. We recommend to replace it by [BioConda](https://bioconda.github.io/).**
 
 
 Short description
@@ -33,7 +33,7 @@ Installation / upgrade can be performed using the following command.
 If SnakeMake has not been installed, yet, it will
 be installed automatically with SMBL.
 
-The current version of SMBL from git can be installed by 
+The current version of SMBL from git can be installed by
 
 .. code-block:: bash
 
@@ -169,7 +169,7 @@ Programs
 +------------------------+-----------------------------------------+-------------------------------------------------------------------------+
 | xs                     | ``smbl.prog.XS``                        | http://bioinformatics.ua.pt/software/xs/                                |
 +------------------------+-----------------------------------------+-------------------------------------------------------------------------+
-	
+
 
 FASTA files
 ^^^^^^^^^^^
