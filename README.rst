@@ -8,7 +8,7 @@ SMBL - SnakeMake Bioinformatics Library
 	:target: https://travis-ci.org/karel-brinda/smbl
 
 
-**SMBL is deprecated and is not maintained any more. We recommend to replace it by `BioConda <https://bioconda.github.io>`_.**
+**SMBL is deprecated and is not maintained any more. We recommend to replace it by BioConda (see https://bioconda.github.io).**
 
 
 Short description
